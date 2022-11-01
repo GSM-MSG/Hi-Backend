@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.reserve.entity;
+package msg.team1.Hi.domain.reservation.entity;
 
 import lombok.*;
 import msg.team1.Hi.domain.homebase.entity.Homebase;
