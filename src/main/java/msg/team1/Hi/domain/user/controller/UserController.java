@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ResponseBody
 @RequestMapping("/user")
 public class UserController {
+
 }
