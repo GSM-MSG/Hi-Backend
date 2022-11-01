@@ -19,10 +19,10 @@ CREATE TABLE `homebase` (
 );
 
 CREATE TABLE `personnal` (
+                             `personal_idx`	int	NOT NULL,
                              `user_idx`	int	NOT NULL	COMMENT 'Auto Increment',
                              `homebase_idx`	int	NOT NULL,
-                             `user_idx2`	int	NOT NULL	COMMENT 'Auto Increment',
-                             `Key`	VARCHAR(255)	NOT NULL
+                             `user_idx2`	int	NOT NULL	COMMENT 'Auto Increment'
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
@@ -40,10 +40,10 @@ ALTER TABLE `homebase` ADD CONSTRAINT `PK_HOMEBASE` PRIMARY KEY (
     );
 
 ALTER TABLE `personnal` ADD CONSTRAINT `PK_PERSONNAL` PRIMARY KEY (
+                                                                   `personal_idx`,
                                                                    `user_idx`,
                                                                    `homebase_idx`,
-                                                                   `user_idx2`,
-                                                                   `Key`
+                                                                   `user_idx2`
     );
 
 ALTER TABLE `reservation` ADD CONSTRAINT `FK_homebase_TO_reservation_1` FOREIGN KEY (
@@ -79,12 +79,5 @@ ALTER TABLE `personnal` ADD CONSTRAINT `FK_reservation_TO_personnal_2` FOREIGN K
     )
     REFERENCES `reservation` (
                               `user_idx`
-        );
-
-ALTER TABLE `personnal` ADD CONSTRAINT `FK_reservation_TO_personnal_3` FOREIGN KEY (
-                                                                                    `Key`
-    )
-    REFERENCES `reservation` (
-                              `reservation_idx`
         );
 
