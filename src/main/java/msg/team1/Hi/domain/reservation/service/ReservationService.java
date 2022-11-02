@@ -1,12 +1,12 @@
 package msg.team1.Hi.domain.reservation.service;
 
-import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.domain.homebase.dto.HomebaseDto;
+import msg.team1.Hi.domain.personal.dto.PersonalUserDto;
+import msg.team1.Hi.domain.reservation.dto.ReservationRepDto;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface ReservationService {
 
-    List<User> makeUserReservationList(Integer user_idx);
+    ReservationRepDto makeUserReservation(Integer user_idx, Integer homeBase_idx);
 }

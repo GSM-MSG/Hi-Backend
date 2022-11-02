@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Reservation {
 
     @Id
@@ -26,4 +25,9 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "homebase_idx")
     private Homebase homebase;
+
+    public Reservation(User user, Homebase homebase) {
+        this.user = user;
+        this.homebase = homebase;
+    }
 }

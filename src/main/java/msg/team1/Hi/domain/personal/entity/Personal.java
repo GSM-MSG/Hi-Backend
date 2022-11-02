@@ -1,10 +1,10 @@
-package msg.team1.Hi.domain.personnal.entity;
+package msg.team1.Hi.domain.personal.entity;
 
 import lombok.*;
-import msg.team1.Hi.domain.reservation.entity.Reservation;
 import msg.team1.Hi.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "personnal")
@@ -13,18 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class Personnal {
+public class Personal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "personnal_idx", nullable = false)
-    private Integer personnal_idx;
-
-    @ManyToOne
-    @JoinColumn(name = "reservation")
-    private Reservation reservation;
+    @Column(name = "personal_idx", nullable = false)
+    private Integer personal_idx;
 
     @OneToOne
     @JoinColumn(name = "user")
     private User user;
+
+    public Personal(User user) {
+        this.user = user;
+    }
 }

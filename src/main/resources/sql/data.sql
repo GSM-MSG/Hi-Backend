@@ -15,14 +15,14 @@ CREATE TABLE `reservation` (
 
 CREATE TABLE `homebase` (
                             `homebase_idx`	int	NOT NULL	COMMENT '홈베 좌석번호',
-                            `floor`	INT(1)	NOT NULL	COMMENT '신청한 홈베의 층'
+                            `floor`	int	NOT NULL	COMMENT '신청한 홈베의 층'
 );
 
-CREATE TABLE `personnal` (
-                             `personal_idx`	int	NOT NULL,
-                             `user_idx`	int	NOT NULL	COMMENT 'Auto Increment',
-                             `homebase_idx`	int	NOT NULL,
-                             `user_idx2`	int	NOT NULL	COMMENT 'Auto Increment'
+CREATE TABLE `personal` (
+                            `personal_idx`	int	NOT NULL,
+                            `user_idx`	int	NOT NULL	COMMENT 'Auto Increment',
+                            `homebase_idx`	int	NOT NULL,
+                            `user_idx2`	int	NOT NULL	COMMENT 'Auto Increment'
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
@@ -39,11 +39,11 @@ ALTER TABLE `homebase` ADD CONSTRAINT `PK_HOMEBASE` PRIMARY KEY (
                                                                  `homebase_idx`
     );
 
-ALTER TABLE `personnal` ADD CONSTRAINT `PK_PERSONNAL` PRIMARY KEY (
-                                                                   `personal_idx`,
-                                                                   `user_idx`,
-                                                                   `homebase_idx`,
-                                                                   `user_idx2`
+ALTER TABLE `personal` ADD CONSTRAINT `PK_PERSONAL` PRIMARY KEY (
+                                                                 `personal_idx`,
+                                                                 `user_idx`,
+                                                                 `homebase_idx`,
+                                                                 `user_idx2`
     );
 
 ALTER TABLE `reservation` ADD CONSTRAINT `FK_homebase_TO_reservation_1` FOREIGN KEY (
@@ -60,22 +60,22 @@ ALTER TABLE `reservation` ADD CONSTRAINT `FK_user_TO_reservation_1` FOREIGN KEY 
                        `user_idx`
         );
 
-ALTER TABLE `personnal` ADD CONSTRAINT `FK_user_TO_personnal_1` FOREIGN KEY (
-                                                                             `user_idx`
+ALTER TABLE `personal` ADD CONSTRAINT `FK_user_TO_personal_1` FOREIGN KEY (
+                                                                           `user_idx`
     )
     REFERENCES `user` (
                        `user_idx`
         );
 
-ALTER TABLE `personnal` ADD CONSTRAINT `FK_reservation_TO_personnal_1` FOREIGN KEY (
-                                                                                    `homebase_idx`
+ALTER TABLE `personal` ADD CONSTRAINT `FK_reservation_TO_personal_1` FOREIGN KEY (
+                                                                                  `homebase_idx`
     )
     REFERENCES `reservation` (
                               `homebase_idx`
         );
 
-ALTER TABLE `personnal` ADD CONSTRAINT `FK_reservation_TO_personnal_2` FOREIGN KEY (
-                                                                                    `user_idx2`
+ALTER TABLE `personal` ADD CONSTRAINT `FK_reservation_TO_personal_2` FOREIGN KEY (
+                                                                                  `user_idx2`
     )
     REFERENCES `reservation` (
                               `user_idx`
