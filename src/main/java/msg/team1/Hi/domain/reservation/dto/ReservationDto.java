@@ -10,5 +10,4 @@ import msg.team1.Hi.domain.user.entity.User;
 @ToString
 public class ReservationDto {
     private User user;
-    private Homebase homebase;
 }

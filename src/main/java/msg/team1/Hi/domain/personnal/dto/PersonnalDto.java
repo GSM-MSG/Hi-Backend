@@ -11,5 +11,4 @@ import msg.team1.Hi.domain.user.entity.User;
 public class PersonnalDto {
 
     private User user;
-    private Reservation reservation;
 }
