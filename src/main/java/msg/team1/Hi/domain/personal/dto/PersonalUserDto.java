@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class PersonalUserDto {
     private String name;
     private String number;
-    private String authorizations;
 }
