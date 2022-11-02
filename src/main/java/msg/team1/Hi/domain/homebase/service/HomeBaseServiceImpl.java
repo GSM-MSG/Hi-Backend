@@ -23,16 +23,16 @@ public class HomeBaseServiceImpl implements HomeBaseService {
      */
     @Override
     public HomebaseDto findHomebaseDtoById(Integer homebase_idx) {
-        Optional<Homebase> findHomebase = homeBaseRepository.findById(homebase_idx);
-        Integer findHomebase_idx = findHomebase.get().getHomebase_idx();
+        Optional<Homebase> findHomeBase = homeBaseRepository.findById(homebase_idx);
+        Integer findHomeBase_idx = findHomeBase.get().getHomebase_idx();
 
         HomebaseDto homebaseDto = new HomebaseDto();
 
-        if(findHomebase_idx <= 4 && findHomebase_idx > 0){
+        if(findHomeBase_idx <= 4 && findHomeBase_idx > 0){
             homebaseDto.setFloor(2);
-        } else if(findHomebase_idx <= 8 && findHomebase_idx > 4 ) {
+        } else if(findHomeBase_idx <= 8 && findHomeBase_idx > 4 ) {
             homebaseDto.setFloor(3);
-        } else if (findHomebase_idx <= 12 && findHomebase_idx > 8) {
+        } else if (findHomeBase_idx <= 12 && findHomeBase_idx > 8) {
             homebaseDto.setFloor(4);
         }
         return homebaseDto;

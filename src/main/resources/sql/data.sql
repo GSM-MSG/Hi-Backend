@@ -15,7 +15,7 @@ CREATE TABLE `reservation` (
 
 CREATE TABLE `homebase` (
                             `homebase_idx`	int	NOT NULL	COMMENT '홈베 좌석번호',
-                            `floor`	INT(1)	NOT NULL	COMMENT '신청한 홈베의 층'
+                            `floor`	int	NOT NULL	COMMENT '신청한 홈베의 층'
 );
 
 CREATE TABLE `personal` (
