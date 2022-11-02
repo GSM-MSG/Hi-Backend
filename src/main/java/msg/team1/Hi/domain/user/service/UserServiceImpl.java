@@ -3,7 +3,7 @@ package msg.team1.Hi.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import msg.team1.Hi.domain.user.dto.UserDto;
+import msg.team1.Hi.domain.user.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.user.entity.User;
 import msg.team1.Hi.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -36,21 +36,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer signUpUser(UserDto userDto) {
-        User user = new User();
+    public void signUp(SignUpRequest signUpRequest) {
 
-        if(userRepository.findByEmail(userDto.getEmail()) == null) {
-            user.builder().email(userDto.getEmail())
-                    .password(userDto.getPassword())
-                    .name(userDto.getName())
-                    .number(userDto.getNumber())
-                    .authorization(userDto.getAuthorization())
-                    .build();
-        } else {
-
+        if(userRepository.findByEmail(signUpRequest.getEmail()).isPresent()){
+            // throws new Exception........ 할 예정
         }
 
-        return user.getUser_idx();
+        userRepository.save(signUpRequest.toEntity(signUpRequest.getPassword()));
     }
 
 }

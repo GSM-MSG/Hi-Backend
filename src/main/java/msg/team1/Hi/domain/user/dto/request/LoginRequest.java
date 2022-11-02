@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.user.dto;
+package msg.team1.Hi.domain.user.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginUserDto {
+public class LoginRequest {
     private String email;
     private String password;
 }
