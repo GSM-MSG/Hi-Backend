@@ -14,15 +14,8 @@ public class HomeBaseServiceImpl implements HomeBaseService {
 
     private final HomeBaseRepository homeBaseRepository;
 
-    /**
-     * homebase_idx 1 ~ 4 == floor : 2
-     * homebase_idx 5 ~ 8 == floor : 3
-     * homebase_idx 9 ~ 12 == floor : 4
-     * @param homebase_idx
-     * @return HomebaseDto
-     */
     @Override
-    public HomebaseDto findHomebaseDtoById(Integer homebase_idx) {
+    public HomebaseDto homeBaseInfo (Integer homebase_idx) {
         Optional<Homebase> findHomeBase = homeBaseRepository.findById(homebase_idx);
         Integer findHomeBase_idx = findHomeBase.get().getHomebase_idx();
 

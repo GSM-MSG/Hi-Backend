@@ -12,5 +12,5 @@ public class UserDto {
     private String password;
     private String number;
     private String name;
-    private String author;
+    private String authorization;
 }

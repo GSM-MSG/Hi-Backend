@@ -11,7 +11,4 @@ import lombok.Setter;
 public class LoginUserDto {
     private String email;
     private String password;
-    private String name;
-    private String number;
-    private String authorization;
 }

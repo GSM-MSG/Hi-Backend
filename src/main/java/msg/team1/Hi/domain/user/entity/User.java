@@ -17,19 +17,26 @@ public class User {
     @Column(name = "user_idx", nullable = false)
     private Integer user_idx;
 
-    @Column(name = "email" , nullable = false)
+    @Column(name = "email" , nullable = false , unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false , unique = true)
     private String password;
 
-    @Column(name = "number")
+    @Column(name = "number", unique = true )
     private String number;
 
-    @Column(name = "name")
+    @Column(name = "name" , unique = true)
     private String name;
 
-    @Column(name = "authorization", nullable = false)
+    @Column(name = "authorization", nullable = false , unique = true)
     private String authorization;
 
+    public User(String email, String password, String number, String name, String authorization) {
+        this.email = email;
+        this.password = password;
+        this.number = number;
+        this.name = name;
+        this.authorization = authorization;
+    }
 }
