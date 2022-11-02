@@ -10,5 +10,5 @@ import java.util.List;
 @Service
 public interface PersonalService {
 
-    PersonalUserDto makePersonal(UserDto user);
+    PersonalUserDto savePersonal(Integer user_idx);
 }

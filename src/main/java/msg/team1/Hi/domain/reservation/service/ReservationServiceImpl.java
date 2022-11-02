@@ -1,31 +1,28 @@
 package msg.team1.Hi.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.homebase.entity.Homebase;
-import msg.team1.Hi.domain.reservation.dto.ReservationDto;
-import msg.team1.Hi.domain.reservation.entity.Reservation;
+import msg.team1.Hi.domain.personal.entity.Personal;
+import msg.team1.Hi.domain.personal.repository.PersonalRepository;
+import msg.team1.Hi.domain.reservation.dto.ReservationRepDto;
 import msg.team1.Hi.domain.reservation.repository.ReservationRepository;
-import msg.team1.Hi.domain.user.entity.User;
-import msg.team1.Hi.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
+    private final PersonalRepository personalRepository;
 
 
     @Override
-    public ReservationDto makeUserReservation(User user) {
+    public ReservationRepDto makeUserReservation(Integer personal_idx) {
 
-        Reservation.builder().user(user).build();
-        ReservationDto reservationDto = new ReservationDto(user);
+        Optional<Personal> personal = personalRepository.findById(personal_idx);
 
-        return reservationDto;
+        return new ReservationRepDto(personal.get().getUser());
     }
 }

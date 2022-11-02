@@ -1,10 +1,10 @@
 package msg.team1.Hi.domain.personal.entity;
 
 import lombok.*;
-import msg.team1.Hi.domain.reservation.entity.Reservation;
 import msg.team1.Hi.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "personnal")
@@ -20,11 +20,11 @@ public class Personal {
     @Column(name = "personal_idx", nullable = false)
     private Integer personal_idx;
 
-    @ManyToOne
-    @JoinColumn(name = "reservation")
-    private Reservation reservation;
-
     @OneToOne
     @JoinColumn(name = "user")
     private User user;
+
+    public Personal(User user) {
+        this.user = user;
+    }
 }
