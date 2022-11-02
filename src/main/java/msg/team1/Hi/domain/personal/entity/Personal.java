@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.personnal.entity;
+package msg.team1.Hi.domain.personal.entity;
 
 import lombok.*;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
@@ -13,12 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Builder
-public class Personnal {
+public class Personal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "personnal_idx", nullable = false)
-    private Integer personnal_idx;
+    @Column(name = "personal_idx", nullable = false)
+    private Integer personal_idx;
 
     @ManyToOne
     @JoinColumn(name = "reservation")
