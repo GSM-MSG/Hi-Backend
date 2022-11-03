@@ -1,6 +1,8 @@
 package msg.team1.Hi.domain.user.entity;
 
 import lombok.*;
+import msg.team1.Hi.global.role.Role;
+import msg.team1.Hi.global.security.dto.JwtRequest;
 import msg.team1.Hi.global.security.dto.SignUpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -8,10 +10,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-@Getter @Setter
+@Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class User {
 
     @Id
@@ -31,18 +32,18 @@ public class User {
     @Column(name = "name" , unique = true)
     private String name;
 
-    @Column(name = "authorization", nullable = false , unique = true)
     @Enumerated(EnumType.STRING)
-    private String authorization;
+    private Role role;
 
     public User(SignUpRequest request) {
         this.email = request.getEmail();
         this.password = request.getPassword();
         this.number = request.getNumber();
-        this.authorization = request.getAuthorization();
+        this.role = Role.STUDENT;
     }
 
     public void encryptPassword(PasswordEncoder passwordEncoder) {
         password = passwordEncoder.encode(password);
     }
+
 }

@@ -1,10 +1,13 @@
 package msg.team1.Hi.global.security.authentication;
 
 import lombok.AllArgsConstructor;
+import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.global.role.Role;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -15,7 +18,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Role role = user.getRole();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(ROLE_PREFIX + role.toString());
+        Collection<GrantedAuthority> authorities = new ArrayList<>(); // List 인 이유 : 여러개의 권한을 가질 수 있다
+        authorities.add(authority);
+
+        return authorities;
     }
 
     @Override
@@ -25,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getName();
     }
 
     @Override

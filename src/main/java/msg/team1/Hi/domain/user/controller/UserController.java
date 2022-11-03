@@ -21,8 +21,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LoginResponse userLogin(@RequestBody JwtRequest loginRequest) {
-        userService.login(loginRequest);
+    public String userLogin(@RequestBody JwtRequest request) {
+        try{
+            return userService.login(request);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
+        userService.login(request);
         return null;
     }
 }
