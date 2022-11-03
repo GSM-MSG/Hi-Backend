@@ -1,6 +1,8 @@
 package msg.team1.Hi.domain.user.entity;
 
 import lombok.*;
+import msg.team1.Hi.global.security.dto.SignUpRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -32,11 +34,14 @@ public class User {
     @Column(name = "authorization", nullable = false , unique = true)
     private String authorization;
 
-    public User(String email, String password, String number, String name, String authorization) {
-        this.email = email;
-        this.password = password;
-        this.number = number;
-        this.name = name;
-        this.authorization = authorization;
+    public User(SignUpRequest request) {
+        this.email = request.getEmail();
+        this.password = request.getPassword();
+        this.number = request.getNumber();
+        this.authorization = request.getAuthorization();
+    }
+
+    public void encryptPassword(PasswordEncoder passwordEncoder) {
+        password = passwordEncoder.encode(password);
     }
 }

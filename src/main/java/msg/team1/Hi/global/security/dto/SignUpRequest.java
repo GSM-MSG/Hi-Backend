@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.user.dto.request;
+package msg.team1.Hi.global.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

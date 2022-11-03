@@ -3,12 +3,15 @@ package msg.team1.Hi.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import msg.team1.Hi.domain.user.dto.request.SignUpRequest;
+import msg.team1.Hi.global.security.dto.JwtRequest;
+import msg.team1.Hi.global.security.dto.SignUpRequest;
+import msg.team1.Hi.domain.user.dto.response.LoginResponse;
 import msg.team1.Hi.domain.user.entity.User;
 import msg.team1.Hi.domain.user.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,33 +19,29 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean login(User user) {
-
-        Optional<User> findUser = userRepository.findById(user.getUser_idx());
-
-        if(findUser.get() == null) {
-            log.info("등록되어있지 않은 유저입니다.");
-            return false;
+    @Transactional
+    public LoginResponse login(JwtRequest loginRequest) {
+        if(userRepository.findByEmail(loginRequest.getEmail()) == null) {
+            throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
 
-        if(!user.getPassword().equals(findUser.get().getPassword())) {
-            log.info("비밀번호가 일치하지 않습니다.");
-            return false;
-        }
-
-        return true;
+        return null;
     }
 
     @Override
-    public void signUp(SignUpRequest signUpRequest) {
-
-        if(userRepository.findByEmail(signUpRequest.getEmail()).isPresent()){
-            // throws new Exception........ 할 예정
+    @Transactional
+    public String signUp(SignUpRequest signUpRequest) {
+        if(userRepository.existByEmail(signUpRequest.getEmail())) {
+            return null;
         }
+        User user = new User(signUpRequest);
+        user.encryptPassword(passwordEncoder);
 
-        userRepository.save(signUpRequest.toEntity(signUpRequest.getPassword()));
+        userRepository.save(user);
+        return user.getEmail();
     }
 
 }
