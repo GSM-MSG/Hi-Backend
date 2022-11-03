@@ -32,6 +32,7 @@ public class User {
     private String name;
 
     @Column(name = "authorization", nullable = false , unique = true)
+    @Enumerated(EnumType.STRING)
     private String authorization;
 
     public User(SignUpRequest request) {

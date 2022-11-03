@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.security.detail;
+package msg.team1.Hi.global.security.authentication;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.user.entity.User;
@@ -18,6 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
+
         return null;
     }
 }
