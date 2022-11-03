@@ -3,8 +3,10 @@ package msg.team1.Hi.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import msg.team1.Hi.global.security.JwtTokenProvider;
 import msg.team1.Hi.global.security.authentication.UserDetailsImpl;
 import msg.team1.Hi.global.security.dto.JwtRequest;
+import msg.team1.Hi.global.security.dto.JwtResponseDto;
 import msg.team1.Hi.global.security.dto.SignUpRequest;
 import msg.team1.Hi.domain.user.entity.User;
 import msg.team1.Hi.domain.user.repository.UserRepository;
@@ -26,17 +28,18 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     @Transactional
-    public String login(JwtRequest loginRequest) {
+    public JwtResponseDto login(JwtRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        return principal.getUsername();
+        return createJwtToken(authentication);
     }
 
     @Override
@@ -51,6 +54,13 @@ public class UserServiceImpl implements UserService{
 
         userRepository.save(user);
         return user.getEmail();
+    }
+
+    @Override
+    public JwtResponseDto createJwtToken(Authentication authentication) {
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+        String token = jwtTokenProvider.generateToken(principal);
+        return new JwtResponseDto(token);
     }
 
 }

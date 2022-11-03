@@ -2,8 +2,8 @@ package msg.team1.Hi.domain.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.security.dto.JwtRequest;
-import msg.team1.Hi.domain.user.dto.response.LoginResponse;
 import msg.team1.Hi.domain.user.service.UserService;
+import msg.team1.Hi.global.security.dto.JwtResponseDto;
 import msg.team1.Hi.global.security.dto.SignUpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +21,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String userLogin(@RequestBody JwtRequest request) {
-        try{
+    public JwtResponseDto userLogin(@RequestBody JwtRequest request) {
+        try {
             return userService.login(request);
         } catch (Exception e) {
-            return e.getMessage();
+            return new JwtResponseDto(e.getMessage());
         }
-
-        userService.login(request);
-        return null;
     }
 }
