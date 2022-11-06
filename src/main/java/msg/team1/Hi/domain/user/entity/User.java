@@ -17,10 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_idx", nullable = false)
-    private Integer user_idx;
-
-    @Column(name = "email" , nullable = false , unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "password", nullable = false , unique = true)

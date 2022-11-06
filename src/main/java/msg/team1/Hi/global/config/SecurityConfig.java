@@ -1,6 +1,5 @@
 package msg.team1.Hi.global.config;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.security.JwtAuthenticationFilter;
 import msg.team1.Hi.global.security.JwtTokenProvider;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
