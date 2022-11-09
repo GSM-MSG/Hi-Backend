@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.global.security.jwt.JwtTokenProvider;
 import msg.team1.Hi.global.security.authentication.UserDetailsImpl;
-import msg.team1.Hi.global.security.dto.JwtRequest;
-import msg.team1.Hi.global.security.dto.JwtResponse;
+import msg.team1.Hi.global.security.dto.request.JwtRequest;
+import msg.team1.Hi.global.security.dto.response.JwtResponse;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 
@@ -24,13 +25,13 @@ import javax.transaction.Transactional;
 @Slf4j
 public class MemberService {
 
-    private final MemberRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public JwtResponse login(JwtRequest loginRequest) {
+    public JwtResponse login(@Validated JwtRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -41,16 +42,16 @@ public class MemberService {
     }
 
     @Transactional
-    public String signUp(SignUpRequest signUpRequest) {
+    public String signUp(@Validated SignUpRequest signUpRequest) {
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if(memberRepository.existsByEmail(signUpRequest.getEmail())) {
             return null;
         }
-        Member user = new Member(signUpRequest);
-        user.encryptPassword(passwordEncoder);
+        Member member = new Member(signUpRequest);
+        member.encryptPassword(passwordEncoder);
 
-        userRepository.save(user);
-        return user.getEmail();
+        memberRepository.save(member);
+        return member.getEmail();
     }
 
     public JwtResponse createJwtToken(Authentication authentication) {
