@@ -16,19 +16,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 20)
     private String email;
 
-    @Column(name = "password", nullable = false , unique = true)
+    @Column(name = "password", nullable = false , unique = true , length = 50)
     private String password;
 
-    @Column(name = "number", unique = true )
+    @Column(name = "number", unique = true , length = 10)
     private String number;
 
-    @Column(name = "name" , unique = true)
+    @Column(name = "name" , unique = true , length = 20)
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "role" , length = 5)
     private Role role;
 
     public User(SignUpRequest request) {

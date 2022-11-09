@@ -18,7 +18,6 @@ import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;

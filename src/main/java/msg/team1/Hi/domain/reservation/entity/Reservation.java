@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "reservation")
-@Getter @Setter
+@Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reservation {
@@ -19,15 +19,10 @@ public class Reservation {
     private Integer reservation_idx;
 
     @OneToOne
-    @JoinColumn(name = "user_idx")
+    @JoinColumn(name = "email")
     private User user;
 
     @OneToOne
     @JoinColumn(name = "homebase_idx")
     private Homebase homebase;
-
-    public Reservation(User user, Homebase homebase) {
-        this.user = user;
-        this.homebase = homebase;
-    }
 }
