@@ -7,14 +7,13 @@ import msg.team1.Hi.global.security.JwtTokenProvider;
 import msg.team1.Hi.global.security.authentication.UserDetailsImpl;
 import msg.team1.Hi.global.security.dto.JwtRequest;
 import msg.team1.Hi.global.security.dto.JwtResponseDto;
-import msg.team1.Hi.global.security.dto.SignUpRequest;
+import msg.team1.Hi.domain.user.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.user.entity.User;
 import msg.team1.Hi.domain.user.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -2,8 +2,7 @@ package msg.team1.Hi.domain.user.entity;
 
 import lombok.*;
 import msg.team1.Hi.global.role.Role;
-import msg.team1.Hi.global.security.dto.JwtRequest;
-import msg.team1.Hi.global.security.dto.SignUpRequest;
+import msg.team1.Hi.domain.user.dto.request.SignUpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
