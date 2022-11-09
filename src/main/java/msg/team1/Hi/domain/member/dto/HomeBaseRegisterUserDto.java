@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.user.dto;
+package msg.team1.Hi.domain.member.dto;
 
 import lombok.*;
 

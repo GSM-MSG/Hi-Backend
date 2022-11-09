@@ -1,19 +1,19 @@
-package msg.team1.Hi.domain.user.controller;
+package msg.team1.Hi.domain.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.global.security.dto.JwtRequest;
-import msg.team1.Hi.domain.user.service.UserService;
-import msg.team1.Hi.global.security.dto.JwtResponseDto;
-import msg.team1.Hi.domain.user.dto.request.SignUpRequest;
+import msg.team1.Hi.global.security.dto.JwtResponse;
+import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-public class UserController {
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService userService;
 
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public String signUp(@RequestBody SignUpRequest signUpRequest) {
@@ -21,11 +21,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public JwtResponseDto userLogin(@RequestBody JwtRequest request) {
+    public JwtResponse userLogin(@RequestBody JwtRequest request) {
         try {
             return userService.login(request);
         } catch (Exception e) {
-            return new JwtResponseDto(e.getMessage());
+            return new JwtResponse(e.getMessage());
         }
     }
 }

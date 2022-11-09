@@ -1,7 +1,7 @@
 package msg.team1.Hi.global.security.authentication;
 
 import lombok.AllArgsConstructor;
-import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.global.role.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +14,7 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 
     private static final String ROLE_PREFIX = "ROLE_";
-    private final User user;
+    private final Member user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

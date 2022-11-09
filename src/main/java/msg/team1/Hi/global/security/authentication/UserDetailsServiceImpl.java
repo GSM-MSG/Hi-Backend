@@ -1,8 +1,8 @@
 package msg.team1.Hi.global.security.authentication;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.user.entity.User;
-import msg.team1.Hi.domain.user.repository.UserRepository;
+import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username)
+        Member user = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 유저입니다."));
 
         return null;

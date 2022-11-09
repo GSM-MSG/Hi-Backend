@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.user.dto.response;
+package msg.team1.Hi.domain.member.dto.response;
 
 
 import lombok.AllArgsConstructor;

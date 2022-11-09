@@ -1,8 +1,8 @@
 package msg.team1.Hi.domain.reservation.dto;
 
 import lombok.*;
-import msg.team1.Hi.domain.homebase.entity.Homebase;
-import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.domain.homebase.entity.HomeBase;
+import msg.team1.Hi.domain.member.entity.Member;
 
 @Getter @Setter
 @Builder
@@ -12,8 +12,8 @@ import msg.team1.Hi.domain.user.entity.User;
 public class ReservationRepDto {
 
     // 대표
-    private User user;
+    private Member user;
 
     // 등록할 홈베이스 자리
-    private Homebase homebase;
+    private HomeBase homebase;
 }

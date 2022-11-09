@@ -2,14 +2,12 @@ package msg.team1.Hi.domain.personal.entity;
 
 import lombok.*;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
-import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.domain.member.entity.Member;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
-@Table(name = "personnal")
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -23,11 +21,11 @@ public class Personal {
 
     @OneToOne
     @JoinColumn(name = "email")
-    private User user;
+    private Member user;
 
     @OneToOne
     @JoinColumn(name = "email2")
-    private User representative;
+    private Member representative;
 
     @ManyToOne
     @JoinColumn(name = "reservation_idx")

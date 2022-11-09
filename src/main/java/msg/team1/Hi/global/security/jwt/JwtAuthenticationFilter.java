@@ -1,6 +1,5 @@
-package msg.team1.Hi.global.security;
+package msg.team1.Hi.global.security.jwt;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
