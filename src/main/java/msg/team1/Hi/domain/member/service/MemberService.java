@@ -2,11 +2,14 @@ package msg.team1.Hi.domain.member.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import msg.team1.Hi.domain.member.dto.response.MemberResponse;
+import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.security.jwt.JwtTokenProvider;
 import msg.team1.Hi.global.security.authentication.UserDetailsImpl;
-import msg.team1.Hi.global.security.dto.request.JwtRequest;
-import msg.team1.Hi.global.security.dto.response.JwtResponse;
+import msg.team1.Hi.domain.member.dto.request.LoginRequest;
+import msg.team1.Hi.domain.member.dto.response.LoginResponse;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
@@ -31,7 +34,7 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public JwtResponse login(@Validated JwtRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -42,10 +45,24 @@ public class MemberService {
     }
 
     @Transactional
-    public String signUp(@Validated SignUpRequest signUpRequest) {
+    public MemberResponse memberLogin(LoginRequest loginRequest) {
+        Member member = memberRepository
+                .findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
+
+        boolean matches = passwordEncoder.matches(loginRequest.getPassword(), member.getPassword());
+        if(!matches) {
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return MemberResponse.of(member);
+    }
+
+    @Transactional
+    public String signUp(SignUpRequest signUpRequest) {
 
         if(memberRepository.existsByEmail(signUpRequest.getEmail())) {
-            return null;
+            throw new BadRequestException("이미 존재하는 이메일 입니다.");
         }
         Member member = new Member(signUpRequest);
         member.encryptPassword(passwordEncoder);
@@ -54,10 +71,10 @@ public class MemberService {
         return member.getEmail();
     }
 
-    public JwtResponse createJwtToken(Authentication authentication) {
+    @Transactional
+    public LoginResponse createJwtToken(Authentication authentication) {
         UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
         String token = jwtTokenProvider.generateToken(principal);
-        return new JwtResponse(token);
+        return new LoginResponse(token);
     }
-
 }
