@@ -53,4 +53,9 @@ public class JwtProvider {
                 .compact();
     }
 
+    public Subject getSubject(String accessToken) throws JsonProcessingException {
+        String subjectStr = Jwts.parser().setSigningKey(key).parseClaimsJws(accessToken).getBody().getSubject();
+        return objectMapper.readValue(subjectStr, Subject.class);
+    }
+
 }
