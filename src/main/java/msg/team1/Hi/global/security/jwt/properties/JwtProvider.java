@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.security.jwt;
+package msg.team1.Hi.global.security.jwt.properties;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.global.security.dto.response.TokenResponse;
+import msg.team1.Hi.global.security.jwt.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

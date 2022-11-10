@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.security.jwt;
+package msg.team1.Hi.global.security.auth;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
