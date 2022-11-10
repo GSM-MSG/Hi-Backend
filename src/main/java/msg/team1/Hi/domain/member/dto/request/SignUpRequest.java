@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.global.role.Role;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 
 @Getter @Builder
@@ -27,7 +29,8 @@ public class SignUpRequest {
     private String number;
 
     @NotEmpty(message = "역할을 지정해주십시요.")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private String role;
 
     public Member toEntity() {
         return Member.builder()
@@ -35,7 +38,7 @@ public class SignUpRequest {
                 .password(password)
                 .name(name)
                 .number(number)
-                .role(role)
+                .role(Role.from(role))
                 .build();
     }
 

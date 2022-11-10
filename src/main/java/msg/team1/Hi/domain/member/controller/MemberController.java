@@ -1,10 +1,15 @@
 package msg.team1.Hi.domain.member.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import msg.team1.Hi.domain.member.dto.response.MemberResponse;
+import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.response.LoginResponse;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
+import msg.team1.Hi.global.security.dto.response.TokenResponse;
+import msg.team1.Hi.global.security.jwt.JwtProvider;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +20,16 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String signUp(@RequestBody @Validated SignUpRequest signUpRequest) {
+    public MemberResponse signUp(@RequestBody @Validated SignUpRequest signUpRequest) {
         return memberService.signUp(signUpRequest);
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LoginResponse login(@RequestBody @Validated LoginRequest request) {
-        try {
-            return memberService.login(request);
-        } catch (Exception e) {
-            return new LoginResponse(e.getMessage());
-        }
+    public TokenResponse login(@RequestBody @Validated LoginRequest request) throws JsonProcessingException {
+        MemberResponse memberResponse = memberService.login(request);
+        return jwtProvider.createTokenByLogin(memberResponse);
     }
 }

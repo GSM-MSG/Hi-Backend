@@ -12,7 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-
+    // 하던대로 id 쓰던가
+    // uuid String
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "email", nullable = false, length = 20)
@@ -35,7 +36,7 @@ public class Member {
         this.email = request.getEmail();
         this.password = request.getPassword();
         this.number = request.getNumber();
-        this.role = request.getRole();
+        this.role = Role.from(request.getRole());
     }
 
     public void encryptPassword(PasswordEncoder passwordEncoder) {
