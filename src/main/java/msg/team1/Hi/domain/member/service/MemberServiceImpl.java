@@ -34,7 +34,11 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
 
-        return MemberResponse.of(member);
+        return MemberResponse.builder()
+                .name(member.getName())
+                .email(member.getEmail())
+                .number(member.getNumber())
+                .build();
     }
 
     @Transactional
@@ -55,6 +59,10 @@ public class MemberServiceImpl implements MemberService {
 
         signUpMember = memberRepository.save(signUpMember);
 
-        return MemberResponse.of(signUpMember);
+        return MemberResponse.builder()
+                .name(signUpMember.getName())
+                .email(signUpMember.getEmail())
+                .number(signUpMember.getNumber())
+                .build();
     }
 }

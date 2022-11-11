@@ -3,13 +3,12 @@ package msg.team1.Hi.domain.member.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.global.role.Role;
 
 import javax.validation.constraints.NotEmpty;
 
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpRequest {
