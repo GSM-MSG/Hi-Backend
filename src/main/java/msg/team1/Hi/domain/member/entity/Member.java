@@ -14,8 +14,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
-    // 하던대로 id 쓰던가
-    // uuid String
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

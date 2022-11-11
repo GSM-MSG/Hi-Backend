@@ -45,10 +45,13 @@ public class MemberServiceImpl implements MemberService {
         }
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
 
-        Member signUpMember = new Member(signUpRequest.getEmail(),
-                encodedPassword , signUpRequest.getName() ,
-                signUpRequest.getNumber(),
-                Role.from(signUpRequest.getRole()));
+        Member signUpMember = Member.builder()
+                .email(signUpRequest.getEmail())
+                .password(encodedPassword)
+                .name(signUpRequest.getName())
+                .number(signUpRequest.getNumber())
+                .role(Role.from(signUpRequest.getRole()))
+                .build();
 
         signUpMember = memberRepository.save(signUpMember);
 
