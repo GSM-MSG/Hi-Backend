@@ -7,18 +7,22 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
-import msg.team1.Hi.global.security.dto.response.TokenResponse;
+import msg.team1.Hi.global.common.RedisDao;
+import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import msg.team1.Hi.global.security.jwt.Subject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
+
+    private final RedisDao redisDao;
     private final ObjectMapper objectMapper;
 
     @Value("${spring.jwt.key}")
@@ -26,6 +30,9 @@ public class JwtProvider {
 
     @Value("${spring.jwt.live.atk}")
     private Long accessTokenLive;
+
+    @Value("${spring.jwt.live.rtk}")
+    private Long refreshTokenLive;
 
     @PostConstruct
     protected void init() {
@@ -37,8 +44,15 @@ public class JwtProvider {
                 memberResponse.getEmail(),
                 memberResponse.getName(),
                 memberResponse.getNumber());
+        Subject refreshTokenSubject = Subject.rtk(
+                memberResponse.getEmail(),
+                memberResponse.getName(),
+                memberResponse.getNumber()
+        );
         String accessToken = createToken(accessTokenSubject , accessTokenLive);
-        return new TokenResponse(accessToken, null);
+        String refreshToken = createToken(refreshTokenSubject , refreshTokenLive);
+        redisDao.setValues(memberResponse.getEmail(), refreshToken, Duration.ofMillis(refreshTokenLive));
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException{

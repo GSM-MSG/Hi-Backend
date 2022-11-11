@@ -6,7 +6,7 @@ import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
-import msg.team1.Hi.global.security.dto.response.TokenResponse;
+import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import msg.team1.Hi.global.security.jwt.properties.JwtProvider;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
