@@ -1,6 +1,7 @@
 package msg.team1.Hi.domain.member.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
@@ -10,6 +11,10 @@ import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.role.Role;
+import msg.team1.Hi.global.security.auth.MemberDetails;
+import msg.team1.Hi.global.security.jwt.properties.JwtProvider;
+import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public MemberResponse login(LoginRequest loginRequest) {
@@ -36,21 +42,21 @@ public class MemberServiceImpl implements MemberService {
 
         return MemberResponse.builder()
                 .name(member.getName())
-                .email(member.getEmail())
+                .memberEmail(member.getMemberEmail())
                 .number(member.getNumber())
                 .build();
     }
 
     @Transactional
     public MemberResponse signUp(SignUpRequest signUpRequest) {
-        boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
+        boolean isExist = memberRepository.existsByEmail(signUpRequest.getMemberEmail());
         if(isExist) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
 
         Member signUpMember = Member.builder()
-                .email(signUpRequest.getEmail())
+                .memberEmail(signUpRequest.getMemberEmail())
                 .password(encodedPassword)
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
@@ -61,8 +67,20 @@ public class MemberServiceImpl implements MemberService {
 
         return MemberResponse.builder()
                 .name(signUpMember.getName())
-                .email(signUpMember.getEmail())
+                .memberEmail(signUpMember.getMemberEmail())
                 .number(signUpMember.getNumber())
                 .build();
+    }
+
+    @Override
+    public TokenResponse reissue(@AuthenticationPrincipal MemberDetails memberDetails) throws JsonProcessingException {
+        Member member = memberDetails.getMember();
+        MemberResponse memberResponse = MemberResponse.builder()
+                .memberEmail(member.getMemberEmail())
+                .name(member.getName())
+                .number(member.getNumber())
+                .build();
+
+        return jwtProvider.reissueAtk(memberResponse);
     }
 }

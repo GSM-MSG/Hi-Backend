@@ -5,13 +5,11 @@ import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
-import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.service.MemberServiceImpl;
 import msg.team1.Hi.global.security.auth.MemberDetails;
 import msg.team1.Hi.global.security.jwt.properties.JwtProvider;
 import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,16 +33,7 @@ public class MemberController {
     }
 
     @GetMapping("/reissue")
-    public TokenResponse reissue(
-            @AuthenticationPrincipal MemberDetails memberDetails
-    ) throws JsonProcessingException {
-        Member member = memberDetails.getMember();
-        MemberResponse memberResponse = MemberResponse.builder()
-                .memberEmail(member.getMemberEmail())
-                .name(member.getName())
-                .number(member.getNumber())
-                .build();
-
-        return jwtProvider.reissueAtk(memberResponse);
+    public TokenResponse reissue(MemberDetails memberDetails) throws JsonProcessingException {
+        return memberService.reissue(memberDetails);
     }
 }
