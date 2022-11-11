@@ -20,8 +20,8 @@ public class Member {
     @Column(name = "member_idx" , nullable = false)
     private Integer memberId;
 
-    @Column(name = "email", nullable = false, length = 20)
-    private String email;
+    @Column(name = "memberEmail", nullable = false, length = 20)
+    private String memberEmail;
 
     @Column(name = "password", nullable = false , unique = true)
     private String password;

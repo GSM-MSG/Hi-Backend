@@ -17,14 +17,14 @@ public class Personal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "personal_idx", nullable = false)
-    private Integer personal_idx;
+    private Integer personalId;
 
     @OneToOne
     @JoinColumn(name = "email")
     private Member user;
 
     @OneToOne
-    @JoinColumn(name = "email2")
+    @JoinColumn(name = "representative_email")
     private Member representative;
 
     @ManyToOne
