@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import msg.team1.Hi.global.role.Role;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -35,11 +34,5 @@ public class Member {
     @Column(name = "role" , length = 10)
     @Enumerated(EnumType.STRING)
     private  Role role;
-
-
-
-    public void encryptPassword(PasswordEncoder passwordEncoder) {
-        password = passwordEncoder.encode(password);
-    }
 
 }
