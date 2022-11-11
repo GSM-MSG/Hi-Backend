@@ -11,4 +11,5 @@ public interface MemberService {
     MemberResponse login(LoginRequest loginRequest);
     MemberResponse signUp(SignUpRequest signUpRequest);
     TokenResponse reissue(MemberDetails memberDetails) throws JsonProcessingException;
+    TokenResponse createTokenByLogin(MemberResponse memberResponse) throws JsonProcessingException;
 }

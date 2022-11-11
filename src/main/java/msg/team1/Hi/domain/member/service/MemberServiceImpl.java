@@ -83,4 +83,9 @@ public class MemberServiceImpl implements MemberService {
 
         return jwtProvider.reissueAtk(memberResponse);
     }
+
+    @Override
+    public TokenResponse createTokenByLogin(MemberResponse memberResponse) throws JsonProcessingException {
+        return jwtProvider.createTokenByLogin(memberResponse);
+    }
 }
