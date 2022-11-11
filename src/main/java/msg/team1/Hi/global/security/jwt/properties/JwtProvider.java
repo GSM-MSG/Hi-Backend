@@ -8,8 +8,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.global.common.RedisDao;
-import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
+import msg.team1.Hi.global.exception.collection.ForbiddenException;
 import msg.team1.Hi.global.security.jwt.Subject;
+import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -73,4 +75,14 @@ public class JwtProvider {
         return objectMapper.readValue(subjectStr, Subject.class);
     }
 
+    public TokenResponse reissueAtk(MemberResponse memberResponse) throws JsonProcessingException {
+        String rtkInRedis = redisDao.getValues(memberResponse.getEmail());
+        if (Objects.isNull(rtkInRedis)) throw new ForbiddenException("인증 정보가 만료되었습니다.");
+        Subject accessTokenSubject = Subject.atk(
+                memberResponse.getEmail(),
+                memberResponse.getName(),
+                memberResponse.getNumber());
+        String accessToken = createToken(accessTokenSubject, accessTokenLive);
+        return new TokenResponse(accessToken, null);
+    }
 }
