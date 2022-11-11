@@ -17,5 +17,6 @@ public class MemberResponse {
         this.memberEmail = member.getMemberEmail();
         this.name = member.getName();
         this.number = member.getNumber();
+        return new MemberResponse(memberEmail , name , number);
     }
 }

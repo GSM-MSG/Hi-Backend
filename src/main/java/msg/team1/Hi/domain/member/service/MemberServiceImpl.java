@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberResponse login(LoginRequest loginRequest) {
         Member member = memberRepository
-                .findByEmail(loginRequest.getEmail())
+                .findByMemberEmail(loginRequest.getMemberEmail())
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
 
         // 비밀번호가 일치하는지 검증
@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     public MemberResponse signUp(SignUpRequest signUpRequest) {
-        boolean isExist = memberRepository.existsByEmail(signUpRequest.getMemberEmail());
+        boolean isExist = memberRepository.existsByMemberEmail(signUpRequest.getMemberEmail());
         if(isExist) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
