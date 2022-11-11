@@ -3,12 +3,13 @@ package msg.team1.Hi.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import msg.team1.Hi.domain.member.dto.response.MemberResponse;
-import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
+import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
+import msg.team1.Hi.global.exception.collection.BadRequestException;
+import msg.team1.Hi.global.role.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +44,14 @@ public class MemberService {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
-        Member member = memberRepository.save(signUpRequest.toEntity());
 
-        return MemberResponse.of(member);
+        Member signUpMember = new Member(signUpRequest.getEmail(),
+                encodedPassword , signUpRequest.getName() ,
+                signUpRequest.getNumber(),
+                Role.from(signUpRequest.getRole()));
+
+        signUpMember = memberRepository.save(signUpMember);
+
+        return MemberResponse.of(signUpMember);
     }
 }

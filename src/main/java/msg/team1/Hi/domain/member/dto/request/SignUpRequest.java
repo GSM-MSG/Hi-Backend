@@ -1,17 +1,15 @@
 package msg.team1.Hi.domain.member.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.global.role.Role;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 
-@Getter @Builder
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpRequest {
@@ -29,7 +27,6 @@ public class SignUpRequest {
     private String number;
 
     @NotEmpty(message = "역할을 지정해주십시요.")
-    @Enumerated(EnumType.STRING)
     private String role;
 
     public Member toEntity() {
