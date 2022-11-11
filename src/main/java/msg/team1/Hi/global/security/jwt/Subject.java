@@ -11,11 +11,11 @@ public class Subject {
     private final String number;
     private final String tokenType;
 
-    public static Subject atk(String email, String name, String number) {
+    public static Subject accessToken(String email, String name, String number) {
         return new Subject(email , name , number, "accessToken");
     }
 
-    public static Subject rtk(String email, String name, String number) {
+    public static Subject refreshToken(String email, String name, String number) {
         return new Subject(email, name, number, "refreshToken");
     }
 

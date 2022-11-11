@@ -42,11 +42,11 @@ public class JwtProvider {
     }
 
     public TokenResponse createTokenByLogin(MemberResponse memberResponse) throws JsonProcessingException {
-        Subject accessTokenSubject = Subject.atk(
+        Subject accessTokenSubject = Subject.accessToken(
                 memberResponse.getEmail(),
                 memberResponse.getName(),
                 memberResponse.getNumber());
-        Subject refreshTokenSubject = Subject.rtk(
+        Subject refreshTokenSubject = Subject.refreshToken(
                 memberResponse.getEmail(),
                 memberResponse.getName(),
                 memberResponse.getNumber()
@@ -78,7 +78,7 @@ public class JwtProvider {
     public TokenResponse reissueAtk(MemberResponse memberResponse) throws JsonProcessingException {
         String rtkInRedis = redisDao.getValues(memberResponse.getEmail());
         if (Objects.isNull(rtkInRedis)) throw new ForbiddenException("인증 정보가 만료되었습니다.");
-        Subject accessTokenSubject = Subject.atk(
+        Subject accessTokenSubject = Subject.accessToken(
                 memberResponse.getEmail(),
                 memberResponse.getName(),
                 memberResponse.getNumber());
