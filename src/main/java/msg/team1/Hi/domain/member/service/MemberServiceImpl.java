@@ -29,8 +29,8 @@ public class MemberServiceImpl implements MemberService {
                 .findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
 
-        boolean matches = passwordEncoder.matches(loginRequest.getPassword(), member.getPassword());
-        if(!matches) {
+        // 비밀번호가 일치하는지 검증
+        if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
             throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
 

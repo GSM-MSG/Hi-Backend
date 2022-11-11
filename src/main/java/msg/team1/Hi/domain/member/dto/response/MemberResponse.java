@@ -11,6 +11,5 @@ public class MemberResponse {
     private String email;
     private String name;
     private String number;
-
-
+    
 }
