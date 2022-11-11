@@ -22,7 +22,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_idx" , nullable = false)
-    private Integer member_idx;
+    private Integer memberId;
 
     @Column(name = "email", nullable = false, length = 20)
     private String email;
