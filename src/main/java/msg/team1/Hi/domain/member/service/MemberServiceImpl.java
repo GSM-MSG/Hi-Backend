@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceImpl {
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
