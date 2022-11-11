@@ -3,7 +3,7 @@ package msg.team1.Hi.global.security.handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import msg.team1.Hi.global.exception.Message;
+import msg.team1.Hi.global.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -28,8 +28,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        Message message = new Message(exceptionMessage, HttpStatus.UNAUTHORIZED);
-        String res = this.convertObjectToJson(message);
+        ErrorMessage errorMessage = new ErrorMessage(exceptionMessage, HttpStatus.UNAUTHORIZED);
+        String res = this.convertObjectToJson(errorMessage);
         response.getWriter().print(res);
     }
 
