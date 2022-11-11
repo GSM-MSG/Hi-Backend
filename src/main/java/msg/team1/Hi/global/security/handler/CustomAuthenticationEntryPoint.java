@@ -1,0 +1,40 @@
+package msg.team1.Hi.global.security.handler;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import msg.team1.Hi.global.exception.ErrorMessage;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Getter
+@Component
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    private final ObjectMapper objectMapper;
+
+    public CustomAuthenticationEntryPoint(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        String exceptionMessage = (String) request.getAttribute("exception");
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        ErrorMessage errorMessage = new ErrorMessage(exceptionMessage, HttpStatus.UNAUTHORIZED);
+        String res = this.convertObjectToJson(errorMessage);
+        response.getWriter().print(res);
+    }
+
+    private String convertObjectToJson(Object object) throws JsonProcessingException {
+        return object == null ? null : objectMapper.writeValueAsString(object);
+    }
+}
+

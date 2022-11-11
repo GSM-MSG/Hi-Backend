@@ -7,6 +7,6 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class HomebaseDto {
+public class HomeBaseDto {
     private Integer floor;
 }

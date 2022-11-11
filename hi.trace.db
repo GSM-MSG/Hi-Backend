@@ -1,0 +1,6 @@
+2022-11-11 07:57:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ROLE CHARACTER VARYING(5)": "'STUDENT' (7)"; SQL statement:
+insert into member (email, name, number, password, role, member_idx) values (?, ?, ?, ?, ?, ?) [22001-214]
+2022-11-11 08:08:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PASSWORD CHARACTER VARYING(20)": "'{bcrypt}$2a$10$xTi4n1JOe1z9qHIyN/Kryenn/0FJ2UYgskHr.26fmkPL6lHRM7LN6' (68)"; SQL statement:
+insert into member (email, name, number, password, role, member_idx) values (?, ?, ?, ?, ?, ?) [22001-214]

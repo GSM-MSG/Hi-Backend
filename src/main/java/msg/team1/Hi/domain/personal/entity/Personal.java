@@ -1,14 +1,13 @@
 package msg.team1.Hi.domain.personal.entity;
 
 import lombok.*;
-import msg.team1.Hi.domain.user.entity.User;
+import msg.team1.Hi.domain.reservation.entity.Reservation;
+import msg.team1.Hi.domain.member.entity.Member;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
-@Table(name = "personnal")
-@Getter @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -18,13 +17,17 @@ public class Personal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "personal_idx", nullable = false)
-    private Integer personal_idx;
+    private Integer personalId;
 
     @OneToOne
-    @JoinColumn(name = "user")
-    private User user;
+    @JoinColumn(name = "email")
+    private Member user;
 
-    public Personal(User user) {
-        this.user = user;
-    }
+    @OneToOne
+    @JoinColumn(name = "representative_email")
+    private Member representative;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_idx")
+    private Reservation reservation;
 }

@@ -1,17 +1,15 @@
 package msg.team1.Hi.domain.homebase.entity;
 
 import lombok.*;
-import msg.team1.Hi.domain.user.entity.User;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "entity")
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Homebase {
+public class HomeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
