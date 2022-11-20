@@ -15,7 +15,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reservation_idx", nullable = false)
-    private Integer reservation_idx;
+    private Integer reservationId;
 
     @OneToOne
     @JoinColumn(name = "email")

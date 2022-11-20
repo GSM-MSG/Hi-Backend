@@ -13,8 +13,8 @@ public class HomeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "homebase_idx", nullable = false)
-    private Integer homebase_idx;
+    @Column(name = "homeBase_id", nullable = false)
+    private Integer homeBaseId;
 
     @Column(name = "floor")
     private Integer floor;
