@@ -9,14 +9,14 @@ import msg.team1.Hi.domain.member.entity.Member;
 @Builder
 @AllArgsConstructor
 public class MemberResponse {
-    private String memberEmail;
+    private String email;
     private String name;
     private String number;
 
     public MemberResponse of(Member member) {
-        this.memberEmail = member.getMemberEmail();
+        this.email = member.getEmail();
         this.name = member.getName();
         this.number = member.getNumber();
-        return new MemberResponse(memberEmail , name , number);
+        return new MemberResponse(email , name , number);
     }
 }

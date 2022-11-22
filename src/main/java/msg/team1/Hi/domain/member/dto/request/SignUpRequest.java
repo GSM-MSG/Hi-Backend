@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 public class SignUpRequest {
 
     @NotEmpty(message = "이메일은 필수 입력 값입니다.")
-    private String memberEmail;
+    private String email;
 
     @NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
     private String password;
@@ -30,7 +30,7 @@ public class SignUpRequest {
 
     public Member toEntity() {
         return Member.builder()
-                .memberEmail(memberEmail)
+                .email(email)
                 .password(password)
                 .name(name)
                 .number(number)
