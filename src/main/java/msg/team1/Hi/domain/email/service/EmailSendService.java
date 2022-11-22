@@ -18,7 +18,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Random;
 
-@Slf4j
 @Service
 @EnableAsync
 @RequiredArgsConstructor
@@ -35,7 +34,6 @@ public class EmailSendService {
         String authKey = String.valueOf(random.nextInt(8888) + 1111);
 
         sendAuthEmail(emailSentDto.getEmail(),authKey);
-        log.info("execute run!");
     }
 
     private void sendAuthEmail(String email, String authKey) {
@@ -66,8 +64,6 @@ public class EmailSendService {
         } catch (MessagingException e) {
             throw new AuthCodeExpiredException("메일 발송에 실패했습니다");
         }
-
-        log.info("sendAuthEmail run!");
 
     }
 
