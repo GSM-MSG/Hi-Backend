@@ -7,6 +7,7 @@ import msg.team1.Hi.global.security.handler.JwtAuthenticationFilter;
 import msg.team1.Hi.global.security.jwt.properties.JwtProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -40,10 +41,12 @@ public class SecurityConfig  {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/member/signup", "/member/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, memberDetailsService),
                         UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

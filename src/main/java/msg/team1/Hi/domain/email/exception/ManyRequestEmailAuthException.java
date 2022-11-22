@@ -4,7 +4,6 @@ import lombok.Getter;
 import msg.team1.Hi.global.exception.ErrorCode;
 
 @Getter
-
 public class ManyRequestEmailAuthException extends RuntimeException{
 
     private final ErrorCode errorCode;
