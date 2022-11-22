@@ -17,9 +17,8 @@ public class EmailController {
 
     private final EmailSendService emailSendService;
 
-    // 이메일 전송
     @PostMapping("/send")
-    public ResponseEntity<Void> authEmail(@RequestBody @Validated EmailSentDto emailSentDto) {
+    public ResponseEntity<Void> sendEmail(@RequestBody @Validated EmailSentDto emailSentDto) {
         emailSendService.execute(emailSentDto);
         return ResponseEntity.ok().build();
     }
