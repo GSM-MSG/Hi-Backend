@@ -20,6 +20,6 @@ public class EmailController {
     @PostMapping("/send")
     public ResponseEntity<Void> sendEmail(@RequestBody @Validated EmailSentDto emailSentDto) {
         emailSendService.execute(emailSentDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
