@@ -30,7 +30,7 @@ public class SignUpRequest {
 
     public Member toEntity() {
         return Member.builder()
-                .memberEmail(email)
+                .email(email)
                 .password(password)
                 .name(name)
                 .number(number)

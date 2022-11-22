@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberResponse login(LoginRequest loginRequest) {
         Member member = memberRepository
-                .findByMemberEmail(loginRequest.getEmail())
+                .findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
 
         // 비밀번호가 일치하는지 검증
@@ -42,21 +42,21 @@ public class MemberServiceImpl implements MemberService {
 
         return MemberResponse.builder()
                 .name(member.getName())
-                .memberEmail(member.getMemberEmail())
+                .email(member.getEmail())
                 .number(member.getNumber())
                 .build();
     }
 
     @Transactional
     public MemberResponse signUp(SignUpRequest signUpRequest) {
-        boolean isExist = memberRepository.existsByMemberEmail(signUpRequest.getEmail());
+        boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
 
         Member signUpMember = Member.builder()
-                .memberEmail(signUpRequest.getEmail())
+                .email(signUpRequest.getEmail())
                 .password(encodedPassword)
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
@@ -67,7 +67,7 @@ public class MemberServiceImpl implements MemberService {
 
         return MemberResponse.builder()
                 .name(signUpMember.getName())
-                .memberEmail(signUpMember.getMemberEmail())
+                .email(signUpMember.getEmail())
                 .number(signUpMember.getNumber())
                 .build();
     }
@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
     public TokenResponse reissue(@AuthenticationPrincipal MemberDetails memberDetails) throws JsonProcessingException {
         Member member = memberDetails.getMember();
         MemberResponse memberResponse = MemberResponse.builder()
-                .memberEmail(member.getMemberEmail())
+                .email(member.getEmail())
                 .name(member.getName())
                 .number(member.getNumber())
                 .build();
