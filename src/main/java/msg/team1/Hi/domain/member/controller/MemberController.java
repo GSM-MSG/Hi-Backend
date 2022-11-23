@@ -8,7 +8,9 @@ import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.global.security.auth.MemberDetails;
 import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public MemberResponse signUp(@RequestBody @Validated SignUpRequest signUpRequest) {
-        return memberService.signUp(signUpRequest);
+    public ResponseEntity<Void> signUp(@RequestBody @Validated SignUpRequest signUpRequest) {
+        memberService.signUp(signUpRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
