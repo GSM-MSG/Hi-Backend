@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
-import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
+import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
@@ -23,9 +23,8 @@ import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,29 +53,28 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void signUp(SignUpRequest signUpRequest) {
         boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
-        Optional<EmailAuth> emailAuth = Optional.ofNullable(emailAuthRepository.findById(signUpRequest.getEmail())
-                .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다.")));
-        if(!emailAuth.get().getAuthentication()){
-            throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
+        EmailAuth emailAuth = emailAuthRepository.findById(signUpRequest.getEmail())
+                .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));
+
+        if(!emailAuth.getAuthentication()){
+            throw new NotVerifyEmailException("인증되지 않은 이메일입니다."); // 여기서 걸리네
         }
 
-        String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
-
-        Member signUpMember = Member.builder()
+        Member member = Member.builder()
                 .email(signUpRequest.getEmail())
-                .password(encodedPassword)
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
                 .role(Role.from(signUpRequest.getRole()))
                 .build();
 
-        memberRepository.save(signUpMember);
+        memberRepository.save(member);
     }
 
     @Override

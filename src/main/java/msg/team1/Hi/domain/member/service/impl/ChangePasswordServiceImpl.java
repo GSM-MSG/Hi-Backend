@@ -2,8 +2,8 @@ package msg.team1.Hi.domain.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
-import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
+import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.service.ChangePasswordService;

@@ -5,10 +5,11 @@ import msg.team1.Hi.domain.email.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.service.EmailCheckService;
 import msg.team1.Hi.domain.email.service.EmailSendService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 
 @RestController
@@ -19,8 +20,8 @@ public class EmailController {
     private final EmailSendService emailSendService;
     private final EmailCheckService emailCheckService;
 
-    @PostMapping("/send")
-    public ResponseEntity<Void> sendEmail(@RequestBody @Validated EmailSentDto emailSentDto) {
+    @PostMapping(value = "/send" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid EmailSentDto emailSentDto) {
         emailSendService.execute(emailSentDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

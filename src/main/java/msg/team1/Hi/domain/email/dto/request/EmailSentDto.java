@@ -12,5 +12,5 @@ public class EmailSentDto {
 
     @Email
     @NotBlank(message = "이메일은 필수입니다.")
-    private final String email;
+    private String email;
 }
