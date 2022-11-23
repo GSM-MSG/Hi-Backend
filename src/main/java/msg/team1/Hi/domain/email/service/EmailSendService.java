@@ -1,7 +1,6 @@
 package msg.team1.Hi.domain.email.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
@@ -49,9 +48,9 @@ public class EmailSendService {
         if (emailAuthEntity.getAttemptCount() >= 3) {
             throw new ManyRequestEmailAuthException("발송 횟수 초과");
         }
+
         emailAuthEntity.updateRandomValue(authKey);
         emailAuthEntity.increaseAttemptCount();
-
 
         emailAuthRepository.save(emailAuthEntity);
         try{
