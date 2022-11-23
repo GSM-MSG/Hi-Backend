@@ -11,6 +11,8 @@ import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
+import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.role.Role;
@@ -36,13 +38,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     public MemberResponse login(LoginRequest loginRequest) {
-        Member member = memberRepository
-                .findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
+        Member member = memberRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         // 비밀번호가 일치하는지 검증
         if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
-            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+            throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
         return MemberResponse.builder()
