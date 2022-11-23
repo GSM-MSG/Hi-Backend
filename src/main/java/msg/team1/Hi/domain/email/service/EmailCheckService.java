@@ -2,6 +2,7 @@ package msg.team1.Hi.domain.email.service;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
+import msg.team1.Hi.domain.email.exception.MisMatchAuthCodeException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import org.springframework.stereotype.Service;

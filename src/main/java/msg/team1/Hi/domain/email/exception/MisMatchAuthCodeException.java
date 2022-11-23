@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.email.service;
+package msg.team1.Hi.domain.email.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

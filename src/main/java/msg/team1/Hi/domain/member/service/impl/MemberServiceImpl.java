@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.member.service;
+package msg.team1.Hi.domain.member.service.impl;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
-import msg.team1.Hi.domain.email.service.NotVerifyEmailException;
+import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
@@ -14,6 +14,7 @@ import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
+import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.role.Role;
 import msg.team1.Hi.global.security.auth.MemberDetails;
