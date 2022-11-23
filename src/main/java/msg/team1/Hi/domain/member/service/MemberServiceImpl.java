@@ -4,10 +4,15 @@ package msg.team1.Hi.domain.member.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import msg.team1.Hi.domain.email.entity.EmailAuth;
+import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
+import msg.team1.Hi.domain.email.service.NotVerifyEmailException;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
+import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.role.Role;
@@ -19,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,16 +34,16 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final EmailAuthRepository emailAuthRepository;
 
     @Transactional
     public MemberResponse login(LoginRequest loginRequest) {
-        Member member = memberRepository
-                .findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호를 확인하세요."));
+        Member member = memberRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         // 비밀번호가 일치하는지 검증
         if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
-            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
+            throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
         }
 
         return MemberResponse.builder()
@@ -48,11 +54,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Transactional
-    public MemberResponse signUp(SignUpRequest signUpRequest) {
+    public void signUp(SignUpRequest signUpRequest) {
         boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
             throw new BadRequestException("이미 존재하는 이메일입니다.");
         }
+        Optional<EmailAuth> emailAuth = Optional.ofNullable(emailAuthRepository.findById(signUpRequest.getEmail())
+                .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다.")));
+        if(!emailAuth.get().getAuthentication()){
+            throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
+        }
+
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
 
         Member signUpMember = Member.builder()
@@ -63,13 +75,7 @@ public class MemberServiceImpl implements MemberService {
                 .role(Role.from(signUpRequest.getRole()))
                 .build();
 
-        signUpMember = memberRepository.save(signUpMember);
-
-        return MemberResponse.builder()
-                .name(signUpMember.getName())
-                .email(signUpMember.getEmail())
-                .number(signUpMember.getNumber())
-                .build();
+        memberRepository.save(signUpMember);
     }
 
     @Override
