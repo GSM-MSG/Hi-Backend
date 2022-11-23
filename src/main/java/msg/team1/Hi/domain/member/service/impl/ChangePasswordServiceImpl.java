@@ -6,7 +6,6 @@ import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.service.ChangePasswordService;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChangePasswordServiceImpl implements ChangePasswordService {
 
-    private final MemberRepository memberRepository;
     private final EmailAuthRepository emailAuthRepository;
     private final PasswordEncoder passwordEncoder;
     private final MemberUtil memberUtil;
