@@ -24,14 +24,11 @@ public class EmailCheckService {
         checkAuthKey(emailAuthEntity,authKey);
         emailAuthEntity.updateAuthentication(true);
         emailAuthRepository.save(emailAuthEntity);
-        log.info("run Check execute");
     }
 
     private void checkAuthKey(EmailAuth emailAuthEntity, String authKey) {
         if(!Objects.equals(emailAuthEntity.getRandomValue(), authKey)){
             throw new MisMatchAuthCodeException("인증번호가 일치하지 않습니다.");
         }
-        emailAuthEntity.updateAuthentication(true);
-        log.info("run checkAuthKey");
     }
 }
