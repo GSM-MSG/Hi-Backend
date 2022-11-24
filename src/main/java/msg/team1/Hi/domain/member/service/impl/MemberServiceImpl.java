@@ -11,11 +11,11 @@ import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.service.MemberService;
-import msg.team1.Hi.global.exception.collection.BadRequestException;
 import msg.team1.Hi.global.role.Role;
 import msg.team1.Hi.global.security.auth.MemberDetails;
 import msg.team1.Hi.global.security.jwt.properties.JwtProvider;
@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
     public void signUp(SignUpRequest signUpRequest) {
         boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
-            throw new BadRequestException("이미 존재하는 이메일입니다.");
+            throw new ExistEmailException("이미 존재하는 이메일입니다.");
         }
         EmailAuth emailAuth = emailAuthRepository.findById(signUpRequest.getEmail())
                 .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));

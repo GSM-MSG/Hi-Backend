@@ -7,7 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.response.MemberResponse;
-import msg.team1.Hi.global.common.RedisDao;
+import msg.team1.Hi.global.config.common.RedisDao;
 import msg.team1.Hi.global.exception.collection.ForbiddenException;
 import msg.team1.Hi.global.security.jwt.Subject;
 import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
@@ -51,14 +51,14 @@ public class JwtProvider {
                 memberResponse.getName(),
                 memberResponse.getNumber()
         );
-        String accessToken = createToken(accessTokenSubject , accessTokenLive);
-        String refreshToken = createToken(refreshTokenSubject , refreshTokenLive);
+        String accessToken = createToken(accessTokenSubject.getEmail() , accessTokenLive);
+        String refreshToken = createToken(refreshTokenSubject.getEmail() , refreshTokenLive);
         redisDao.setValues(memberResponse.getEmail(), refreshToken, Duration.ofMillis(refreshTokenLive));
         return new TokenResponse(accessToken, refreshToken);
     }
 
-    private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException{
-        String subjectStr = objectMapper.writeValueAsString(subject);
+    private String createToken(String email, Long tokenLive) throws JsonProcessingException{
+        String subjectStr = objectMapper.writeValueAsString(email);
         Claims claims = Jwts.claims().setSubject(subjectStr);
         Date date = new Date();
 
@@ -82,7 +82,7 @@ public class JwtProvider {
                 memberResponse.getEmail(),
                 memberResponse.getName(),
                 memberResponse.getNumber());
-        String accessToken = createToken(accessTokenSubject, accessTokenLive);
+        String accessToken = createToken(accessTokenSubject.getEmail(), accessTokenLive);
         return new TokenResponse(accessToken, null);
     }
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper;
 
-    public CustomAuthenticationEntryPoint(ObjectMapper objectMapper) {
+    public CustomAuthenticationEntryPoint(ObjectMapper objectMapper)     {
         this.objectMapper = objectMapper;
     }
 
@@ -28,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        ErrorMessage errorMessage = new ErrorMessage(exceptionMessage, HttpStatus.UNAUTHORIZED);
+        ErrorMessage errorMessage = new ErrorMessage(exceptionMessage, 401);
         String res = this.convertObjectToJson(errorMessage);
         response.getWriter().print(res);
     }
