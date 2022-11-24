@@ -37,7 +37,7 @@ public class EmailSendService {
 
     private void sendAuthEmail(String email, String authKey) {
         String subject = "Hi 인증번호";
-        String text = "회원 가입을 위한 인증번호는 " + authKey + "입니다. <br />";
+        String text = "회원 가입을 위한 인증번호는 <strong>" + authKey + "<strong /> 입니다. <br />";
         EmailAuth emailAuthEntity = emailAuthRepository.findById(email)
                 .orElse(EmailAuth.builder()
                         .authentication(false)

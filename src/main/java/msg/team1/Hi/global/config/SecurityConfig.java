@@ -42,6 +42,7 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .antMatchers("/member/signup", "/member/login").permitAll()
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
+                .antMatchers(HttpMethod.HEAD, "/email").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, memberDetailsService),

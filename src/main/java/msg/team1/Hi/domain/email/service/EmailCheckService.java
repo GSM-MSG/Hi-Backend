@@ -19,7 +19,8 @@ public class EmailCheckService {
 
     @Transactional(rollbackFor = Exception.class)
     public void execute(String email , String authKey) {
-        EmailAuth emailAuthEntity = emailAuthRepository.findById(email).orElseThrow(()-> new MemberNotFoundException("유저를 찾을 수 없습니다."));
+        EmailAuth emailAuthEntity = emailAuthRepository.findById(email)
+                .orElseThrow(()-> new MemberNotFoundException("유저를 찾을 수 없습니다."));
         checkAuthKey(emailAuthEntity,authKey);
         emailAuthEntity.updateAuthentication(true);
         emailAuthRepository.save(emailAuthEntity);

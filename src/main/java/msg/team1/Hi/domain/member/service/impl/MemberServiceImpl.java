@@ -63,7 +63,7 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));
 
         if(!emailAuth.getAuthentication()){
-            throw new NotVerifyEmailException("인증되지 않은 이메일입니다."); // 여기서 걸리네
+            throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
         }
 
         Member member = Member.builder()
