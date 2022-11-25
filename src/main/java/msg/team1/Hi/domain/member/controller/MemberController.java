@@ -1,15 +1,12 @@
 package msg.team1.Hi.domain.member.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
-import msg.team1.Hi.domain.member.dto.response.MemberResponse;
+import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
 import msg.team1.Hi.domain.member.service.ChangePasswordService;
 import msg.team1.Hi.domain.member.service.MemberService;
-import msg.team1.Hi.global.security.auth.MemberDetails;
-import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +27,10 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TokenResponse login(@RequestBody @Validated LoginRequest request) throws JsonProcessingException {
-        MemberResponse memberResponse = memberService.login(request);
-        return memberService.createTokenByLogin(memberResponse);
+    @PostMapping
+    public ResponseEntity<MemberLoginResponse> signIn(@RequestBody LoginRequest request) {
+        MemberLoginResponse data = memberService.login(request);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
     @PatchMapping("/password")
@@ -42,8 +39,5 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/reissue")
-    public TokenResponse reissue(MemberDetails memberDetails) throws JsonProcessingException {
-        return memberService.reissue(memberDetails);
-    }
+
 }
