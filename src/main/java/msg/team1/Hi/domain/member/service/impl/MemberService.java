@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
+import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
@@ -16,10 +17,10 @@ import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.repository.RefreshTokenRepository;
-import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.global.role.Role;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
+import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceImpl implements MemberService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -36,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
     private final JwtProperties jwtProperties;
+    private final MemberUtil memberUtil;
 
     @Transactional
     public MemberLoginResponse login(LoginRequest loginRequest) {
@@ -80,6 +82,20 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+    
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        Member member = memberUtil.currentMember();
+        validateAuth(member.getEmail());
+        member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+    }
+
+    public void validateAuth(String email) {
+        EmailAuth emailAuth = emailAuthRepository.findById(email)
+                .orElseThrow(() -> new NotVerifyEmailException("검증되지 않은 이메일입니다."));
+        if(!emailAuth.getAuthentication()){
+            throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
+        }
     }
 
 }
