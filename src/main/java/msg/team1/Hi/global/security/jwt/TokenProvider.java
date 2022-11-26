@@ -5,7 +5,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.global.exception.collection.TokenExpirationException;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.auth.MemberDetailsService;
@@ -22,7 +21,6 @@ import java.util.Date;
 @Component
 @Getter
 @RequiredArgsConstructor
-@Slf4j
 public class TokenProvider {
 
     private final MemberDetailsService memberDetailsService;

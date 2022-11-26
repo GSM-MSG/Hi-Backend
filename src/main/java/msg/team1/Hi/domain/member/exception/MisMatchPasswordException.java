@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.exception.ErrorCode;
 
 @Getter
-@RequiredArgsConstructor
 public class MisMatchPasswordException extends RuntimeException{
 
     private final ErrorCode errorCode;
