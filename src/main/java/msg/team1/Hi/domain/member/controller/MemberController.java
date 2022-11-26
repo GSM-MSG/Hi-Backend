@@ -27,8 +27,8 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping
-    public ResponseEntity<MemberLoginResponse> signIn(@RequestBody LoginRequest request) {
+    @PostMapping("/login")
+    public ResponseEntity<MemberLoginResponse> login(@RequestBody LoginRequest request) {
         MemberLoginResponse data = memberService.login(request);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
