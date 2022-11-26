@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class MemberUtil {
 
@@ -17,7 +16,6 @@ public class MemberUtil {
 
     public Member currentMember() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info("email={}",email);
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다"));
     }

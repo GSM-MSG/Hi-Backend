@@ -45,13 +45,11 @@ public class TokenProvider {
         String value;
     }
 
-    // 암호화된 키 값 가져오기
     private Key getSignInKey(String secretKey) {
         byte[] bytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(bytes);
     }
 
-    // Token 생성
     private String generateToken(String userEmail, TokenType tokenType, String secret, long expireTime) {
         final Claims claims = Jwts.claims();
         claims.put(TokenClaimName.USER_EMAIL.value, userEmail);
@@ -84,22 +82,18 @@ public class TokenProvider {
         return ZonedDateTime.now().plusSeconds(ACCESS_TOKEN_EXPIRE_TIME);
     }
 
-    // 토큰 값으로 유저 이메일 조회
     public String getUserEmail(String token, String secret) {
         return extractAllClaims(token, secret).get(TokenClaimName.USER_EMAIL.value, String.class);
     }
 
-    // 토큰 타입 확인
     public String getTokenType(String token, String secret) {
         return extractAllClaims(token, secret).get(TokenClaimName.TOKEN_TYPE.value, String.class);
     }
 
-    // AccessToken 토큰 생성
     public String generatedAccessToken(String email) {
         return generateToken(email, TokenType.ACCESS_TOKEN, jwtProperties.getAccessSecret(), ACCESS_TOKEN_EXPIRE_TIME);
     }
 
-    // RefreshToken 토큰 생성
     public String generatedRefreshToken(String email) {
         return generateToken(email, TokenType.REFRESH_TOKEN, jwtProperties.getRefreshSecret(), REFRESH_TOKEN_EXPIRE_TIME);
     }

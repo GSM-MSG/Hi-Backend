@@ -27,7 +27,6 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
         }
     }
 
-    @Override
     public Boolean validateAuth(String email) {
         EmailAuth emailAuth = emailAuthRepository.findById(email)
                 .orElseThrow(() -> new NotVerifyEmailException("검증되지 않은 이메일입니다."));

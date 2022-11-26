@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
-
 @Getter
 public class MemberDetails extends User{
     private final Member member;
