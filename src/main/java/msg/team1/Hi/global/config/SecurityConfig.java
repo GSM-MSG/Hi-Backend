@@ -41,7 +41,8 @@ public class SecurityConfig  {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/member/reissue").permitAll()
-                .antMatchers(HttpMethod.POST, "/member/signup", "/member/login", "/email/send").permitAll()
+                .antMatchers("/member/signup", "/member/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/member/password").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
                 .antMatchers(HttpMethod.PATCH,"/member").authenticated()
@@ -57,5 +58,4 @@ public class SecurityConfig  {
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }

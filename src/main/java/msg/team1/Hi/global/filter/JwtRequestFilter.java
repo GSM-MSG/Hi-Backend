@@ -1,6 +1,7 @@
 package msg.team1.Hi.global.filter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
@@ -15,9 +16,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
@@ -28,14 +31,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = request.getHeader("Authorization");
-        if(accessToken != null) {
+
+        if(!Objects.isNull(accessToken)) {
             tokenProvider.extractAllClaims(accessToken, jwtProperties.getAccessSecret());
             System.out.printf(tokenProvider.getTokenType(accessToken, jwtProperties.getAccessSecret()));
             if (!tokenProvider.getTokenType(accessToken, jwtProperties.getAccessSecret()).equals("ACCESS_TOKEN"))
                 throw new TokenNotValidException("Token is not valid");
+
+            String email = tokenProvider.getUserEmail(accessToken, jwtProperties.getAccessSecret());
+            registerSecurityContext(request, email);
         }
-        String email = tokenProvider.getUserEmail(accessToken, jwtProperties.getAccessSecret());
-        registerSecurityContext(request, email);
+        filterChain.doFilter(request, response);
     }
 
     private void registerSecurityContext(HttpServletRequest request, String email) {

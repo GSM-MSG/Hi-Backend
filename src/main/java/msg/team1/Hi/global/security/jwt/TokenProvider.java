@@ -5,6 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.global.exception.collection.TokenExpirationException;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.auth.MemberDetailsService;
@@ -21,6 +22,7 @@ import java.util.Date;
 @Component
 @Getter
 @RequiredArgsConstructor
+@Slf4j
 public class TokenProvider {
 
     private final MemberDetailsService memberDetailsService;
@@ -58,7 +60,7 @@ public class TokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
-                .signWith(SignatureAlgorithm.HS256, getSignInKey(secret))
+                .signWith(getSignInKey(secret), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -76,7 +78,6 @@ public class TokenProvider {
         } catch (JwtException e) {
             throw new TokenNotValidException("토큰이 올바르지 않습니다.");
         }
-
     }
 
     public ZonedDateTime getExpiredAtToken(String token, String secret) {

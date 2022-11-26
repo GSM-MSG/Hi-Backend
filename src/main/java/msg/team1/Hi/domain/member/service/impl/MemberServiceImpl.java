@@ -41,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberLoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
         if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
             throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
         }
@@ -55,7 +56,6 @@ public class MemberServiceImpl implements MemberService {
                 .refreshToken(refreshToken)
                 .expiredAt(tokenProvider.getExpiredAtToken(accessToken, jwtProperties.getAccessSecret()))
                 .build();
-
     }
 
     @Transactional(rollbackFor = Exception.class)
