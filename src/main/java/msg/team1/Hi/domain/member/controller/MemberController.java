@@ -1,13 +1,11 @@
 package msg.team1.Hi.domain.member.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
-import msg.team1.Hi.domain.member.dto.response.MemberResponse;
-import msg.team1.Hi.domain.member.service.MemberService;
-import msg.team1.Hi.global.security.auth.MemberDetails;
-import msg.team1.Hi.global.security.jwt.properties.dto.response.TokenResponse;
+import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
+import msg.team1.Hi.domain.member.service.impl.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +25,15 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public TokenResponse login(@RequestBody @Validated LoginRequest request) throws JsonProcessingException {
-        MemberResponse memberResponse = memberService.login(request);
-        return memberService.createTokenByLogin(memberResponse);
+    @PostMapping("/login")
+    public ResponseEntity<MemberLoginResponse> login(@RequestBody LoginRequest request) {
+        MemberLoginResponse data = memberService.login(request);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @GetMapping("/reissue")
-    public TokenResponse reissue(MemberDetails memberDetails) throws JsonProcessingException {
-        return memberService.reissue(memberDetails);
+    @PatchMapping("/password")
+    public ResponseEntity<Void> changePassword(@RequestBody @Validated ChangePasswordRequest changePasswordRequest) {
+        memberService.changePassword(changePasswordRequest);
+        return ResponseEntity.noContent().build();
     }
 }

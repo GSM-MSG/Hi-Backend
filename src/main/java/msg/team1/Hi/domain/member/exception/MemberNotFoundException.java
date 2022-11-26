@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.exception.ErrorCode;
 
-@RequiredArgsConstructor
 @Getter
 public class MemberNotFoundException extends RuntimeException{
 

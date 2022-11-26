@@ -1,10 +1,9 @@
-package msg.team1.Hi.domain.email.service;
+package msg.team1.Hi.domain.email.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.exception.ErrorCode;
 
-@RequiredArgsConstructor
 @Getter
 public class MisMatchAuthCodeException extends RuntimeException{
 

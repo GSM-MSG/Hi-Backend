@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.exception.ErrorCode;
 
 @Getter
-public class MisMatchPasswordException extends RuntimeException{
+public class ExistEmailException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public MisMatchPasswordException(String message) {
+    public ExistEmailException(String message) {
         super(message);
-        this.errorCode = ErrorCode.MISMATCH_MEMBER_PASSWORD;
+        this.errorCode = ErrorCode.ALREADY_EXIST_EMAIL;
     }
 }

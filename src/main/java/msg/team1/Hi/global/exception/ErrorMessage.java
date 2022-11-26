@@ -1,12 +1,11 @@
 package msg.team1.Hi.global.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ErrorMessage {
-    private String message;
-    private HttpStatus status;
+    private final String message;
+    private final int status;
 }

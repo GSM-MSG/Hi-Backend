@@ -22,8 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// jwt
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
 
 	// validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -38,8 +37,15 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
 	// h2 DB
 	runtimeOnly 'com.h2database:h2'
+
+
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 
 }
