@@ -20,7 +20,6 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
