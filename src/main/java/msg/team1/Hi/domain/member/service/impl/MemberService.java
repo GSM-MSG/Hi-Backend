@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -88,6 +87,7 @@ public class MemberService {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+        memberRepository.save(member);
     }
 
     public void validateAuth(String email) {
@@ -97,5 +97,4 @@ public class MemberService {
             throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
         }
     }
-
 }

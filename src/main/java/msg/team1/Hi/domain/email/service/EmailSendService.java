@@ -27,7 +27,7 @@ public class EmailSendService {
 
     @Async
     @Transactional(rollbackFor = Exception.class)
-    public void execute(EmailSentDto emailSentDto){
+    public void sendEmail(EmailSentDto emailSentDto){
 
         Random random = new Random();
         String authKey = String.valueOf(random.nextInt(8888) + 1111);
@@ -37,7 +37,7 @@ public class EmailSendService {
 
     private void sendAuthEmail(String email, String authKey) {
         String subject = "Hi 인증번호";
-        String text = "회원 가입을 위한 인증번호는 <strong>" + authKey + "<strong /> 입니다. <br />";
+        String text = "인증을 위한 인증번호는 <strong>" + authKey + "<strong /> 입니다. <br />";
         EmailAuth emailAuthEntity = emailAuthRepository.findById(email)
                 .orElse(EmailAuth.builder()
                         .authentication(false)
@@ -63,7 +63,6 @@ public class EmailSendService {
         } catch (MessagingException e) {
             throw new AuthCodeExpiredException("메일 발송에 실패했습니다");
         }
-
     }
 
 }

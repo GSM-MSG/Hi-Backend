@@ -22,13 +22,14 @@ public class EmailController {
 
     @PostMapping(value = "/send" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendEmail(@RequestBody @Valid EmailSentDto emailSentDto) {
-        emailSendService.execute(emailSentDto);
+        emailSendService.sendEmail(emailSentDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @RequestMapping(method = RequestMethod.HEAD)
     public ResponseEntity<Void> mailCheck(@Email @RequestParam String email, @RequestParam String authKey) {
-        emailCheckService.execute(email, authKey);
+        emailCheckService.checkEmail(email, authKey);
         return ResponseEntity.ok().build();
     }
+
 }

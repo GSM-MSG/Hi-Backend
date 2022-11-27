@@ -31,7 +31,7 @@ public class MemberController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PatchMapping("/password")
+    @PatchMapping
     public ResponseEntity<Void> changePassword(@RequestBody @Validated ChangePasswordRequest changePasswordRequest) {
         memberService.changePassword(changePasswordRequest);
         return ResponseEntity.noContent().build();
