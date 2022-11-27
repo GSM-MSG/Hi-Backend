@@ -42,11 +42,9 @@ public class SecurityConfig  {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/member/reissue").permitAll()
-                .antMatchers("/member/signup", "/member/login").permitAll()
+                .antMatchers("/member/signup", "/member/login" , "/member" ).permitAll()
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/member/password").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
-                .antMatchers(HttpMethod.PATCH,"/member").authenticated()
                 .anyRequest().authenticated();
         http
                 .sessionManagement()
@@ -57,6 +55,7 @@ public class SecurityConfig  {
                 .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler());
         http
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 }

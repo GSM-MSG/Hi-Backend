@@ -88,6 +88,7 @@ public class MemberService {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+        log.info("changePassword Run!");
     }
 
     public void validateAuth(String email) {
@@ -96,6 +97,8 @@ public class MemberService {
         if(!emailAuth.getAuthentication()){
             throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
         }
+
+        log.info("validateAuth Run!!");
     }
 
 }

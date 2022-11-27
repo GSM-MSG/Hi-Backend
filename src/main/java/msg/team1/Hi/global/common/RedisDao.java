@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.config.common;
+package msg.team1.Hi.global.common;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;

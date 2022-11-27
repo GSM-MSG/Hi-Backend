@@ -38,7 +38,7 @@ public class TokenProvider {
 
     @AllArgsConstructor
     private enum TokenClaimName {
-        USER_EMAIL("userEmail"),
+        USER_EMAIL("email"),
         TOKEN_TYPE("tokenType");
         String value;
     }
@@ -95,8 +95,8 @@ public class TokenProvider {
     public String generatedRefreshToken(String email) {
         return generateToken(email, TokenType.REFRESH_TOKEN, jwtProperties.getRefreshSecret(), REFRESH_TOKEN_EXPIRE_TIME);
     }
-    public UsernamePasswordAuthenticationToken authentication(String userEmail) {
-        UserDetails userDetails = memberDetailsService.loadUserByUsername(userEmail);
+    public UsernamePasswordAuthenticationToken authentication(String email) {
+        UserDetails userDetails = memberDetailsService.loadUserByUsername(email);
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
