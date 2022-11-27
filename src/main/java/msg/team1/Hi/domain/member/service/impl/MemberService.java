@@ -88,6 +88,7 @@ public class MemberService {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+        memberRepository.save(member);
         log.info("changePassword Run!");
     }
 
