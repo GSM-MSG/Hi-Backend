@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.config;
+package msg.team1.Hi.global.security;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.global.filter.JwtRequestFilter;
@@ -45,6 +45,9 @@ public class SecurityConfig  {
                 .antMatchers("/member/signup", "/member/login" , "/member" ).permitAll()
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
+                .antMatchers("/admin/notice/**").hasRole("ADMIN")
+                .antMatchers("/teacher/notice/**").hasRole("TEACHER")
+                .antMatchers("/student/notice/**").hasRole("STUDENT")
                 .anyRequest().authenticated();
         http
                 .sessionManagement()
