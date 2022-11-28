@@ -30,4 +30,9 @@ public class Notice {
 
     @Column(name = "notice_content", length = 5000, nullable = false)
     private String content;
+
+    public void updateNotice(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

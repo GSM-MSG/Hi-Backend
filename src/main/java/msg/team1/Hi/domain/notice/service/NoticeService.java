@@ -13,6 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +57,16 @@ public class NoticeService {
         return map;
     }
 
+    @Transactional
+    public void updateNotice(Long noticeId , RequestNotice requestNotice) {
+        Optional<Notice> notice = noticeRepository.findById(noticeId);
+        notice.get().updateNotice(requestNotice.getTitle(), requestNotice.getContent());
+    }
 
+    @Transactional
+    public void deleteNotice(Long boardId) {
+        Notice notice = noticeRepository.findById(boardId)
+                .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
+        noticeRepository.delete(notice);
+    }
 }
