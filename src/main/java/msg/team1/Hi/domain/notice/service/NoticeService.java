@@ -3,6 +3,7 @@ package msg.team1.Hi.domain.notice.service;
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.notice.dto.request.RequestNotice;
+import msg.team1.Hi.domain.notice.dto.response.ResponseGetIdNotice;
 import msg.team1.Hi.domain.notice.dto.response.ResponseGetNotice;
 import msg.team1.Hi.domain.notice.entity.Notice;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
@@ -38,7 +39,19 @@ public class NoticeService {
                     map.setRole(notice.getMember().getRole());
 
                     return map;
-                });
+                    }
+                );
+    }
+
+    public ResponseGetIdNotice getNoticeById(Long noticeId) {
+        Notice notice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
+
+        ModelMapper mapper = new ModelMapper();
+        ResponseGetIdNotice map = mapper.map(notice, ResponseGetIdNotice.class);
+        map.setRole(notice.getMember().getRole());
+
+        return map;
     }
 
 
