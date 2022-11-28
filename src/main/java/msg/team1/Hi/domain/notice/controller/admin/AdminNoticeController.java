@@ -39,4 +39,16 @@ public class AdminNoticeController {
         return ResponseEntity.ok().body(notice);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateNoticeAdmin(@PathVariable Long id , @Valid @RequestBody RequestNotice requestNotice) {
+        noticeService.updateNotice(id , requestNotice);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNoticeAdmin(@PathVariable Long id) {
+        noticeService.deleteNotice(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
