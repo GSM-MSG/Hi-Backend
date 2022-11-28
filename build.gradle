@@ -1,3 +1,9 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
@@ -51,7 +57,9 @@ dependencies {
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 
-	implementation 'com.querydsl:querydsl-jpa'
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
 
 
 }
@@ -66,15 +74,12 @@ querydsl {
 	jpa = true
 	querydslSourcesDir = querydslDir
 }
-
 sourceSets {
 	main.java.srcDir querydslDir
 }
-
 configurations {
 	querydsl.extendsFrom compileClasspath
 }
-
 compileQuerydsl {
 	options.annotationProcessorPath = configurations.querydsl
 }

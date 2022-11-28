@@ -1,8 +1,7 @@
-package msg.team1.Hi.domain.member.service.impl;
+package msg.team1.Hi.domain.member.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;

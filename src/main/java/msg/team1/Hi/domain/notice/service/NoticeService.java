@@ -26,7 +26,7 @@ public class NoticeService {
     }
 
     public Page<ResponseGetNotice> getAllNotice(Pageable pageable) {
-        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+        Page<Notice> noticePage = noticeRepository.getAllNoticeCreateDateDesc(pageable);
 
         if(noticePage.isEmpty()) {
             throw new NoticeNotFoundException("공지사항이 존재하지 않습니다.");
