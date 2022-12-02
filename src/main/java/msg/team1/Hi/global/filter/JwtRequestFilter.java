@@ -1,7 +1,6 @@
 package msg.team1.Hi.global.filter;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
@@ -32,7 +31,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if(!Objects.isNull(accessToken)) {
             tokenProvider.extractAllClaims(accessToken, jwtProperties.getAccessSecret());
-            System.out.printf(tokenProvider.getTokenType(accessToken, jwtProperties.getAccessSecret()));
 
             if (!tokenProvider.getTokenType(accessToken, jwtProperties.getAccessSecret()).equals("ACCESS_TOKEN"))
                 throw new TokenNotValidException("Token is not valid");
