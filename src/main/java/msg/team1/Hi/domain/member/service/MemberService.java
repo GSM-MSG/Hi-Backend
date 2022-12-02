@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.member.service.impl;
+package msg.team1.Hi.domain.member.service;
 
 
 import lombok.RequiredArgsConstructor;
