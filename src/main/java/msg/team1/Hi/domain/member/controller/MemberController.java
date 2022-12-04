@@ -5,6 +5,7 @@ import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
+import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,9 +32,17 @@ public class MemberController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
-    @PatchMapping
+    @PatchMapping("/change-pw")
     public ResponseEntity<Void> changePassword(@RequestBody @Validated ChangePasswordRequest changePasswordRequest) {
         memberService.changePassword(changePasswordRequest);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping
+    public ResponseEntity<NewTokenResponse> reIssueToken(@RequestHeader("RefreshToken") String token) {
+        NewTokenResponse reIssueToken = memberService.tokenReissue(token);
+        return new ResponseEntity<>(reIssueToken, HttpStatus.OK);
+    }
+
+
 }

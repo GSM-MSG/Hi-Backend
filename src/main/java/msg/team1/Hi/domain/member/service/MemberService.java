@@ -1,8 +1,7 @@
-package msg.team1.Hi.domain.member.service.impl;
+package msg.team1.Hi.domain.member.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
@@ -10,13 +9,16 @@ import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.dto.request.LoginRequest;
 import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
+import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.RefreshToken;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
+import msg.team1.Hi.domain.member.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.repository.RefreshTokenRepository;
+import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.role.Role;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
@@ -25,15 +27,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
     private final EmailAuthRepository emailAuthRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final JwtProperties jwtProperties;
     private final MemberUtil memberUtil;
@@ -97,4 +101,28 @@ public class MemberService {
             throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
         }
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public NewTokenResponse tokenReissue(String requestToken) {
+        String email = tokenProvider.getUserEmail(requestToken, jwtProperties.getRefreshSecret());
+        RefreshToken token = refreshTokenRepository.findById(email)
+                .orElseThrow(() -> new RefreshTokenNotFoundException("리프레시 토큰이 존재하지 없습니다."));
+
+        if(!token.getToken().equals(requestToken)) {
+            throw new TokenNotValidException("검증되지 않은 토큰입니다.");
+        }
+
+        String accessToken = tokenProvider.generatedAccessToken(email);
+        String refreshToken = tokenProvider.generatedRefreshToken(email);
+        ZonedDateTime expiredAt = tokenProvider.getExpiredAtToken(accessToken, jwtProperties.getAccessSecret());
+        token.exchangeRefreshToken(refreshToken);
+        refreshTokenRepository.save(token);
+
+        return NewTokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .expiredAt(expiredAt)
+                .build();
+    }
+
 }
