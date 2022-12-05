@@ -86,12 +86,12 @@ public class MemberService {
 
         memberRepository.save(member);
     }
-    
+
+    @Transactional
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-        memberRepository.save(member);
     }
 
     public void validateAuth(String email) {
