@@ -7,10 +7,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @Builder
+@Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseGetIdNotice {
+public class GetIdNoticeResponse {
 
     private Long id;
     private String title;
@@ -22,4 +22,8 @@ public class ResponseGetIdNotice {
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

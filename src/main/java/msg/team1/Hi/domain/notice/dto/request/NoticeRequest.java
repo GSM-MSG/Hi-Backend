@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestNotice {
+public class NoticeRequest {
 
     @NotBlank
     @Size(min = 1, max = 45)

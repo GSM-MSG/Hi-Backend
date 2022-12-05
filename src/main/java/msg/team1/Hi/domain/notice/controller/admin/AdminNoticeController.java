@@ -1,9 +1,9 @@
 package msg.team1.Hi.domain.notice.controller.admin;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.notice.dto.request.RequestNotice;
-import msg.team1.Hi.domain.notice.dto.response.ResponseGetIdNotice;
-import msg.team1.Hi.domain.notice.dto.response.ResponseGetNotice;
+import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
+import msg.team1.Hi.domain.notice.dto.response.GetIdNoticeResponse;
+import msg.team1.Hi.domain.notice.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.service.NoticeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,26 +22,26 @@ public class AdminNoticeController {
     private final NoticeService noticeService;
 
     @PostMapping
-    public ResponseEntity<Void> createNoticeAdmin(@Valid @RequestBody RequestNotice requestNotice) {
-        noticeService.createNotice(requestNotice);
+    public ResponseEntity<Void> createNoticeAdmin(@Valid @RequestBody NoticeRequest noticeRequest) {
+        noticeService.createNotice(noticeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
-    public ResponseEntity<Page<ResponseGetNotice>> getAllNoticeAdmin(@PageableDefault(size = 6) Pageable pageable) {
-        Page<ResponseGetNotice> result = noticeService.getAllNotice(pageable);
+    public ResponseEntity<Page<GetNoticeResponse>> getAllNoticeAdmin(@PageableDefault(size = 6) Pageable pageable) {
+        Page<GetNoticeResponse> result = noticeService.getAllNotice(pageable);
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseGetIdNotice> getNoticeById(@PathVariable Long id) {
-        ResponseGetIdNotice notice = noticeService.getNoticeById(id);
+    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Long id) {
+        GetIdNoticeResponse notice = noticeService.getNoticeById(id);
         return ResponseEntity.ok().body(notice);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateNoticeAdmin(@PathVariable Long id , @Valid @RequestBody RequestNotice requestNotice) {
-        noticeService.updateNotice(id , requestNotice);
+    public ResponseEntity<Void> updateNoticeAdmin(@PathVariable Long id , @Valid @RequestBody NoticeRequest noticeRequest) {
+        noticeService.updateNotice(id , noticeRequest);
         return ResponseEntity.ok().build();
     }
 
