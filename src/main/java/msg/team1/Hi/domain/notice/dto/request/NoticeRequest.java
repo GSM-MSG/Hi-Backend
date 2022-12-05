@@ -1,6 +1,5 @@
 package msg.team1.Hi.domain.notice.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import msg.team1.Hi.domain.member.entity.Member;
@@ -21,12 +20,10 @@ public class NoticeRequest {
     private final String content;
 
     public Notice toEntity(Member member) {
-        Notice board = Notice.builder()
+        return Notice.builder()
                 .title(title)
                 .content(content)
                 .member(member)
                 .build();
-
-        return board;
     }
 }
