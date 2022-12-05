@@ -5,16 +5,15 @@ import msg.team1.Hi.global.role.Role;
 
 import java.time.LocalDateTime;
 
-@Getter @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class GetNoticeResponse {
 
-    private Long noticeId;
-    private String title;
+    private final Long noticeId;
+    private final String title;
     private Role role;
 
-    private LocalDateTime createdDateTime;
+    private final LocalDateTime createdDateTime;
 
     public void setRole(Role role) {
         this.role = role;
