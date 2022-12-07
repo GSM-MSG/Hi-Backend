@@ -8,6 +8,7 @@ import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
+import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.global.exception.ErrorMessage;
 import msg.team1.Hi.global.exception.collection.TokenExpirationException;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
@@ -83,6 +84,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TokenNotValidException.class)
     public ResponseEntity<ErrorMessage> handleTokenNotValidException(HttpServletRequest request , TokenNotValidException e) {
+        printError(request, e, e.getErrorCode().getMessage());
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(NoticeNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleNoticeNotFoundException(HttpServletRequest request , NoticeNotFoundException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
