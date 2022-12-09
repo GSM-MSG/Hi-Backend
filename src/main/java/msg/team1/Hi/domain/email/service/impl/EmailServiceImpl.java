@@ -1,11 +1,14 @@
-package msg.team1.Hi.domain.email.service;
+package msg.team1.Hi.domain.email.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.email.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
 import msg.team1.Hi.domain.email.exception.ManyRequestEmailAuthException;
+import msg.team1.Hi.domain.email.exception.MisMatchAuthCodeException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
+import msg.team1.Hi.domain.email.service.EmailService;
+import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,15 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
 @EnableAsync
 @RequiredArgsConstructor
-public class EmailSendService {
+public class EmailServiceImpl implements EmailService {
 
-    private final JavaMailSender mailSender;
     private final EmailAuthRepository emailAuthRepository;
+    private final JavaMailSender mailSender;
 
     @Async
     @Transactional(rollbackFor = Exception.class)
@@ -62,6 +66,22 @@ public class EmailSendService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new AuthCodeExpiredException("메일 발송에 실패했습니다");
+        }
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public void checkEmail(String email , String authKey) {
+        EmailAuth emailAuthEntity = emailAuthRepository.findById(email)
+                .orElseThrow(()-> new MemberNotFoundException("유저를 찾을 수 없습니다."));
+        checkAuthKey(emailAuthEntity,authKey);
+        emailAuthEntity.updateAuthentication(true);
+        emailAuthRepository.save(emailAuthEntity);
+    }
+
+    private void checkAuthKey(EmailAuth emailAuthEntity, String authKey) {
+        if(!Objects.equals(emailAuthEntity.getRandomValue(), authKey)){
+            throw new MisMatchAuthCodeException("인증번호가 일치하지 않습니다.");
         }
     }
 
