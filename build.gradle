@@ -47,8 +47,7 @@ dependencies {
 
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-	// h2 DB
-	runtimeOnly 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java'
 
 
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
