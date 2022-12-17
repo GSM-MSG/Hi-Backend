@@ -14,7 +14,6 @@ import java.io.IOException;
 @Slf4j
 public class CustomAuthenticationEntryPointHandler implements AuthenticationEntryPoint {
 
-
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("===AuthenticationEntryPoint===");
