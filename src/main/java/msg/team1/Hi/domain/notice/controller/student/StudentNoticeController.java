@@ -1,18 +1,17 @@
 package msg.team1.Hi.domain.notice.controller.student;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
 import msg.team1.Hi.domain.notice.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.service.NoticeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/student/notice")
@@ -21,14 +20,9 @@ public class StudentNoticeController {
 
     private final NoticeService noticeService;
 
-    @PostMapping
-    public ResponseEntity<Void> createNoticeAdmin(@Valid @RequestBody NoticeRequest noticeRequest) {
-        noticeService.createNotice(noticeRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
 
     @GetMapping
-    public ResponseEntity<Page<GetNoticeResponse>> getAllNoticeAdmin(@PageableDefault(size = 6) Pageable pageable) {
+    public ResponseEntity<Page<GetNoticeResponse>> getAllNoticeStudent(@PageableDefault(size = 6) Pageable pageable) {
         Page<GetNoticeResponse> result = noticeService.getAllNotice(pageable);
         return ResponseEntity.ok().body(result);
     }

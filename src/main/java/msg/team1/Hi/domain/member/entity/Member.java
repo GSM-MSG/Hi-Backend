@@ -8,7 +8,7 @@ import msg.team1.Hi.global.role.Role;
 
 import javax.persistence.*;
 
-@Entity
+@Entity @Table(name = "member")
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class Member {
     @Column(name = "member_idx" , nullable = false)
     private Integer memberId;
 
-    @Column(name = "memberEmail", nullable = false, length = 20)
+    @Column(name = "member_email", nullable = false, length = 20)
     private String email;
 
     @Column(name = "password", nullable = false , unique = true)

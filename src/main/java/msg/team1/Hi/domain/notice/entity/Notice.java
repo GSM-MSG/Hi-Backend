@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
-@Entity
+@Entity @Table(name = "notice")
 @Builder @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,11 +18,11 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "notice_id", nullable = false)
-    private Long noticeId;
+    @Column(name = "notice_idx", nullable = false)
+    private Integer noticeId;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_idx", nullable = false)
     private Member member;
 
     @Column(name = "notice_title", nullable = false)
