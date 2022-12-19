@@ -87,7 +87,8 @@ public class MemberServiceImpl implements MemberService {
 
         memberRepository.save(member);
     }
-    
+
+    @Transactional(rollbackFor = Exception.class)
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
@@ -95,6 +96,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void validateAuth(String email) {
         EmailAuth emailAuth = emailAuthRepository.findById(email)
                 .orElseThrow(() -> new NotVerifyEmailException("검증되지 않은 이메일입니다."));
