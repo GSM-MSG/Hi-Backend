@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Getter @Setter @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
-public class GetNoticeResponse {
+public class GetNoticeResponse{
 
     private Integer noticeId;
     private String title;
