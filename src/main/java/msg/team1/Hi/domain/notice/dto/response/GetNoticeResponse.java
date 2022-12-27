@@ -1,21 +1,22 @@
 package msg.team1.Hi.domain.notice.dto.response;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@RequiredArgsConstructor
+@Getter @Setter @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetNoticeResponse {
 
-    private final Long noticeId;
-    private final String title;
+    private Long noticeId;
+    private String title;
     private String name;
 
-    private final LocalDateTime createdDateTime;
+    private LocalDateTime createdDateTime;
 
     public void setName(String name) {
         this.name = name;
     }
 }
+
+

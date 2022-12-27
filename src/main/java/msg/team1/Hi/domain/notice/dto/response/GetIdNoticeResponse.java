@@ -1,5 +1,6 @@
 package msg.team1.Hi.domain.notice.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Getter
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class GetIdNoticeResponse {
 
