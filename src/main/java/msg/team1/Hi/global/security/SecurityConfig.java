@@ -44,9 +44,9 @@ public class SecurityConfig  {
                 .antMatchers("/member/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
-                .antMatchers("/admin/notice/**").hasAuthority("ADMIN")
-                .antMatchers("/teacher/notice/**").hasAuthority("TEACHER")
-                .antMatchers("/student/notice/**").hasAuthority("STUDENT")
+                .antMatchers("/notice/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/notice/teacher/**").hasAuthority("TEACHER")
+                .antMatchers("/notice/student/**").hasAuthority("STUDENT")
                 .anyRequest().authenticated();
         http
                 .sessionManagement()

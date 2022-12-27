@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/teacher/notice")
+@RequestMapping("/notice/student")
 @RequiredArgsConstructor
 public class TeacherNoticeController {
 
