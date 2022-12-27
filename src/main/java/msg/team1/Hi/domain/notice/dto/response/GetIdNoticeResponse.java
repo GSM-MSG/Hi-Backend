@@ -1,7 +1,7 @@
 package msg.team1.Hi.domain.notice.dto.response;
 
-import lombok.*;
-import msg.team1.Hi.global.role.Role;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,7 +14,8 @@ public class GetIdNoticeResponse {
     private final Long id;
     private final String title;
     private final String content;
-    private Role role;
+
+    private String name;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -22,7 +23,7 @@ public class GetIdNoticeResponse {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 }
