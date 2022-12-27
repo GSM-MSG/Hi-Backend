@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.config;
+package msg.team1.Hi.global.config.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
