@@ -42,11 +42,14 @@ public class SecurityConfig  {
         http
                 .authorizeRequests()
                 .antMatchers("/member/**").permitAll()
+
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
-                .antMatchers("/notice/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/notice/teacher/**").hasAuthority("TEACHER")
-                .antMatchers("/notice/student/**").hasAuthority("STUDENT")
+
+                .antMatchers("/notice/**").hasAuthority("ADMIN")
+                .antMatchers("/notice/**").hasAuthority("TEACHER")
+                .antMatchers(HttpMethod.GET , "/notice/**").hasAuthority("STUDENT")
+
                 .anyRequest().authenticated();
         http
                 .sessionManagement()
