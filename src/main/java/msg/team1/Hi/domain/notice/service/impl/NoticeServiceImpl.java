@@ -40,7 +40,7 @@ public class NoticeServiceImpl implements NoticeService {
         return noticePage.map(notice -> {
                     ModelMapper mapper = new ModelMapper();
                     GetNoticeResponse map = mapper.map(notice , GetNoticeResponse.class);
-                    map.setRole(notice.getMember().getRole());
+                    map.setName(notice.getMember().getName());
 
                     return map;
                     }
@@ -53,7 +53,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         ModelMapper mapper = new ModelMapper();
         GetIdNoticeResponse map = mapper.map(notice, GetIdNoticeResponse.class);
-        map.setRole(notice.getMember().getRole());
+        map.setName(notice.getMember().getName());
 
         return map;
     }

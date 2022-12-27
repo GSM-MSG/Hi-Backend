@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/admin/notice")
+@RequestMapping("/notice/admin")
 @RequiredArgsConstructor
 public class AdminNoticeController {
 
