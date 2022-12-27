@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.notice.controller.admin;
+package msg.team1.Hi.domain.notice.controller;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/notice/admin")
 @RequiredArgsConstructor
-public class AdminNoticeController {
+@RequestMapping("/notice")
+public class NoticeController {
 
     private final NoticeService noticeService;
 
@@ -50,5 +50,4 @@ public class AdminNoticeController {
         noticeService.deleteNotice(id);
         return ResponseEntity.ok().build();
     }
-
 }
