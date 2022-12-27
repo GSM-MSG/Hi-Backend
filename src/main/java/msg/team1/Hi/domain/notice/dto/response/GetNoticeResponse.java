@@ -8,15 +8,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetNoticeResponse {
 
-    private Long noticeId;
+    private Integer noticeId;
     private String title;
     private String name;
 
     private LocalDateTime createdDateTime;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
 
 

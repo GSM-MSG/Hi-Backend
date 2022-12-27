@@ -34,19 +34,19 @@ public class NoticeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Long id) {
+    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Integer id) {
         GetIdNoticeResponse notice = noticeService.getNoticeById(id);
         return ResponseEntity.ok().body(notice);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateNoticeAdmin(@PathVariable Long id , @Valid @RequestBody NoticeRequest noticeRequest) {
+    public ResponseEntity<Void> updateNoticeAdmin(@PathVariable Integer id , @Valid @RequestBody NoticeRequest noticeRequest) {
         noticeService.updateNotice(id , noticeRequest);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNoticeAdmin(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNoticeAdmin(@PathVariable Integer id) {
         noticeService.deleteNotice(id);
         return ResponseEntity.ok().build();
     }

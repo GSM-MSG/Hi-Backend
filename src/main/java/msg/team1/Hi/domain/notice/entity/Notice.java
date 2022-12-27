@@ -17,7 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Notice {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_idx", nullable = false)
     private Integer noticeId;
 

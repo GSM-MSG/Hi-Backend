@@ -47,7 +47,7 @@ public class NoticeServiceImpl implements NoticeService {
                 );
     }
 
-    public GetIdNoticeResponse getNoticeById(Long noticeId) {
+    public GetIdNoticeResponse getNoticeById(Integer noticeId) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
 
@@ -59,14 +59,14 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Transactional
-    public void updateNotice(Long noticeId , NoticeRequest requestNotice) {
+    public void updateNotice(Integer noticeId , NoticeRequest requestNotice) {
         Optional<Notice> notice = noticeRepository.findById(noticeId);
         notice.get().updateNotice(requestNotice.getTitle(), requestNotice.getContent());
     }
 
     @Transactional
-    public void deleteNotice(Long boardId) {
-        Notice notice = noticeRepository.findById(boardId)
+    public void deleteNotice(Integer noticeId) {
+        Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
         noticeRepository.delete(notice);
     }

@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 public interface NoticeService {
     public void createNotice(NoticeRequest noticeRequest);
     public Page<GetNoticeResponse> getAllNotice(Pageable pageable);
-    public GetIdNoticeResponse getNoticeById(Long noticeId);
-    public void updateNotice(Long noticeId , NoticeRequest requestNotice);
-    public void deleteNotice(Long boardId);
+    public GetIdNoticeResponse getNoticeById(Integer noticeId);
+    public void updateNotice(Integer noticeId , NoticeRequest requestNotice);
+    public void deleteNotice(Integer boardId);
 }
