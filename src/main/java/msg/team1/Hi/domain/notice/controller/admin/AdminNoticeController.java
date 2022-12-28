@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.notice.controller;
+package msg.team1.Hi.domain.notice.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notice")
-public class NoticeController {
+public class AdminNoticeController {
 
     private final NoticeService noticeService;
 
