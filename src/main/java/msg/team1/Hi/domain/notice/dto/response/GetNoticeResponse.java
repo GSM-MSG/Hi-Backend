@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @Builder
+@Getter @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetNoticeResponse{
 
