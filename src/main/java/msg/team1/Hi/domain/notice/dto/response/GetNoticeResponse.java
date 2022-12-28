@@ -13,7 +13,6 @@ public class GetNoticeResponse{
     private String name;
 
     private LocalDateTime createdDateTime;
-
 }
 
 

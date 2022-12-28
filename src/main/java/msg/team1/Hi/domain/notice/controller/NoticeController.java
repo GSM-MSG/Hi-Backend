@@ -5,7 +5,6 @@ import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
 import msg.team1.Hi.domain.notice.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.service.NoticeService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +28,8 @@ public class NoticeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetNoticeResponse>> getAllNoticeAdmin(@PageableDefault(size = 6) Pageable pageable) {
-        Page<GetNoticeResponse> result = noticeService.getAllNotice(pageable);
+    public ResponseEntity<List<GetNoticeResponse>> getAllNoticeAdmin(@PageableDefault(size = 6) Pageable pageable) {
+        List<GetNoticeResponse> result = noticeService.getAllNotice();
         return ResponseEntity.ok().body(result);
     }
 
