@@ -6,7 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @Builder
+@Getter @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetIdNoticeResponse {
 

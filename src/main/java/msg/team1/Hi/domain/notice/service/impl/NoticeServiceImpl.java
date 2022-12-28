@@ -51,11 +51,14 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
 
-        ModelMapper mapper = new ModelMapper();
-        GetIdNoticeResponse map = mapper.map(notice, GetIdNoticeResponse.class);
-        map.setName(notice.getMember().getName());
-
-        return map;
+        return GetIdNoticeResponse
+                .builder()
+                .id(notice.getNoticeId())
+                .title(notice.getTitle())
+                .content(notice.getContent())
+                .createdDate(notice.getCreatedDate())
+                .modifiedDate(notice.getModifiedDate())
+                .build();
     }
 
     @Transactional
