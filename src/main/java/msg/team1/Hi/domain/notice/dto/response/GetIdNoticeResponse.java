@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetIdNoticeResponse {
 
-    private Integer id;
+    private Integer noticeId;
     private String title;
     private String content;
     private String name;
