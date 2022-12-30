@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 
-    @ExceptionHandler(NoticeNotFoundException.class)
+    @ExceptionHandler(ReservedHomeBaseException.class)
     public ResponseEntity<ErrorMessage> handleReservedHomeBaseException(HttpServletRequest request , ReservedHomeBaseException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());

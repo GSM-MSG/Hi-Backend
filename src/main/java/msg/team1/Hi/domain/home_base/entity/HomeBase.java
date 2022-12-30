@@ -23,11 +23,11 @@ public class HomeBase {
     @Column(name = "stair")
     private String stair;
 
+    @Column(name = "representative_name")
+    private String representative;
+
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_idx")
+    @JoinColumn(name = "member_id")
     private List<Member> members;
 
-    @OneToOne
-    @JoinColumn(name = "representative")
-    private Member representative;
 }

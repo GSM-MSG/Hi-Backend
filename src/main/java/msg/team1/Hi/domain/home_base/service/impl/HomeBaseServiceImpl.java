@@ -26,6 +26,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
+
         verifyMember(request);
 
         List<Member> members = memberUtil.memberNameListToMemberList(request.getMembers());
@@ -35,7 +36,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         HomeBase homeBase = HomeBase.builder()
                 .stair(request.getStair())
                 .members(members).
-                representative(representative)
+                representative(representative.getName())
                 .build();
 
         homeBaseRepository.save(homeBase);
@@ -43,7 +44,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
 
     private void verifyMember(ReserveHomeBaseRequest request) {
         if(homeBaseRepository.existsByRepresentative(memberRepository.findByName(request.getRepresentative()).get())) {
-            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다.");
+            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
         }
 
         List<String> members = request.getMembers();
@@ -51,7 +52,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         for (String name : members) {
             Optional<Member> member = memberRepository.findByName(name);
             if(member.get().isReserveHomeBase())
-                throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다.");
+                throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
         }
     }
 }

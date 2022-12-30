@@ -29,4 +29,6 @@ public class MemberUtil {
                 .map(n -> memberRepository.findByName(n).get()).collect(Collectors.toList());
         return members;
     }
+
+
 }
