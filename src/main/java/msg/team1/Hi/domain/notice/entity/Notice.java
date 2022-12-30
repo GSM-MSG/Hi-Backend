@@ -1,10 +1,8 @@
 package msg.team1.Hi.domain.notice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.global.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 
@@ -12,9 +10,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity @Table(name = "notice")
 @Builder @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Notice {
+@AllArgsConstructor
+public class Notice extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +30,7 @@ public class Notice {
     private String content;
 
     public void updateNotice(String title, String content) {
-        this.title = title;
-        this.content = content;
+        this.title = title != null ? title : this.title;
+        this.content = content != null ? content : this.content;
     }
 }

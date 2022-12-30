@@ -47,7 +47,7 @@ public class SecurityConfig  {
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
 
                 .antMatchers("/notice/**").hasAnyAuthority("ADMIN" , "TEACHER")
-                .antMatchers(HttpMethod.GET , "/notice/**").hasAuthority("STUDENT")
+                .antMatchers(HttpMethod.GET , "/student/notice/**").hasAuthority("STUDENT")
 
                 .anyRequest().authenticated();
         http

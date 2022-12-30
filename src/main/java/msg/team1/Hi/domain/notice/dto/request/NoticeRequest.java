@@ -1,5 +1,6 @@
 package msg.team1.Hi.domain.notice.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import msg.team1.Hi.domain.member.entity.Member;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter @Builder
+@AllArgsConstructor
 public class NoticeRequest {
 
     @NotBlank

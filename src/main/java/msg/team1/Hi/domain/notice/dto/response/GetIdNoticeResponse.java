@@ -1,20 +1,18 @@
 package msg.team1.Hi.domain.notice.dto.response;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-@Getter
-@RequiredArgsConstructor
+@Getter @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetIdNoticeResponse {
 
-    private final Long id;
-    private final String title;
-    private final String content;
-
+    private Integer id;
+    private String title;
+    private String content;
     private String name;
 
     @CreatedDate
@@ -23,7 +21,4 @@ public class GetIdNoticeResponse {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
