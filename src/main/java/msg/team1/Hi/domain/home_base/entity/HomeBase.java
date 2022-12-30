@@ -27,4 +27,7 @@ public class HomeBase {
     @JoinColumn(name = "member_idx")
     private List<Member> members;
 
+    @OneToOne
+    @JoinColumn(name = "representative")
+    private Member representative;
 }

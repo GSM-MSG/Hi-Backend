@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import msg.team1.Hi.domain.home_base.entity.HomeBase;
 import msg.team1.Hi.global.role.Role;
 
 import javax.persistence.*;
@@ -33,9 +34,19 @@ public class Member {
 
     @Column(name = "role" , length = 10)
     @Enumerated(EnumType.STRING)
-    private  Role role;
+    private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "home_base_id")
+    private HomeBase homeBase;
+
+    private boolean isReserveHomeBase = false;
 
     public void updatePassword(String password) {
         this.password = password;
+    }
+
+    public void updateReserveHomeBase() {
+        this.isReserveHomeBase = true;
     }
 }
