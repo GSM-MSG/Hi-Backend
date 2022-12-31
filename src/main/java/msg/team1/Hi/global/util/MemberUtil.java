@@ -24,11 +24,12 @@ public class MemberUtil {
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다"));
     }
 
-    public List<Member> memberNameListToMemberList(List<String> memberNameList) {
+    public List<Member> memberIdListToMemberList(List<Integer> memberNameList) {
         List<Member> members = memberNameList.stream()
-                .map(n -> memberRepository.findByName(n)
+                .map(n -> memberRepository.findById(n)
                         .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 유저입니다.")))
                 .collect(Collectors.toList());
+
         return members;
     }
 

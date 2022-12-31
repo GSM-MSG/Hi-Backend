@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -11,8 +12,8 @@ import java.util.List;
 public class ReserveHomeBaseRequest {
     @NotEmpty
     private final String stair;
-    @NotEmpty
-    private final List<String> members;
-    @NotEmpty
-    private final String representativeName;
+    @NotNull
+    private final List<Integer> members;
+    @NotNull
+    private final Integer representative;
 }

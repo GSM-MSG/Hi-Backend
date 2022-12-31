@@ -27,34 +27,34 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Transactional(rollbackFor = Exception.class)
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
 
-        verifyRepresentative(request.getRepresentativeName());
+        verifyRepresentative(request.getRepresentative());
         verifyMembers(request.getMembers());
 
-        List<Member> members = memberUtil.memberNameListToMemberList(request.getMembers());
+        List<Member> members = memberUtil.memberIdListToMemberList(request.getMembers());
         Member representative = memberUtil.currentMember();
         representative.updateReserveHomeBase();
 
         HomeBase homeBase = HomeBase.builder()
                 .stair(request.getStair())
                 .members(members)
-                .representativeName(representative.getName())
+                .representative(representative.getMemberId())
                 .build();
 
         homeBaseRepository.save(homeBase);
     }
 
-    private void verifyRepresentative(String representativeName) {
-        Member representative = memberRepository.findByName(representativeName)
+    private void verifyRepresentative(Integer representativeId) {
+        Member representative = memberRepository.findById(representativeId)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        if(homeBaseRepository.existsByRepresentativeName(representative.getName())) {
+        if(homeBaseRepository.existsByRepresentative(representative.getMemberId())) {
             throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
         }
     }
 
-    private void verifyMembers(List<String> members) {
-        for (String name : members) {
-            Member member = memberRepository.findByName(name)
+    private void verifyMembers(List<Integer> members) {
+        for (Integer memberId : members) {
+            Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
             if(member.isReserveHomeBase())
