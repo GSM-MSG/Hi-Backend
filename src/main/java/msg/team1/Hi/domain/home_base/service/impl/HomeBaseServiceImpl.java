@@ -7,13 +7,13 @@ import msg.team1.Hi.domain.home_base.exception.ReservedHomeBaseException;
 import msg.team1.Hi.domain.home_base.repository.HomeBaseRepository;
 import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,22 +36,27 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         HomeBase homeBase = HomeBase.builder()
                 .stair(request.getStair())
                 .members(members).
-                representative(representative.getName())
+                representativeName(representative.getName())
                 .build();
 
         homeBaseRepository.save(homeBase);
     }
 
     private void verifyMember(ReserveHomeBaseRequest request) {
-        if(homeBaseRepository.existsByRepresentative(memberRepository.findByName(request.getRepresentative()).get())) {
-            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
-        }
+        Member representative = memberRepository.findByName(request.getRepresentative())
+                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         List<String> members = request.getMembers();
 
+        if(homeBaseRepository.existsByRepresentative(representative.getName())) {
+            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
+        }
+
         for (String name : members) {
-            Optional<Member> member = memberRepository.findByName(name);
-            if(member.get().isReserveHomeBase())
+            Member member = memberRepository.findByName(name)
+                    .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+            if(member.isReserveHomeBase())
                 throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
         }
     }

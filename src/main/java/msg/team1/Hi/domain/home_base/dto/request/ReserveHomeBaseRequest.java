@@ -14,5 +14,5 @@ public class ReserveHomeBaseRequest {
     @NotEmpty
     private final List<String> members;
     @NotEmpty
-    private final String representative;
+    private final String representativeName;
 }

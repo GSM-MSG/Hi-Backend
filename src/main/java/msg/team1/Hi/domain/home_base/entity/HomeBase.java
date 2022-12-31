@@ -24,7 +24,7 @@ public class HomeBase {
     private String stair;
 
     @Column(name = "representative_name")
-    private String representative;
+    private String representativeName;
 
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
