@@ -45,7 +45,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         return GetIdNoticeResponse
                 .builder()
-                .id(notice.getNoticeId())
+                .noticeId(notice.getNoticeId())
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .createdDate(notice.getCreatedDate())

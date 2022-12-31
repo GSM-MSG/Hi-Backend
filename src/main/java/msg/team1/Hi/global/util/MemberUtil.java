@@ -8,6 +8,9 @@ import msg.team1.Hi.domain.member.repository.MemberRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -20,4 +23,15 @@ public class MemberUtil {
         return memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다"));
     }
+
+    public List<Member> memberIdListToMemberList(List<Integer> memberNameList) {
+        List<Member> members = memberNameList.stream()
+                .map(n -> memberRepository.findById(n)
+                        .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 유저입니다.")))
+                .collect(Collectors.toList());
+
+        return members;
+    }
+
+
 }

@@ -49,6 +49,7 @@ public class SecurityConfig  {
                 .antMatchers("/notice/**").hasAnyAuthority("ADMIN" , "TEACHER")
                 .antMatchers(HttpMethod.GET , "/student/notice/**").hasAuthority("STUDENT")
 
+                .antMatchers("home-base/**").permitAll()
                 .anyRequest().authenticated();
         http
                 .sessionManagement()
