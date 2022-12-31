@@ -27,7 +27,8 @@ public class MemberUtil {
     public List<Member> memberNameListToMemberList(List<String> memberNameList) {
         List<Member> members = memberNameList.stream()
                 .map(n -> memberRepository.findByName(n)
-                        .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 유저입니다."))).collect(Collectors.toList());
+                        .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 유저입니다.")))
+                .collect(Collectors.toList());
         return members;
     }
 

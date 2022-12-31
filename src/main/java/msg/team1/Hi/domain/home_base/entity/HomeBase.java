@@ -17,7 +17,7 @@ public class HomeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "home_base_id", nullable = false)
+    @Column(name = "home_base_id")
     private Long homeBaseId;
 
     @Column(name = "stair")
