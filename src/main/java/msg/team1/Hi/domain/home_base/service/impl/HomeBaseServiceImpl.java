@@ -27,7 +27,8 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Transactional(rollbackFor = Exception.class)
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
 
-        verifyMember(request);
+        verifyRepresentative(request.getRepresentativeName());
+        verifyMembers(request.getMembers());
 
         List<Member> members = memberUtil.memberNameListToMemberList(request.getMembers());
         Member representative = memberUtil.currentMember();
@@ -42,16 +43,16 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         homeBaseRepository.save(homeBase);
     }
 
-    private void verifyMember(ReserveHomeBaseRequest request) {
-        Member representative = memberRepository.findByName(request.getRepresentativeName())
+    private void verifyRepresentative(String representativeName) {
+        Member representative = memberRepository.findByName(representativeName)
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        List<String> members = request.getMembers();
-
-        if(homeBaseRepository.existsByRepresentative(representative.getName())) {
+        if(homeBaseRepository.existsByRepresentativeName(representative.getName())) {
             throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
         }
+    }
 
+    private void verifyMembers(List<String> members) {
         for (String name : members) {
             Member member = memberRepository.findByName(name)
                     .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));

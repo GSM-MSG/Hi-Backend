@@ -27,7 +27,7 @@ public class HomeBase {
     private String representativeName;
 
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "members")
     private List<Member> members;
 
 }
