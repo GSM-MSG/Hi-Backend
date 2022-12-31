@@ -35,15 +35,15 @@ public class HomeBaseServiceImpl implements HomeBaseService {
 
         HomeBase homeBase = HomeBase.builder()
                 .stair(request.getStair())
-                .members(members).
-                representativeName(representative.getName())
+                .members(members)
+                .representativeName(representative.getName())
                 .build();
 
         homeBaseRepository.save(homeBase);
     }
 
     private void verifyMember(ReserveHomeBaseRequest request) {
-        Member representative = memberRepository.findByName(request.getRepresentative())
+        Member representative = memberRepository.findByName(request.getRepresentativeName())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
         List<String> members = request.getMembers();
