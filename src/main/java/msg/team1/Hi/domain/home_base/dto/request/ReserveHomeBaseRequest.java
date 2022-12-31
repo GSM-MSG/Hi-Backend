@@ -15,5 +15,5 @@ public class ReserveHomeBaseRequest {
     @NotNull
     private final List<Integer> members;
     @NotNull
-    private final Integer representative;
+    private final Integer representativeId;
 }
