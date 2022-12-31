@@ -26,13 +26,12 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
-
-        verifyRepresentative(request.getRepresentativeId());
-        verifyMembers(request.getMembers());
-
         List<Member> members = memberUtil.memberIdListToMemberList(request.getMembers());
         Member representative = memberRepository.findById(request.getRepresentativeId())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+        verifyRepresentative(request.getRepresentativeId());
+        verifyMembers(request.getMembers());
 
         representative.updateReserveHomeBase();
 
@@ -47,10 +46,8 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     }
 
     private void verifyRepresentative(Integer representativeId) {
-        Member representative = memberRepository.findById(representativeId)
-                .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        if(homeBaseRepository.existsByRepresentative(representative.getMemberId())) {
+        if(homeBaseRepository.existsByRepresentative(representativeId)) {
             throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
         }
     }
