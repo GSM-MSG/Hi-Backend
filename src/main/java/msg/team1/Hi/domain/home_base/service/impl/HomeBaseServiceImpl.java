@@ -56,7 +56,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         for (Integer memberId : members) {
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
-
+            member.updateReserveHomeBase();
             if(member.isReserveHomeBase())
                 throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
         }
