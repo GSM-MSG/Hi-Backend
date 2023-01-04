@@ -49,4 +49,12 @@ public class Member {
     public void updateReserveHomeBase() {
         this.isReserveHomeBase = true;
     }
+
+    public void updateFalseReserveHomeBase() {
+        this.isReserveHomeBase = false;
+    }
+
+    public void deleteHomeBase() {
+        this.homeBase = null;
+    }
 }

@@ -9,6 +9,7 @@ import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
+import msg.team1.Hi.global.util.HomeBaseUtil;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,27 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     private final HomeBaseRepository homeBaseRepository;
     private final MemberRepository memberRepository;
     private final MemberUtil memberUtil;
+
+    private final HomeBaseUtil homeBaseUtil;
+
+    private void verifyRepresentative(Integer representativeId) {
+        if(homeBaseRepository.existsByRepresentative(representativeId)) {
+            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
+        }
+    }
+
+    private void verifyMembers(List<Integer> members) {
+        for (Integer memberId : members) {
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
+
+            if(member.isReserveHomeBase())
+                throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
+
+            member.updateReserveHomeBase();
+            memberRepository.save(member);
+        }
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -45,23 +67,14 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         homeBaseRepository.save(homeBase);
     }
 
-    private void verifyRepresentative(Integer representativeId) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resetHomeBase() {
+        Member currentMember = memberUtil.currentMember();
+        List<Member> reservedMembers = currentMember.getHomeBase().getMembers();
 
-        if(homeBaseRepository.existsByRepresentative(representativeId)) {
-            throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
-        }
-    }
+        homeBaseUtil.deleteMembersHomeBase(reservedMembers);
 
-    private void verifyMembers(List<Integer> members) {
-        for (Integer memberId : members) {
-            Member member = memberRepository.findById(memberId)
-                    .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
-
-            if(member.isReserveHomeBase())
-                throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
-
-            member.updateReserveHomeBase();
-            memberRepository.save(member);
-        }
+        homeBaseRepository.deleteAll();
     }
 }
