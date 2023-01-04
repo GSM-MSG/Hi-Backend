@@ -9,7 +9,6 @@ import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
-import msg.team1.Hi.global.util.HomeBaseUtil;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +23,10 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     private final MemberRepository memberRepository;
     private final MemberUtil memberUtil;
 
-    private final HomeBaseUtil homeBaseUtil;
 
     private void verifyRepresentative(Integer representativeId) {
-        if(homeBaseRepository.existsByRepresentative(representativeId)) {
+        if(homeBaseRepository.existsByRepresentative(representativeId))
             throw new ReservedHomeBaseException("이미 홈베이스 예약을 한 유저입니다. - 팀장");
-        }
     }
 
     private void verifyMembers(List<Integer> members) {
@@ -49,10 +46,10 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Transactional(rollbackFor = Exception.class)
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
         List<Member> members = memberUtil.memberIdListToMemberList(request.getMembers());
-        Member representative = memberRepository.findById(request.getRepresentativeId())
+        Member representative = memberRepository.findByNumber(request.getRepresentativeNumber())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        verifyRepresentative(request.getRepresentativeId());
+        verifyRepresentative(representative.getMemberId());
         verifyMembers(request.getMembers());
 
         representative.updateReserveHomeBase();
