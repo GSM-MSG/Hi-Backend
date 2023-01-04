@@ -37,7 +37,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
             Member member = memberRepository.findById(memberId)
                     .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-            if(member.isReserveHomeBase())
+            if(member.isReserveHomeBaseStatus())
                 throw new ReservedHomeBaseException("예약자 명단 중 이미 예약된 유저가 있습니다. - 멤버들");
 
             member.updateReserveHomeBase();
@@ -60,7 +60,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         HomeBase homeBase = HomeBase.builder()
                 .stair(request.getStair())
                 .members(members)
-                .representative(representative.getMemberId())
+                .representative(representative.getName())
                 .build();
 
         memberRepository.save(representative);
@@ -70,11 +70,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void resetHomeBase() {
-        Member currentMember = memberUtil.currentMember();
-        List<Member> reservedMembers = currentMember.getHomeBase().getMembers();
-
-        homeBaseUtil.deleteMembersHomeBase(reservedMembers);
-
+        memberRepository.updateHomeBaseReserveStatus();
         homeBaseRepository.deleteAll();
     }
 }

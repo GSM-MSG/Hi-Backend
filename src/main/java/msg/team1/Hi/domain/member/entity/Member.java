@@ -37,24 +37,17 @@ public class Member {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "home_base_id")
+    @JoinColumn(name = "home_base")
     private HomeBase homeBase;
 
-    private boolean isReserveHomeBase = false;
+    private boolean reserveHomeBaseStatus = false;
 
     public void updatePassword(String password) {
         this.password = password;
     }
 
     public void updateReserveHomeBase() {
-        this.isReserveHomeBase = true;
+        this.reserveHomeBaseStatus = true;
     }
 
-    public void updateFalseReserveHomeBase() {
-        this.isReserveHomeBase = false;
-    }
-
-    public void deleteHomeBase() {
-        this.homeBase = null;
-    }
 }

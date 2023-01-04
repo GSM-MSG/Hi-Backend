@@ -23,8 +23,8 @@ public class HomeBase {
     @Column(name = "stair")
     private String stair;
 
-    @Column(name = "representative_id")
-    private Integer representative;
+    @Column(name = "representative")
+    private String representative;
 
     @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinColumn(name = "members")
