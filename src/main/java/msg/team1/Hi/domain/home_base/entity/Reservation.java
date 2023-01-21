@@ -25,4 +25,8 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "home_base_id")
     private HomeBase homeBase;
+
+    @OneToOne
+    @JoinColumn(name = "member_id2")
+    private Member member;
 }
