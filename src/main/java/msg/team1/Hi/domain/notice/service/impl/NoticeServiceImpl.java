@@ -33,7 +33,7 @@ public class NoticeServiceImpl implements NoticeService {
         List<Notice> notices = noticeRepository.findAll();
 
         List<GetNoticeResponse> response = notices.stream().map(m -> new GetNoticeResponse(
-                m.getNoticeId() , m.getTitle() , m.getMember().getName(), m.getCreatedDate()))
+                m.getId() , m.getTitle() , m.getMember().getName(), m.getCreatedDate()))
                 .collect(Collectors.toList());
 
         return response;
@@ -45,7 +45,7 @@ public class NoticeServiceImpl implements NoticeService {
 
         return GetIdNoticeResponse
                 .builder()
-                .noticeId(notice.getNoticeId())
+                .noticeId(notice.getId())
                 .title(notice.getTitle())
                 .content(notice.getContent())
                 .createdDate(notice.getCreatedDate())

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import msg.team1.Hi.domain.home_base.entity.HomeBase;
+import msg.team1.Hi.domain.member.enum_type.Status;
 import msg.team1.Hi.global.role.Role;
 
 import javax.persistence.*;
@@ -17,8 +17,8 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "member_idx" , nullable = false)
-    private Integer memberId;
+    @Column(name = "member_id" , nullable = false)
+    private Integer id;
 
     @Column(name = "member_email", nullable = false, length = 20)
     private String email;
@@ -36,17 +36,15 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToOne
-    @JoinColumn(name = "home_base_id")
-    private HomeBase homeBase;
-
-    private boolean isReserveHomeBase = false;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public void updatePassword(String password) {
         this.password = password;
     }
 
-    public void updateReserveHomeBase() {
-        this.isReserveHomeBase = true;
+    public void updateStatus(String status) {
+        this.status = Status.valueOf(status);
     }
 }
