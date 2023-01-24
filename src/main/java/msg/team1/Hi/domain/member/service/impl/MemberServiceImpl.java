@@ -12,7 +12,7 @@ import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
 import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.RefreshToken;
-import msg.team1.Hi.domain.member.enum_type.UsingStatus;
+import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
@@ -21,7 +21,7 @@ import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.repository.RefreshTokenRepository;
 import msg.team1.Hi.domain.member.service.MemberService;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
-import msg.team1.Hi.global.role.Role;
+import msg.team1.Hi.domain.member.entity.enum_type.Role;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
 import msg.team1.Hi.global.util.MemberUtil;
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
                 .role(Role.STUDENT)
-                .status(UsingStatus.AVAILABLE)
+                .status(UseStatus.AVAILABLE)
                 .build();
 
         memberRepository.save(member);
