@@ -3,8 +3,6 @@ package msg.team1.Hi.domain.member.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.global.role.Role;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -26,15 +24,5 @@ public class SignUpRequest {
 
     @NotEmpty(message = "학번은 필수 입력 값입니다.")
     private String number;
-
-
-    public Member toEntity() {
-        return Member.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .number(number)
-                .build();
-    }
 
 }
