@@ -19,10 +19,10 @@ public class HomeBase {
     private Long id;
 
     @Column(name = "stair")
-    private String stair;
+    private Integer stair;
 
     @Column(name = "period")
-    private String period;
+    private Integer period;
 
     @Column(name = "is_available")
     private boolean isAvailable = true;
