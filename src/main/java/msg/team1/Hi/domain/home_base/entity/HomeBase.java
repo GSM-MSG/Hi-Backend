@@ -18,8 +18,8 @@ public class HomeBase {
     @Column(name = "home_base_id")
     private Long id;
 
-    @Column(name = "stair")
-    private Integer stair;
+    @Column(name = "floor")
+    private Integer floor;
 
     @Column(name = "period")
     private Integer period;
