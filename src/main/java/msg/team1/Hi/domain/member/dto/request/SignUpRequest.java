@@ -27,8 +27,6 @@ public class SignUpRequest {
     @NotEmpty(message = "학번은 필수 입력 값입니다.")
     private String number;
 
-    @NotEmpty(message = "역할을 지정해주십시요.")
-    private String role;
 
     public Member toEntity() {
         return Member.builder()
@@ -36,7 +34,6 @@ public class SignUpRequest {
                 .password(password)
                 .name(name)
                 .number(number)
-                .role(Role.from(role))
                 .build();
     }
 

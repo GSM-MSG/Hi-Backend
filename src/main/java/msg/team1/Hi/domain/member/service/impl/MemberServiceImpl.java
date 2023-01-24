@@ -83,8 +83,8 @@ public class MemberServiceImpl implements MemberService {
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
-                .role(Role.from(signUpRequest.getRole()))
-                .status(Status.from("AVAILABLE"))
+                .role(Role.STUDENT)
+                .status(Status.AVAILABLE)
                 .build();
 
         memberRepository.save(member);
