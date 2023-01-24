@@ -12,7 +12,7 @@ import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
 import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.RefreshToken;
-import msg.team1.Hi.domain.member.enum_type.Status;
+import msg.team1.Hi.domain.member.enum_type.UsingStatus;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
                 .name(signUpRequest.getName())
                 .number(signUpRequest.getNumber())
                 .role(Role.STUDENT)
-                .status(Status.AVAILABLE)
+                .status(UsingStatus.AVAILABLE)
                 .build();
 
         memberRepository.save(member);

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import msg.team1.Hi.domain.member.enum_type.Status;
+import msg.team1.Hi.domain.member.enum_type.UsingStatus;
 import msg.team1.Hi.global.role.Role;
 
 import javax.persistence.*;
@@ -38,13 +38,13 @@ public class Member {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private UsingStatus status;
 
     public void updatePassword(String password) {
         this.password = password;
     }
 
     public void updateStatus(String status) {
-        this.status = Status.valueOf(status);
+        this.status = UsingStatus.valueOf(status);
     }
 }

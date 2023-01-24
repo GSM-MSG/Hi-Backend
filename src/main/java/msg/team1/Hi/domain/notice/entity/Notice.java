@@ -26,7 +26,7 @@ public class Notice extends BaseTimeEntity {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "content", length = 5000, nullable = false)
+    @Column(name = "content", nullable = false,columnDefinition = "TEXT")
     private String content;
 
     public void updateNotice(String title, String content) {
