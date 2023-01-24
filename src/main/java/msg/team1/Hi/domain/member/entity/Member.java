@@ -44,7 +44,7 @@ public class Member {
         this.password = password;
     }
 
-    public void updateStatus(String status) {
-        this.status = UsingStatus.valueOf(status);
+    public void updateStatus(UsingStatus status) {
+        this.status = status;
     }
 }
