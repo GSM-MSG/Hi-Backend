@@ -27,6 +27,7 @@ public class HomeBase {
     @Column(name = "is_available")
     private boolean isAvailable = true;
 
+
     public void updateIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
