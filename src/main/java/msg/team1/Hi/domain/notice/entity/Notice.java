@@ -16,17 +16,17 @@ public class Notice extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "notice_idx", nullable = false)
-    private Integer noticeId;
+    @Column(name = "notice_id", nullable = false)
+    private Integer id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_idx", nullable = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "notice_title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "notice_content", length = 5000, nullable = false)
+    @Column(name = "content", nullable = false,columnDefinition = "TEXT")
     private String content;
 
     public void updateNotice(String title, String content) {
