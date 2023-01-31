@@ -11,6 +11,5 @@ public interface MemberService {
     public MemberLoginResponse login(LoginRequest loginRequest);
     public void signUp(SignUpRequest signUpRequest);
     public void changePassword(ChangePasswordRequest changePasswordRequest);
-    public void validateAuth(String email);
     public NewTokenResponse tokenReissue(String requestToken);
 }

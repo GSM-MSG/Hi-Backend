@@ -44,6 +44,14 @@ public class MemberServiceImpl implements MemberService {
     private final JwtProperties jwtProperties;
     private final MemberUtil memberUtil;
 
+    private void validateAuth(String email) {
+        EmailAuth emailAuth = emailAuthRepository.findById(email)
+                .orElseThrow(() -> new NotVerifyEmailException("검증되지 않은 이메일입니다."));
+        if(!emailAuth.getAuthentication()){
+            throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
+        }
+    }
+
     @Transactional
     public MemberLoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
@@ -96,15 +104,6 @@ public class MemberServiceImpl implements MemberService {
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         memberRepository.save(member);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public void validateAuth(String email) {
-        EmailAuth emailAuth = emailAuthRepository.findById(email)
-                .orElseThrow(() -> new NotVerifyEmailException("검증되지 않은 이메일입니다."));
-        if(!emailAuth.getAuthentication()){
-            throw new NotVerifyEmailException("검증되지 않은 이메일입니다.");
-        }
     }
 
     @Transactional(rollbackFor = Exception.class)
