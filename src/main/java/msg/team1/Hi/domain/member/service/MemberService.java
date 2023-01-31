@@ -8,8 +8,9 @@ import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 
 public interface MemberService {
 
-    public MemberLoginResponse login(LoginRequest loginRequest);
-    public void signUp(SignUpRequest signUpRequest);
-    public void changePassword(ChangePasswordRequest changePasswordRequest);
-    public NewTokenResponse tokenReissue(String requestToken);
+    MemberLoginResponse login(LoginRequest loginRequest);
+    void signUp(SignUpRequest signUpRequest);
+    void changePassword(ChangePasswordRequest changePasswordRequest);
+    NewTokenResponse tokenReissue(String requestToken);
+
 }
