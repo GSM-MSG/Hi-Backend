@@ -17,6 +17,7 @@ public enum ErrorCode {
     TOKEN_EXPIRATION("토큰이 만료 되었습니다.", 401),
     NOTICE_NOT_FOUND("공지사항이 존재하지 않습니다.", 404),
     ALREADY_RESERVED("이미 예약한 상태입니다." , 400),
+    ALREADY_EXIST_REFRESH_TOKEN("이미 존재하는 리프레시 토큰입니다.", 400),
     REFRESH_TOKEN_NOT_FOUND("존재하지 않는 리프레시 토큰입니다.", 404);
 
     private String message;
