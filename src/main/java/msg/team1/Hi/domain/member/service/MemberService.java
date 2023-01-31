@@ -12,5 +12,5 @@ public interface MemberService {
     void signUp(SignUpRequest signUpRequest);
     void changePassword(ChangePasswordRequest changePasswordRequest);
     NewTokenResponse tokenReissue(String requestToken);
-
+    void logout();
 }

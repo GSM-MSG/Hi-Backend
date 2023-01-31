@@ -12,6 +12,7 @@ import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
 import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.RefreshToken;
+import msg.team1.Hi.domain.member.entity.enum_type.Role;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
@@ -20,19 +21,18 @@ import msg.team1.Hi.domain.member.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.repository.RefreshTokenRepository;
 import msg.team1.Hi.domain.member.service.MemberService;
+import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
-import msg.team1.Hi.domain.member.entity.enum_type.Role;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 
 
-@Service
+@TransactionalService
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
@@ -52,7 +52,6 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    @Transactional
     public MemberLoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
@@ -73,7 +72,6 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public void signUp(SignUpRequest signUpRequest) {
         boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
@@ -98,7 +96,6 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
@@ -106,7 +103,6 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public NewTokenResponse tokenReissue(String requestToken) {
         String email = tokenProvider.getUserEmail(requestToken, jwtProperties.getRefreshSecret());
         RefreshToken token = refreshTokenRepository.findById(email)
@@ -127,6 +123,11 @@ public class MemberServiceImpl implements MemberService {
                 .refreshToken(refreshToken)
                 .expiredAt(expiredAt)
                 .build();
+    }
+
+    @Override
+    public void logout() {
+
     }
 
 }
