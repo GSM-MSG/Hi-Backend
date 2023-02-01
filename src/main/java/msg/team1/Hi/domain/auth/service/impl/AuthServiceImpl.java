@@ -7,21 +7,19 @@ import msg.team1.Hi.domain.auth.exception.BlackListAlreadyExistException;
 import msg.team1.Hi.domain.auth.exception.ExistEmailException;
 import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.auth.exception.RefreshTokenNotFoundException;
-import msg.team1.Hi.domain.auth.service.AuthService;
-import msg.team1.Hi.domain.email.entity.EmailAuth;
-import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
-import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
-import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.domain.member.entity.enum_type.Role;
-import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
-import msg.team1.Hi.domain.member.exception.*;
 import msg.team1.Hi.domain.auth.presentation.dto.request.LoginRequest;
 import msg.team1.Hi.domain.auth.presentation.dto.request.SignUpRequest;
 import msg.team1.Hi.domain.auth.presentation.dto.response.MemberLoginResponse;
 import msg.team1.Hi.domain.auth.presentation.dto.response.NewTokenResponse;
 import msg.team1.Hi.domain.auth.repository.BlackListRepository;
-import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.auth.repository.RefreshTokenRepository;
+import msg.team1.Hi.domain.auth.service.AuthService;
+import msg.team1.Hi.domain.email.entity.EmailAuth;
+import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
+import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
+import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
+import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
@@ -101,16 +99,7 @@ public class AuthServiceImpl implements AuthService {
             throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
         }
 
-        Member member = Member.builder()
-                .email(signUpRequest.getEmail())
-                .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                .name(signUpRequest.getName())
-                .number(signUpRequest.getNumber())
-                .role(Role.STUDENT)
-                .status(UseStatus.AVAILABLE)
-                .build();
-
-        memberRepository.save(member);
+        memberRepository.save(signUpRequest.toEntity(passwordEncoder.encode(signUpRequest.getPassword())));
     }
 
     @Override
