@@ -57,9 +57,12 @@ public class MemberServiceImpl implements MemberService {
         if(blackListRepository.existsById(accessToken))
             throw new BlackListAlreadyExistException("블랙리스트에 이미 등록되어있습니다.");
 
+        long expiredTime = tokenProvider.getACCESS_TOKEN_EXPIRE_TIME();
+
         BlackList blackList = BlackList.builder()
                 .email(email)
                 .accessToken(accessToken)
+                .timeToLive(expiredTime)
                 .build();
 
         blackListRepository.save(blackList);
