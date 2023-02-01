@@ -1,6 +1,5 @@
 package msg.team1.Hi.domain.member.service.impl;
 
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
@@ -26,7 +25,6 @@ import msg.team1.Hi.global.exception.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
 import msg.team1.Hi.global.util.MemberUtil;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.ZonedDateTime;
@@ -45,7 +43,6 @@ public class MemberServiceImpl implements MemberService {
     private final TokenProvider tokenProvider;
     private final JwtProperties jwtProperties;
     private final MemberUtil memberUtil;
-    private final RedisTemplate redisTemplate;
 
     private void validateAuth(String email) {
         EmailAuth emailAuth = emailAuthRepository.findById(email)
@@ -56,9 +53,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void saveBlackList(String email, String accessToken) {
-        if(redisTemplate.opsForValue().get(accessToken) != null){
+
+        if(blackListRepository.existsById(accessToken))
             throw new BlackListAlreadyExistException("블랙리스트에 이미 등록되어있습니다.");
-        }
 
         BlackList blackList = BlackList.builder()
                 .email(email)

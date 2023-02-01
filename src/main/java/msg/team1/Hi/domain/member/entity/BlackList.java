@@ -8,8 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
-import java.time.ZonedDateTime;
-
 @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,5 +17,5 @@ public class BlackList {
     private String accessToken;
     private String email;
     @TimeToLive
-    private ZonedDateTime timeToLive;
+    private Long timeToLive;
 }
