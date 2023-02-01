@@ -9,6 +9,7 @@ import msg.team1.Hi.domain.home_base.exception.ReservedHomeBaseException;
 import msg.team1.Hi.domain.member.exception.ExistEmailException;
 import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
+import msg.team1.Hi.domain.member.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.global.exception.ErrorMessage;
 import msg.team1.Hi.global.exception.collection.TokenExpirationException;
@@ -99,6 +100,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ReservedHomeBaseException.class)
     public ResponseEntity<ErrorMessage> handleReservedHomeBaseException(HttpServletRequest request , ReservedHomeBaseException e) {
+        printError(request, e, e.getErrorCode().getMessage());
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(RefreshTokenNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleRefreshTokenNotFoundException(HttpServletRequest request , RefreshTokenNotFoundException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));

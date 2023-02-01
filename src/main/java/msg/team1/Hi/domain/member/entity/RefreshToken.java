@@ -1,9 +1,6 @@
 package msg.team1.Hi.domain.member.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
@@ -12,7 +9,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString @Builder
 @RedisHash(value = "refreshToken")
 public class RefreshToken {
 

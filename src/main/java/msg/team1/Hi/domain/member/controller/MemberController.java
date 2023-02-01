@@ -29,7 +29,7 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<MemberLoginResponse> login(@RequestBody LoginRequest request) {
         MemberLoginResponse data = memberService.login(request);
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        return ResponseEntity.ok(data);
     }
 
     @PatchMapping("/change-pw")
@@ -41,8 +41,13 @@ public class MemberController {
     @PatchMapping
     public ResponseEntity<NewTokenResponse> reIssueToken(@RequestHeader("RefreshToken") String token) {
         NewTokenResponse reIssueToken = memberService.tokenReissue(token);
-        return new ResponseEntity<>(reIssueToken, HttpStatus.OK);
+        return ResponseEntity.ok(reIssueToken);
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String accessToken) {
+        memberService.logout(accessToken);
+        return ResponseEntity.noContent().build();
+    }
 
 }
