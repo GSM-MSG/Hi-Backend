@@ -76,8 +76,14 @@ public class MemberServiceImpl implements MemberService {
 
         String accessToken = tokenProvider.generatedAccessToken(loginRequest.getEmail());
         String refreshToken = tokenProvider.generatedRefreshToken(loginRequest.getEmail());
-        RefreshToken entityToRedis = new RefreshToken(loginRequest.getEmail(), refreshToken, tokenProvider.getREFRESH_TOKEN_EXPIRE_TIME());
-        refreshTokenRepository.save(entityToRedis);
+
+        RefreshToken token = RefreshToken.builder()
+                .email(loginRequest.getEmail())
+                .token(refreshToken)
+                .expiredAt(tokenProvider.getREFRESH_TOKEN_EXPIRE_TIME())
+                .build();
+
+        refreshTokenRepository.save(token);
 
         return MemberLoginResponse.builder()
                 .accessToken(accessToken)
@@ -129,6 +135,7 @@ public class MemberServiceImpl implements MemberService {
         String accessToken = tokenProvider.generatedAccessToken(email);
         String refreshToken = tokenProvider.generatedRefreshToken(email);
         ZonedDateTime expiredAt = tokenProvider.getExpiredAtToken(accessToken, jwtProperties.getAccessSecret());
+
         token.exchangeRefreshToken(refreshToken);
         refreshTokenRepository.save(token);
 
@@ -142,7 +149,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void logout(String accessToken) {
         Member member = memberUtil.currentMember();
-        RefreshToken refreshToken = refreshTokenRepository.findRefreshTokenByEmail(member.getEmail())
+        RefreshToken refreshToken = refreshTokenRepository.findById(member.getEmail())
                 .orElseThrow(() -> new RefreshTokenNotFoundException("존재하지 않는 리프레시 토큰입니다."));
         refreshTokenRepository.delete(refreshToken);
         saveBlackList(member.getEmail(), accessToken);

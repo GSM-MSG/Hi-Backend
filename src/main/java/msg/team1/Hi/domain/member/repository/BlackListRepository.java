@@ -1,7 +1,7 @@
 package msg.team1.Hi.domain.member.repository;
 
 import msg.team1.Hi.domain.member.entity.BlackList;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BlackListRepository extends CrudRepository<BlackList,String> {
+public interface BlackListRepository extends JpaRepository<BlackList,String> {
 }
