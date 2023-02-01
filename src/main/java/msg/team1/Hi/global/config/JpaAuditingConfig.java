@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.config.jpa;
+package msg.team1.Hi.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
