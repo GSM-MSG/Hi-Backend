@@ -1,16 +1,9 @@
 package msg.team1.Hi.domain.member.service;
 
-import msg.team1.Hi.domain.member.dto.request.ChangePasswordRequest;
-import msg.team1.Hi.domain.member.dto.request.LoginRequest;
-import msg.team1.Hi.domain.member.dto.request.SignUpRequest;
-import msg.team1.Hi.domain.member.dto.response.MemberLoginResponse;
-import msg.team1.Hi.domain.member.dto.response.NewTokenResponse;
+import msg.team1.Hi.domain.member.presentation.dto.request.ChangePasswordRequest;
 
 public interface MemberService {
 
-    MemberLoginResponse login(LoginRequest loginRequest);
-    void signUp(SignUpRequest signUpRequest);
     void changePassword(ChangePasswordRequest changePasswordRequest);
-    NewTokenResponse tokenReissue(String requestToken);
-    void logout(String accessToken);
+
 }
