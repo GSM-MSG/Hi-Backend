@@ -2,6 +2,7 @@ package msg.team1.Hi.domain.member.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
@@ -31,6 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.ZonedDateTime;
 
 
+@Slf4j
 @TransactionalService
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -54,18 +56,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void saveBlackList(String email, String accessToken) {
-        if(redisTemplate.opsForValue().get(accessToken)!=null){
+        if(redisTemplate.opsForValue().get(accessToken) != null){
             throw new BlackListAlreadyExistException("블랙리스트에 이미 등록되어있습니다.");
         }
-        ZonedDateTime accessTokenExpire = tokenProvider.getExpiredAtToken(accessToken,jwtProperties.getAccessSecret());
+
         BlackList blackList = BlackList.builder()
                 .email(email)
                 .accessToken(accessToken)
-                .timeToLive(accessTokenExpire)
                 .build();
+
         blackListRepository.save(blackList);
     }
 
+    @Override
     public MemberLoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
@@ -92,6 +95,7 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
+    @Override
     public void signUp(SignUpRequest signUpRequest) {
         boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist) {
@@ -116,6 +120,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
+    @Override
     public void changePassword(ChangePasswordRequest changePasswordRequest) {
         Member member = memberUtil.currentMember();
         validateAuth(member.getEmail());
@@ -123,6 +128,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
+    @Override
     public NewTokenResponse tokenReissue(String requestToken) {
         String email = tokenProvider.getUserEmail(requestToken, jwtProperties.getRefreshSecret());
         RefreshToken token = refreshTokenRepository.findById(email)
@@ -149,7 +155,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void logout(String accessToken) {
         Member member = memberUtil.currentMember();
-        RefreshToken refreshToken = refreshTokenRepository.findById(member.getEmail())
+        String email = tokenProvider.getUserEmail(accessToken, jwtProperties.getAccessSecret());
+        RefreshToken refreshToken = refreshTokenRepository.findById(email)
                 .orElseThrow(() -> new RefreshTokenNotFoundException("존재하지 않는 리프레시 토큰입니다."));
         refreshTokenRepository.delete(refreshToken);
         saveBlackList(member.getEmail(), accessToken);

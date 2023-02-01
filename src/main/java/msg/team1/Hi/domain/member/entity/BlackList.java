@@ -8,13 +8,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
-import javax.persistence.Entity;
 import java.time.ZonedDateTime;
 
 @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash()
+@RedisHash(value = "blackList")
 public class BlackList {
     @Id
     private String accessToken;
