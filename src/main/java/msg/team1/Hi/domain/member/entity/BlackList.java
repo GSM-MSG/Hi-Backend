@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 
+import javax.persistence.Entity;
 import java.time.ZonedDateTime;
 
 @Getter @Builder
