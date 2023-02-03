@@ -1,7 +1,7 @@
-package msg.team1.Hi.global.exception.collection;
+package msg.team1.Hi.global.error.collection;
 
 import lombok.Getter;
-import msg.team1.Hi.global.exception.ErrorCode;
+import msg.team1.Hi.global.error.ErrorCode;
 
 @Getter
 public class TokenExpirationException extends RuntimeException{

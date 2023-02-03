@@ -1,8 +1,7 @@
 package msg.team1.Hi.domain.auth.exception;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.global.exception.ErrorCode;
+import msg.team1.Hi.global.error.ErrorCode;
 
 @Getter
 public class ExistEmailException extends RuntimeException {

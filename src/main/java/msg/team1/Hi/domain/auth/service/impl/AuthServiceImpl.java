@@ -21,7 +21,7 @@ import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.annotation.TransactionalService;
-import msg.team1.Hi.global.exception.collection.TokenNotValidException;
+import msg.team1.Hi.global.error.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
 import msg.team1.Hi.global.util.MemberUtil;

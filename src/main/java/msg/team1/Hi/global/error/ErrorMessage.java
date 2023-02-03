@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.exception;
+package msg.team1.Hi.global.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

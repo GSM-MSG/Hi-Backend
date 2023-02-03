@@ -1,4 +1,4 @@
-package msg.team1.Hi.global.exception.handler;
+package msg.team1.Hi.global.error.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
@@ -11,9 +11,9 @@ import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.auth.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
-import msg.team1.Hi.global.exception.ErrorMessage;
-import msg.team1.Hi.global.exception.collection.TokenExpirationException;
-import msg.team1.Hi.global.exception.collection.TokenNotValidException;
+import msg.team1.Hi.global.error.ErrorMessage;
+import msg.team1.Hi.global.error.collection.TokenExpirationException;
+import msg.team1.Hi.global.error.collection.TokenNotValidException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
