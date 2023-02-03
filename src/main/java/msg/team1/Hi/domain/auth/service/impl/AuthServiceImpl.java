@@ -59,6 +59,19 @@ public class AuthServiceImpl implements AuthService {
         blackListRepository.save(blackList);
     }
 
+    private void verifyEmail(String email) {
+        boolean isExist = memberRepository.existsByEmail(email);
+        if(isExist) {
+            throw new ExistEmailException("이미 존재하는 이메일입니다.");
+        }
+        EmailAuth emailAuth = emailAuthRepository.findById(email)
+                .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));
+
+        if(!emailAuth.getAuthentication()){
+            throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
+        }
+    }
+
     @Override
     public MemberLoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
@@ -86,19 +99,11 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+
+
     @Override
     public void signUp(SignUpRequest signUpRequest) {
-        boolean isExist = memberRepository.existsByEmail(signUpRequest.getEmail());
-        if(isExist) {
-            throw new ExistEmailException("이미 존재하는 이메일입니다.");
-        }
-        EmailAuth emailAuth = emailAuthRepository.findById(signUpRequest.getEmail())
-                .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));
-
-        if(!emailAuth.getAuthentication()){
-            throw new NotVerifyEmailException("인증되지 않은 이메일입니다.");
-        }
-
+        verifyEmail(signUpRequest.getEmail());
         memberRepository.save(signUpRequest.toEntity(passwordEncoder.encode(signUpRequest.getPassword())));
     }
 

@@ -40,6 +40,4 @@ public class MemberServiceImpl implements MemberService {
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         memberRepository.save(member);
     }
-
-
 }
