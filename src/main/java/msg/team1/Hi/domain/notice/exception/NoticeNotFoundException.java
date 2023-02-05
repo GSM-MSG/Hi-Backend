@@ -1,7 +1,7 @@
 package msg.team1.Hi.domain.notice.exception;
 
 import lombok.Getter;
-import msg.team1.Hi.global.exception.ErrorCode;
+import msg.team1.Hi.global.error.ErrorCode;
 
 @Getter
 public class NoticeNotFoundException extends RuntimeException {
