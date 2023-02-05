@@ -1,7 +1,7 @@
 package msg.team1.Hi.domain.home_base.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.dto.request.ReserveHomeBaseRequest;
+import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
 import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import org.springframework.stereotype.Service;
 

@@ -2,9 +2,9 @@ package msg.team1.Hi.domain.notice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
-import msg.team1.Hi.domain.notice.dto.response.GetIdNoticeResponse;
-import msg.team1.Hi.domain.notice.dto.response.GetNoticeResponse;
+import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.entity.Notice;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;

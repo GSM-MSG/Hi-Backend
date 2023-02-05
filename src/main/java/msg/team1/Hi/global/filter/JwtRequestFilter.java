@@ -1,7 +1,7 @@
 package msg.team1.Hi.global.filter;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.global.exception.collection.TokenNotValidException;
+import msg.team1.Hi.global.error.collection.TokenNotValidException;
 import msg.team1.Hi.global.security.jwt.TokenProvider;
 import msg.team1.Hi.global.security.jwt.properties.JwtProperties;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -1,8 +1,8 @@
 package msg.team1.Hi.domain.notice.service;
 
-import msg.team1.Hi.domain.notice.dto.request.NoticeRequest;
-import msg.team1.Hi.domain.notice.dto.response.GetIdNoticeResponse;
-import msg.team1.Hi.domain.notice.dto.response.GetNoticeResponse;
+import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 
 import java.util.List;
 

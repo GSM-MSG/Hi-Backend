@@ -1,14 +1,14 @@
 package msg.team1.Hi.domain.email.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.email.dto.request.EmailSentDto;
+import msg.team1.Hi.domain.email.presentation.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
 import msg.team1.Hi.domain.email.exception.ManyRequestEmailAuthException;
 import msg.team1.Hi.domain.email.exception.MisMatchAuthCodeException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.email.service.EmailService;
-import msg.team1.Hi.domain.member.exception.MemberNotFoundException;
+import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
