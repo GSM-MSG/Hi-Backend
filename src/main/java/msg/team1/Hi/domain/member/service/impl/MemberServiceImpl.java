@@ -45,7 +45,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void withdraw(String password) {
         Member member = memberUtil.currentMember();
-        if(member.getPassword().equals(passwordEncoder.encode(password))) {
+        if(passwordEncoder.matches(password, member.getPassword())) {
             memberRepository.delete(member);
         } else{
             throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");

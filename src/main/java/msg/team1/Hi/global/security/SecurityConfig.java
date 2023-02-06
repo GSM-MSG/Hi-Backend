@@ -41,7 +41,8 @@ public class SecurityConfig  {
                 .csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/member/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/member/**").authenticated()
 
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
