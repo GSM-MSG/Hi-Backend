@@ -18,7 +18,6 @@ import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.error.collection.TokenNotValidException;
@@ -77,9 +76,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
-            throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
-        }
+        memberUtil.checkPassword(member, loginRequest.getPassword());
 
         String accessToken = tokenProvider.generatedAccessToken(loginRequest.getEmail());
         String refreshToken = tokenProvider.generatedRefreshToken(loginRequest.getEmail());
