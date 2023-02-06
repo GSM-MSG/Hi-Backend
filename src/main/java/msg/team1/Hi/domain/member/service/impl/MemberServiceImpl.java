@@ -6,6 +6,7 @@ import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.presentation.dto.request.ChangePasswordRequest;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.member.service.MemberService;
@@ -39,5 +40,15 @@ public class MemberServiceImpl implements MemberService {
         validateAuth(member.getEmail());
         member.updatePassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         memberRepository.save(member);
+    }
+
+    @Override
+    public void withdraw(String password) {
+        Member member = memberUtil.currentMember();
+        if(member.getPassword().equals(passwordEncoder.encode(password))) {
+            memberRepository.delete(member);
+        } else{
+            throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
+        }
     }
 }
