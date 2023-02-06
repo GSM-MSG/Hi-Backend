@@ -32,6 +32,6 @@ public class Reservation {
     private HomeBase homeBase;
 
     @OneToOne
-    @JoinColumn(name = "member_id2")
+    @JoinColumn(name = "member_id")
     private Member representative;
 }

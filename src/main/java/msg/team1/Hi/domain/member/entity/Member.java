@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.member.entity.enum_type.Role;
+import msg.team1.Hi.domain.reservation.entity.Reservation;
 
 import javax.persistence.*;
 
@@ -39,6 +40,10 @@ public class Member {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UseStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
     public void updatePassword(String password) {
         this.password = password;
