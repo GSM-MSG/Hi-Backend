@@ -21,5 +21,5 @@ $ git push origin {branch}
 ```
 - Jdk 11 
 - Spring boot 
-- JPA, h2 Database
+- JPA, MySQL
 ```
