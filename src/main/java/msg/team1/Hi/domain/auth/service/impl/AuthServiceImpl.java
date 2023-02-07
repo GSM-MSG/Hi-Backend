@@ -18,7 +18,6 @@ import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
 import msg.team1.Hi.domain.member.entity.Member;
-import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.error.collection.TokenNotValidException;
@@ -60,10 +59,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void verifyEmail(String email) {
-        boolean isExist = memberRepository.existsByEmail(email);
-        if(isExist) {
+        if(memberRepository.existsByEmail(email))
             throw new ExistEmailException("이미 존재하는 이메일입니다.");
-        }
+
         EmailAuth emailAuth = emailAuthRepository.findById(email)
                 .orElseThrow(() -> new NotVerifyEmailException("인증되지 않은 이메일입니다."));
 
@@ -77,9 +75,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = memberRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new MemberNotFoundException("존재하지 않는 회원입니다."));
 
-        if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())) {
-            throw new MisMatchPasswordException("비밀번호가 일치하지 않습니다.");
-        }
+        memberUtil.checkPassword(member, loginRequest.getPassword());
 
         String accessToken = tokenProvider.generatedAccessToken(loginRequest.getEmail());
         String refreshToken = tokenProvider.generatedRefreshToken(loginRequest.getEmail());
@@ -98,8 +94,6 @@ public class AuthServiceImpl implements AuthService {
                 .expiredAt(tokenProvider.getExpiredAtToken(accessToken, jwtProperties.getAccessSecret()))
                 .build();
     }
-
-
 
     @Override
     public void signUp(SignUpRequest signUpRequest) {
