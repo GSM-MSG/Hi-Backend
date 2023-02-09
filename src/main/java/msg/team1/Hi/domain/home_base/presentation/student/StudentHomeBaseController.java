@@ -14,12 +14,12 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("home-base")
+@RequestMapping("/student/home-base")
 public class StudentHomeBaseController {
 
     private final HomeBaseService homeBaseService;
 
-    @PostMapping("reserve")
+    @PostMapping("/reserve")
     public ResponseEntity<Void> reserveHomeBase(@Valid @RequestBody ReserveHomeBaseRequest request) {
         homeBaseService.reserveHomeBase(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
