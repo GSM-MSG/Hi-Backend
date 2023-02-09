@@ -4,10 +4,10 @@ import lombok.Getter;
 import msg.team1.Hi.global.error.ErrorCode;
 
 @Getter
-public class ReservedHomeBaseException extends RuntimeException{
+public class AlreadyReservedException extends RuntimeException{
     private final ErrorCode errorCode;
 
-    public ReservedHomeBaseException(String message) {
+    public AlreadyReservedException(String message) {
         super(message);
         this.errorCode = ErrorCode.ALREADY_RESERVED;
     }

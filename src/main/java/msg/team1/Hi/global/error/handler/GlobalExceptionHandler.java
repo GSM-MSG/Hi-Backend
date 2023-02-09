@@ -5,9 +5,10 @@ import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
 import msg.team1.Hi.domain.email.exception.ManyRequestEmailAuthException;
 import msg.team1.Hi.domain.email.exception.MisMatchAuthCodeException;
 import msg.team1.Hi.domain.email.exception.NotVerifyEmailException;
-import msg.team1.Hi.domain.home_base.exception.ReservedHomeBaseException;
+import msg.team1.Hi.domain.home_base.exception.AlreadyReservedException;
 import msg.team1.Hi.domain.auth.exception.ExistEmailException;
 import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
+import msg.team1.Hi.domain.home_base.exception.FullHomeBaseReservationException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.auth.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
@@ -98,8 +99,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
     }
 
-    @ExceptionHandler(ReservedHomeBaseException.class)
-    public ResponseEntity<ErrorMessage> handleReservedHomeBaseException(HttpServletRequest request , ReservedHomeBaseException e) {
+    @ExceptionHandler(AlreadyReservedException.class)
+    public ResponseEntity<ErrorMessage> handleReservedHomeBaseException(HttpServletRequest request , AlreadyReservedException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
@@ -107,6 +108,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RefreshTokenNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleRefreshTokenNotFoundException(HttpServletRequest request , RefreshTokenNotFoundException e) {
+        printError(request, e, e.getErrorCode().getMessage());
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(FullHomeBaseReservationException.class)
+    public ResponseEntity<ErrorMessage> handleFullHomeBaseReservationException(HttpServletRequest request , FullHomeBaseReservationException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
