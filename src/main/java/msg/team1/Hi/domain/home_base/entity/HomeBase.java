@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter @Builder
@@ -28,11 +29,12 @@ public class HomeBase {
     @Column(name = "is_available")
     private boolean isAvailable = true;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    private List<Reservation> reservation;
 
     public void updateIsAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import msg.team1.Hi.domain.home_base.entity.HomeBase;
+import msg.team1.Hi.domain.reservation.entity.enum_type.CheckStatus;
 import msg.team1.Hi.domain.member.entity.Member;
 
 import javax.persistence.*;
@@ -27,11 +28,19 @@ public class Reservation {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "id")
     private List<Member> members = new ArrayList<>();
 
-    @OneToOne
+    @Column(name = "check_status")
+    @Enumerated(EnumType.STRING)
+    private CheckStatus checkStatus;
+
+    @ManyToOne
     @JoinColumn(name = "home_base_id")
     private HomeBase homeBase;
 
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member representative;
+
+    public void updateCheckStatus(CheckStatus checkStatus){
+        this.checkStatus = checkStatus;
+    }
 }
