@@ -27,7 +27,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
     private final ReservationRepository reservationRepository;
 
     private void isAvailableHomeBaseAndMember(HomeBase homeBase, Member member) {
-        if(!homeBase.isFull())
+        if(homeBase.isFull())
             throw new FullHomeBaseReservationException("홈베이스의 자리가 꽉차있습니다.");
 
         if(member.getStatus() != UseStatus.AVAILABLE)
