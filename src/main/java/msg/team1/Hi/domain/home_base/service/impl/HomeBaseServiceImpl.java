@@ -51,6 +51,11 @@ public class HomeBaseServiceImpl implements HomeBaseService {
                 .checkStatus(CheckStatus.UNCHECKED)
                 .build();
 
+        homeBase.updateTableCount(homeBase.getTableCount()+1);
+
+        if(homeBase.getTableCount() >= 4)
+            homeBase.updateIsFull(true);
+
         reservationRepository.save(reservation);
     }
 }

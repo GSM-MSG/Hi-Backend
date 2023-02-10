@@ -27,8 +27,19 @@ public class HomeBase {
     @Column(name = "is_full")
     private boolean isFull = false;
 
+    @Column(name = "table_count")
+    private Integer tableCount = 0;
+
     public void updateIsFull(boolean isFull) {
         this.isFull = isFull;
+    }
+
+    public void updateTableCount(Integer tableCount) {
+        this.tableCount = tableCount;
+    }
+
+    public void resetTableCount(){
+        this.tableCount = 0;
     }
 
 }
