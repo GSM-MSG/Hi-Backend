@@ -50,10 +50,10 @@ public class SecurityConfig  {
                 .antMatchers(HttpMethod.POST,"/email/send").permitAll()
                 .antMatchers(HttpMethod.HEAD, "/email").permitAll()
 
-                .antMatchers("/notice/**").hasAnyAuthority("ADMIN" , "TEACHER")
-                .antMatchers(HttpMethod.GET , "/student/notice/**").hasAuthority("STUDENT")
+                .antMatchers("/student/**").hasAuthority("STUDENT")
+                .antMatchers("/teacher/**").hasAuthority("TEACHER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
 
-                .antMatchers("home-base/**").permitAll()
                 .anyRequest().authenticated();
         http
                 .sessionManagement()

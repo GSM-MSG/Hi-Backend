@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import msg.team1.Hi.domain.reservation.entity.Reservation;
 
 import javax.persistence.*;
 
@@ -25,14 +24,22 @@ public class HomeBase {
     @Column(name = "period")
     private Integer period;
 
-    @Column(name = "is_available")
-    private boolean isAvailable = true;
+    @Column(name = "is_full")
+    private boolean isFull = false;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    @Column(name = "table_count")
+    private Integer tableCount = 0;
 
-    public void updateIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void updateIsFull(boolean isFull) {
+        this.isFull = isFull;
     }
+
+    public void updateTableCount(Integer tableCount) {
+        this.tableCount = tableCount;
+    }
+
+    public void resetTableCount(){
+        this.tableCount = 0;
+    }
+
 }

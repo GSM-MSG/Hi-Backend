@@ -1,19 +1,24 @@
 package msg.team1.Hi.domain.home_base.presentation.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReserveHomeBaseRequest {
+    @NotBlank
+    private String teamName;
+    @NotNull
+    private Integer floor;
+    @NotNull
+    private Integer period;
     @NotEmpty
-    private final String stair;
-    @NotNull
-    private final List<Integer> members;
-    @NotNull
-    private final Integer representativeId;
+    private List<Integer> members;
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
-@Entity @Table(name = "notice")
+@Entity
 @Builder @Getter
 @NoArgsConstructor
 @AllArgsConstructor

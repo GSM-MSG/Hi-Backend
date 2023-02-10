@@ -18,7 +18,12 @@ public enum ErrorCode {
     NOTICE_NOT_FOUND("공지사항이 존재하지 않습니다.", 404),
     ALREADY_RESERVED("이미 예약한 상태입니다." , 400),
     ALREADY_EXIST_REFRESH_TOKEN("이미 존재하는 리프레시 토큰입니다.", 409),
+    HOME_BASE_FULL("홈베이스 자리가 꽉 차있습니다.", 406),
+    NOT_FOUND_HOME_BASE("홈베이스를 찾을 수 없습니다.", 404),
+    FORBIDDEN_RESERVATION("홈베이스 예약이 가능한 상태가 아닙니다.", 403),
+    FORBIDDEN_NOTICE("공지사항에 접근할 수 있는 권한이 없습니다.", 403),
     REFRESH_TOKEN_NOT_FOUND("존재하지 않는 리프레시 토큰입니다.", 404);
+
 
     private String message;
     private int status;
