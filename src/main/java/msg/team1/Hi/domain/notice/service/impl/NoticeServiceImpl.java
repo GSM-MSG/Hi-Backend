@@ -2,22 +2,20 @@ package msg.team1.Hi.domain.notice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.notice.entity.Notice;
+import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
-import msg.team1.Hi.domain.notice.entity.Notice;
-import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
 import msg.team1.Hi.domain.notice.service.NoticeService;
+import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.util.MemberUtil;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@TransactionalService
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
@@ -53,13 +51,12 @@ public class NoticeServiceImpl implements NoticeService {
                 .build();
     }
 
-    @Transactional
     public void updateNotice(Integer noticeId , NoticeRequest requestNotice) {
-        Optional<Notice> notice = noticeRepository.findById(noticeId);
-        notice.get().updateNotice(requestNotice.getTitle(), requestNotice.getContent());
+        Notice notice = noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new NoticeNotFoundException("존재하지 않는 공지사항"));
+        notice.updateNotice(requestNotice.getTitle(), requestNotice.getContent());
     }
 
-    @Transactional
     public void deleteNotice(Integer noticeId) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
