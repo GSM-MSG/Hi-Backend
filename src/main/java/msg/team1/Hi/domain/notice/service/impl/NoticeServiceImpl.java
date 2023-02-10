@@ -2,7 +2,9 @@ package msg.team1.Hi.domain.notice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.member.entity.enum_type.Role;
 import msg.team1.Hi.domain.notice.entity.Notice;
+import msg.team1.Hi.domain.notice.exception.ForbiddenAccessNoticeException;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
@@ -21,6 +23,21 @@ public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
     private final MemberUtil memberUtil;
+
+    private void verifyNoticeOwner(Member owner){
+        Member currentMember = memberUtil.currentMember();
+        if(!owner.equals(currentMember))
+            throw new ForbiddenAccessNoticeException("자신이 만든 공지사항이 아니므로 접근이 제한됩니다.");
+    }
+
+    private boolean isTeacherMember(){
+        Member member = memberUtil.currentMember();
+        if(member.getRole() == Role.TEACHER){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void createNotice(NoticeRequest noticeRequest) {
         Member member = memberUtil.currentMember();
@@ -54,12 +71,20 @@ public class NoticeServiceImpl implements NoticeService {
     public void updateNotice(Integer noticeId , NoticeRequest requestNotice) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("존재하지 않는 공지사항"));
+
+        if(isTeacherMember())
+            verifyNoticeOwner(notice.getMember());
+
         notice.updateNotice(requestNotice.getTitle(), requestNotice.getContent());
     }
 
     public void deleteNotice(Integer noticeId) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
+
+        if(isTeacherMember())
+            verifyNoticeOwner(notice.getMember());
+
         noticeRepository.delete(notice);
     }
 }
