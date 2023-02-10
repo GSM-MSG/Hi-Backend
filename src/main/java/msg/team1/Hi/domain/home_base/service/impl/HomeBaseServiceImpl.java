@@ -34,6 +34,12 @@ public class HomeBaseServiceImpl implements HomeBaseService {
             throw new ForbiddenHomeBaseReservationException("홈베이스에 예약 가능한 상태가 아닙니다.");
     }
 
+    private void updateMemberUseStatus(List<Member> members) {
+        for (Member member : members) {
+            memberUtil.updateUseStatusInUse(member);
+        }
+    }
+
     @Override
     public void reserveHomeBase(ReserveHomeBaseRequest request) {
         Member representative = memberUtil.currentMember();
@@ -52,6 +58,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
                 .build();
 
         homeBase.updateTableCount(homeBase.getTableCount()+1);
+        updateMemberUseStatus(members);
 
         if(homeBase.getTableCount() >= 4)
             homeBase.updateIsFull(true);
