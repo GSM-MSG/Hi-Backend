@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.presentation.teacher;
+package msg.team1.Hi.domain.home_base.presentation.controller.teacher;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;

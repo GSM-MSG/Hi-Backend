@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.presentation.student;
+package msg.team1.Hi.domain.home_base.presentation.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
@@ -13,8 +13,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/student/home-base")
-public class StudentHomeBaseController {
+@RequestMapping("/admin/home-base")
+public class AdminHomeBaseController {
 
     private final HomeBaseService homeBaseService;
 

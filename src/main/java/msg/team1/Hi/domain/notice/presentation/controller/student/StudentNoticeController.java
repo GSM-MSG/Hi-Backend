@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.notice.presentation.student;
+package msg.team1.Hi.domain.notice.presentation.controller.student;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
