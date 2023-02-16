@@ -22,6 +22,7 @@ public enum ErrorCode {
     NOT_FOUND_HOME_BASE("홈베이스를 찾을 수 없습니다.", 404),
     FORBIDDEN_RESERVATION("홈베이스 예약이 가능한 상태가 아닙니다.", 403),
     FORBIDDEN_NOTICE("공지사항에 접근할 수 있는 권한이 없습니다.", 403),
+    NOT_FOUND_RESERVATION("예약테이블이 존재하지 않습니다.",404),
     REFRESH_TOKEN_NOT_FOUND("존재하지 않는 리프레시 토큰입니다.", 404);
 
 
