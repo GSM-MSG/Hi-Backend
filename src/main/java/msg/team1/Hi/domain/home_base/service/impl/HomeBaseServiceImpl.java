@@ -82,4 +82,5 @@ public class HomeBaseServiceImpl implements HomeBaseService {
 
         return homeBaseUtil.reservationToLookUpResponseDto(reservations);
     }
+
 }
