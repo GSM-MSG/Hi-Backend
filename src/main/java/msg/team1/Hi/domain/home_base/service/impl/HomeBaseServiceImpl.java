@@ -77,10 +77,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         HomeBase homeBase = homeBaseRepository.findByFloorAndPeriod(floor, period)
                 .orElseThrow(() -> new NotFoundHomeBaseException("존재하지 않는 홈베이스입니다."));
 
-        List<Reservation> reservations = reservationRepository.findByHomeBase(homeBase);
-
-        if(reservations.isEmpty())
-            throw new NotFoundReservationException("존재하지 않는 예약현황입니다.");
+        List<Reservation> reservations = reservationRepository.findAllByHomeBase(homeBase);
 
         return homeBaseUtil.reservationToLookUpResponseDto(reservations);
     }
