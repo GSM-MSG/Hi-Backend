@@ -1,9 +1,9 @@
 package msg.team1.Hi.domain.member.presentation.dto.response;
 
-import lombok.Getter;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
-@Getter
+@Builder
 @RequiredArgsConstructor
 public class MemberInfoResponse {
     private final Long memberId;
