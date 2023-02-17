@@ -1,13 +1,11 @@
 package msg.team1.Hi.domain.home_base.presentation.controller.teacher;
 
 import lombok.RequiredArgsConstructor;
+import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationDetailResponse;
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
 import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,11 @@ public class TeacherHomeBaseController {
                                                                               @RequestParam Integer period){
         List<LookUpReservationResponse> responses = homeBaseService.lookUpAllReservation(floor, period);
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/{reservationId}")
+    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable Long reservationId){
+        LookUpReservationDetailResponse response = homeBaseService.lookUpReservation(reservationId);
+        return ResponseEntity.ok(response);
     }
 }
