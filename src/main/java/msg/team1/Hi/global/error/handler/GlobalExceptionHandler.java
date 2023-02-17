@@ -12,6 +12,7 @@ import msg.team1.Hi.domain.home_base.exception.FullHomeBaseReservationException;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.auth.exception.RefreshTokenNotFoundException;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
+import msg.team1.Hi.domain.reservation.exception.NotFoundReservationException;
 import msg.team1.Hi.global.error.ErrorMessage;
 import msg.team1.Hi.global.error.collection.TokenExpirationException;
 import msg.team1.Hi.global.error.collection.TokenNotValidException;
@@ -115,6 +116,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FullHomeBaseReservationException.class)
     public ResponseEntity<ErrorMessage> handleFullHomeBaseReservationException(HttpServletRequest request , FullHomeBaseReservationException e) {
+        printError(request, e, e.getErrorCode().getMessage());
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
+        return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler(NotFoundReservationException.class)
+    public ResponseEntity<ErrorMessage> handleNotFoundReservationException(HttpServletRequest request , NotFoundReservationException e) {
         printError(request, e, e.getErrorCode().getMessage());
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), e.getErrorCode().getStatus());
         return new ResponseEntity<>(errorMessage, HttpStatus.valueOf(e.getErrorCode().getStatus()));

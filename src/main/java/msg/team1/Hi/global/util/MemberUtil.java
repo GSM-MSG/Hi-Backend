@@ -5,6 +5,7 @@ import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
+import msg.team1.Hi.domain.member.presentation.dto.response.MemberInfoResponse;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,20 @@ public class MemberUtil {
     public List<Member> convertMemberIdListToMemberList(List<Integer> memberIdList){
         return memberIdList.stream()
                 .map(m -> memberRepository.findById(m).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 멤버입니다.")))
+                .collect(Collectors.toList());
+    }
+
+    public MemberInfoResponse memberToDto(Member member){
+        return MemberInfoResponse.builder()
+                .memberId(member.getId())
+                .email(member.getEmail())
+                .name(member.getName())
+                .number(member.getNumber())
+                .build();
+    }
+
+    public List<MemberInfoResponse> memberListToDtoList(List<Member> members){
+        return members.stream().map(m -> memberToDto(m))
                 .collect(Collectors.toList());
     }
 

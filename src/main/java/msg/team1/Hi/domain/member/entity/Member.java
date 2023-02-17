@@ -19,7 +19,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id" , nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "email", nullable = false, length = 20)
     private String email;
