@@ -40,12 +40,12 @@ public class AdminNoticeController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateNotice(@PathVariable Integer id , @Valid @RequestBody NoticeRequest noticeRequest) {
         noticeService.updateNotice(id , noticeRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNotice(@PathVariable Integer id) {
         noticeService.deleteNotice(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
