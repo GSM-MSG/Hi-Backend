@@ -54,8 +54,8 @@ public class NoticeServiceImpl implements NoticeService {
         return response;
     }
 
-    public GetIdNoticeResponse getNoticeById(Integer noticeId) {
-        Notice notice = noticeRepository.findById(noticeId)
+    public GetIdNoticeResponse getNoticeById(Integer id) {
+        Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
 
         return GetIdNoticeResponse

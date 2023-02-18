@@ -7,11 +7,11 @@ import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.notice.entity.Notice;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
+import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
 import msg.team1.Hi.global.util.MemberUtil;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -89,4 +90,48 @@ public class NoticeServiceTest {
         assertTrue(notice.getId() != null);
     }
 
+    @Test
+    @DisplayName("공지사항 전체 조회 테스트")
+    void getNoticeTest(){
+        //given
+        noticeService.createNotice(NoticeRequest.builder()
+                .title("테스트 제목 1")
+                .content("테스트 내용 1")
+                .build());
+
+        noticeService.createNotice(NoticeRequest.builder()
+                .title("테스트 제목 2")
+                .content("테스트 내용 2")
+                .build());
+
+        System.out.println("======SAVE NOTICE=======");
+
+        //when
+        List<GetNoticeResponse> notices = noticeService.getAllNotice();
+
+        //then
+        assertTrue(notices.size() == 2);
+    }
+
+    @Test
+    @DisplayName("공지사항 상세 조회 (id로 조회) 테스트")
+    void getNoticeByIdTest(){
+        Member member = memberUtil.currentMember();
+        //given
+        Notice savedNotice = noticeRepository.save(Notice.builder()
+                .member(member)
+                .title("공지사항 상세 조회 테스트 제목")
+                .content("공지사항 상세 조회 테스트 내용")
+                .build());
+
+        System.out.println(savedNotice.getId());
+        System.out.println("======SAVE NOTICE=======");
+
+        //when
+        GetIdNoticeResponse findNotice = noticeService.getNoticeById(savedNotice.getId());
+        System.out.println(findNotice.getNoticeId());
+
+        //then
+        assertThat(findNotice.getNoticeId()).isEqualTo(savedNotice.getId());
+    }
 }
