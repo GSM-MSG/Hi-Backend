@@ -36,8 +36,7 @@ public class Reservation {
     @JoinColumn(name = "home_base_id")
     private HomeBase homeBase;
 
-    @OneToOne
-    @JoinColumn(name = "member_id")
+    @OneToOne(mappedBy = "reservation")
     private Member representative;
 
     public void updateCheckStatus(CheckStatus checkStatus){
