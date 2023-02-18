@@ -134,4 +134,44 @@ public class NoticeServiceTest {
         //then
         assertThat(findNotice.getNoticeId()).isEqualTo(savedNotice.getId());
     }
+
+    @Test
+    @DisplayName("공지사항 수정 테스트")
+    void updateNoticeTest(){
+        //given
+        Member member = memberUtil.currentMember();
+        Notice savedNotice = noticeRepository.save(Notice.builder()
+                .member(member)
+                .title("공지사항 수정 테스트 제목 수정 전")
+                .content("공지사항 수정 테스트 내용 수정 전")
+                .build());
+
+        //when
+        noticeService.updateNotice(savedNotice.getId() , NoticeRequest.builder()
+                .title("제목 수정됨")
+                .content("내용 수정됨")
+                .build());
+
+        assertThat(savedNotice.getTitle()).isEqualTo("제목 수정됨");
+        assertThat(savedNotice.getContent()).isEqualTo("내용 수정됨");
+    }
+
+    @Test
+    @DisplayName("공지사항 삭제 테스트")
+    void deleteNoticeTest(){
+        //given
+        Member member = memberUtil.currentMember();
+        Notice savedNotice = noticeRepository.save(Notice.builder()
+                .member(member)
+                .title("공지사항 수정 테스트 제목 수정 전")
+                .content("공지사항 수정 테스트 내용 수정 전")
+                .build());
+
+        //when
+        noticeService.deleteNotice(savedNotice.getId());
+
+        //then
+        List<Notice> notices = noticeRepository.findAll();
+        assertTrue(notices.size() == 0);
+    }
 }
