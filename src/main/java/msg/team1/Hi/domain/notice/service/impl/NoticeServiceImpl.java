@@ -52,7 +52,7 @@ public class NoticeServiceImpl implements NoticeService {
                 .collect(Collectors.toList());
     }
 
-    public GetIdNoticeResponse getNoticeById(Integer id) {
+    public GetIdNoticeResponse getNoticeById(Long id) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
 
@@ -66,7 +66,7 @@ public class NoticeServiceImpl implements NoticeService {
                 .build();
     }
 
-    public void updateNotice(Integer noticeId , NoticeRequest requestNotice) {
+    public void updateNotice(Long noticeId , NoticeRequest requestNotice) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("존재하지 않는 공지사항"));
 
@@ -76,7 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
         notice.updateNotice(requestNotice.getTitle(), requestNotice.getContent());
     }
 
-    public void deleteNotice(Integer noticeId) {
+    public void deleteNotice(Long noticeId) {
         Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("공지사항이 존재하지 않습니다."));
 

@@ -26,7 +26,7 @@ public class StudentNoticeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Integer id) {
+    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Long id) {
         GetIdNoticeResponse notice = noticeService.getNoticeById(id);
         return ResponseEntity.ok().body(notice);
     }

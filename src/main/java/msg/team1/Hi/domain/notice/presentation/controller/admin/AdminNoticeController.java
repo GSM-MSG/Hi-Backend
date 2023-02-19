@@ -32,19 +32,19 @@ public class AdminNoticeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Integer id) {
+    public ResponseEntity<GetIdNoticeResponse> getNoticeById(@PathVariable Long id) {
         GetIdNoticeResponse notice = noticeService.getNoticeById(id);
         return ResponseEntity.ok().body(notice);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateNotice(@PathVariable Integer id , @Valid @RequestBody NoticeRequest noticeRequest) {
+    public ResponseEntity<Void> updateNotice(@PathVariable Long id , @Valid @RequestBody NoticeRequest noticeRequest) {
         noticeService.updateNotice(id , noticeRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNotice(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteNotice(@PathVariable Long id) {
         noticeService.deleteNotice(id);
         return ResponseEntity.noContent().build();
     }

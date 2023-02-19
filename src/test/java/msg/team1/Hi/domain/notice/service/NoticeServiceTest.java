@@ -10,17 +10,21 @@ import msg.team1.Hi.domain.notice.presentation.dto.request.NoticeRequest;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
+import msg.team1.Hi.domain.notice.service.impl.NoticeServiceImpl;
 import msg.team1.Hi.global.util.MemberUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,22 +32,23 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Transactional
+@ExtendWith(MockitoExtension.class)
 public class NoticeServiceTest {
 
-    @Autowired
-    private NoticeService noticeService;
-    @Autowired
+    @InjectMocks
+    private NoticeServiceImpl noticeService;
+    @Mock
     private NoticeRepository noticeRepository;
-    @Autowired
+    @Mock
     private MemberRepository memberRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
+    @InjectMocks
+    private BCryptPasswordEncoder passwordEncoder;
+    @InjectMocks
     private MemberUtil memberUtil;
-
 
     @BeforeEach
     @DisplayName("멤버 로그인 확인 테스트")
@@ -58,6 +63,7 @@ public class NoticeServiceTest {
                 .status(UseStatus.AVAILABLE)
                 .build();
 
+        when(memberRepository.save(member)).thenReturn(member);
         memberRepository.save(member);
 
         System.out.println("SAVE!!");
@@ -77,16 +83,17 @@ public class NoticeServiceTest {
         assertEquals("s22043@gsm.hs.kr", currentMember.getEmail());
     }
 
+
     @Test
     @DisplayName("공지사항 작성 테스트")
     void createNoticeTest(){
         //given
-        noticeService.createNotice(NoticeRequest.builder()
-                .title("테스트를위한하나뿐인제목")
+        Long noticeId = noticeService.createNotice(NoticeRequest.builder()
+                .title("공지사항 제목")
                 .content("공지사항 내용")
                 .build());
 
-        Notice notice = noticeRepository.findByTitle("테스트를위한하나뿐인제목")
+        Notice notice = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new NoticeNotFoundException("존재하지 않는 공지사항"));
 
         // then
@@ -162,6 +169,9 @@ public class NoticeServiceTest {
     @Test
     @DisplayName("공지사항 삭제 테스트")
     void deleteNoticeTest(){
+
+        currentUser();
+
         //given
         Member member = memberUtil.currentMember();
         Notice savedNotice = noticeRepository.save(Notice.builder()

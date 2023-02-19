@@ -9,7 +9,7 @@ import java.util.List;
 public interface NoticeService {
     public Long createNotice(NoticeRequest noticeRequest);
     public List<GetNoticeResponse> getAllNotice();
-    public GetIdNoticeResponse getNoticeById(Integer noticeId);
-    public void updateNotice(Integer noticeId , NoticeRequest requestNotice);
-    public void deleteNotice(Integer boardId);
+    public GetIdNoticeResponse getNoticeById(Long noticeId);
+    public void updateNotice(Long noticeId , NoticeRequest requestNotice);
+    public void deleteNotice(Long boardId);
 }
