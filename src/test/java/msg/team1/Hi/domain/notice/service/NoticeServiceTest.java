@@ -11,7 +11,9 @@ import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
 import msg.team1.Hi.global.util.MemberUtil;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
@@ -41,6 +43,7 @@ public class NoticeServiceTest {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MemberUtil memberUtil;
+
 
     @BeforeEach
     @DisplayName("멤버 로그인 확인 테스트")

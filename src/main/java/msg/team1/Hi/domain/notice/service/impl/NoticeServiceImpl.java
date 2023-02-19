@@ -39,19 +39,17 @@ public class NoticeServiceImpl implements NoticeService {
         }
     }
 
-    public void createNotice(NoticeRequest noticeRequest) {
+    public Long createNotice(NoticeRequest noticeRequest) {
         Member member = memberUtil.currentMember();
-        noticeRepository.save(noticeRequest.toEntity(member));
+        Notice notice = noticeRepository.save(noticeRequest.toEntity(member));
+        return notice.getId();
     }
 
     public List<GetNoticeResponse> getAllNotice() {
         List<Notice> notices = noticeRepository.findAll();
-
-        List<GetNoticeResponse> response = notices.stream().map(m -> new GetNoticeResponse(
-                m.getId() , m.getTitle() , m.getMember().getName(), m.getCreatedDate()))
+        return notices.stream().map(n -> GetNoticeResponse.builder()
+                        .noticeId(n.getId()).title(n.getTitle()).name(n.getMember().getName()).build())
                 .collect(Collectors.toList());
-
-        return response;
     }
 
     public GetIdNoticeResponse getNoticeById(Integer id) {
