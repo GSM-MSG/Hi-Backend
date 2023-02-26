@@ -14,7 +14,6 @@ import msg.team1.Hi.domain.reservation.entity.Reservation;
 import msg.team1.Hi.domain.reservation.entity.enum_type.CheckStatus;
 import msg.team1.Hi.domain.reservation.repository.ReservationRepository;
 import msg.team1.Hi.global.annotation.TransactionalService;
-import msg.team1.Hi.global.util.HomeBaseUtil;
 import msg.team1.Hi.global.util.MemberUtil;
 
 import java.util.List;
@@ -35,9 +34,10 @@ public class HomeBaseServiceImpl implements HomeBaseService {
             throw new ForbiddenHomeBaseReservationException("홈베이스에 예약 가능한 상태가 아닙니다.");
     }
 
-    private void updateMemberUseStatus(List<Member> members) {
+    private void updateMemberUseStatus(List<Member> members, Reservation reservation) {
         for (Member member : members) {
             memberUtil.updateUseStatusInUse(member);
+            member.updateReservation(reservation);
         }
     }
 
@@ -53,19 +53,16 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         Reservation reservation = Reservation.builder()
                 .teamName(request.getTeamName())
                 .representative(representative)
-                .members(members)
                 .homeBase(homeBase)
                 .checkStatus(CheckStatus.UNCHECKED)
                 .build();
 
-        homeBase.updateTableCount(homeBase.getTableCount()+1);
-        updateMemberUseStatus(members);
+        homeBase.updateTableCount(homeBase.getTableCount() + 1);
+        updateMemberUseStatus(members, reservation);
 
         if(homeBase.getTableCount() >= 4)
             homeBase.updateIsFull(true);
 
         reservationRepository.save(reservation);
     }
-
-
 }

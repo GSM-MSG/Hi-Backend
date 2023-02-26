@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReservationService {
     List<LookUpReservationResponse> lookUpAllReservation(Integer floor, Integer period);
     LookUpReservationDetailResponse lookUpReservation(Long reservationId);
+    void updateReservation(Long reservationId, String teamName);
 }
