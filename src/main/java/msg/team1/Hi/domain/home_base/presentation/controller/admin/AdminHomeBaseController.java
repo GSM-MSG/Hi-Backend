@@ -39,4 +39,10 @@ public class AdminHomeBaseController {
         LookUpReservationDetailResponse response = reservationService.lookUpReservation(reservationId);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/{reservation_id}/name")
+    public ResponseEntity<Void> updateReservation(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+        reservationService.updateReservation(reservationId, teamName);
+        return ResponseEntity.noContent().build();
+    }
 }
