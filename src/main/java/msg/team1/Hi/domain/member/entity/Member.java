@@ -41,7 +41,7 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private UseStatus status;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
@@ -51,5 +51,9 @@ public class Member {
 
     public void updateStatus(UseStatus status) {
         this.status = status;
+    }
+
+    public void updateReservation(Reservation reservation){
+        this.reservation = reservation;
     }
 }

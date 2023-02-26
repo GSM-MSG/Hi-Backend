@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import msg.team1.Hi.domain.home_base.entity.HomeBase;
-import msg.team1.Hi.domain.reservation.entity.enum_type.CheckStatus;
 import msg.team1.Hi.domain.member.entity.Member;
+import msg.team1.Hi.domain.reservation.entity.enum_type.CheckStatus;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity @Getter @Builder
 @NoArgsConstructor
@@ -24,9 +22,6 @@ public class Reservation {
 
     @Column(name = "team_name")
     private String teamName;
-
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "id")
-    private List<Member> members = new ArrayList<>();
 
     @Column(name = "check_status")
     @Enumerated(EnumType.STRING)
@@ -42,5 +37,9 @@ public class Reservation {
 
     public void updateCheckStatus(CheckStatus checkStatus){
         this.checkStatus = checkStatus;
+    }
+
+    public void updateTeamName(String teamName){
+        this.teamName = teamName;
     }
 }

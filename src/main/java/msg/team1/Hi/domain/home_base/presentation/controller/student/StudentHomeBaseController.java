@@ -5,6 +5,7 @@ import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseReq
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationDetailResponse;
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
 import msg.team1.Hi.domain.home_base.service.HomeBaseService;
+import msg.team1.Hi.domain.reservation.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 public class StudentHomeBaseController {
 
     private final HomeBaseService homeBaseService;
+    private final ReservationService reservationService;
 
     @PostMapping("/reserve")
     public ResponseEntity<Void> reserveHomeBase(@Valid @RequestBody ReserveHomeBaseRequest request) {
@@ -28,13 +30,19 @@ public class StudentHomeBaseController {
     @GetMapping
     public ResponseEntity<List<LookUpReservationResponse>> lookUpReservations(@RequestParam Integer floor,
                                                                               @RequestParam Integer period){
-        List<LookUpReservationResponse> responses = homeBaseService.lookUpAllReservation(floor, period);
+        List<LookUpReservationResponse> responses = reservationService.lookUpAllReservation(floor, period);
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable Long reservationId){
-        LookUpReservationDetailResponse response = homeBaseService.lookUpReservation(reservationId);
+    @GetMapping("/{reservation_id}")
+    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable("reservation_id") Long reservationId){
+        LookUpReservationDetailResponse response = reservationService.lookUpReservation(reservationId);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{reservation_id}/name")
+    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+        reservationService.updateReservationTeamName(reservationId, teamName);
+        return ResponseEntity.noContent().build();
     }
 }
