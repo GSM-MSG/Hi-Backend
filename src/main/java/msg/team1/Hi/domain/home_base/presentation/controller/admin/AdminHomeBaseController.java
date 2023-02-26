@@ -41,7 +41,7 @@ public class AdminHomeBaseController {
     }
 
     @PatchMapping("/{reservation_id}/name")
-    public ResponseEntity<Void> updateReservation(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
         reservationService.updateReservation(reservationId, teamName);
         return ResponseEntity.noContent().build();
     }
