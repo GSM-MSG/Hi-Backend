@@ -34,9 +34,15 @@ public class StudentHomeBaseController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable Long reservationId){
+    @GetMapping("/{reservation_id}")
+    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable("reservation_id") Long reservationId){
         LookUpReservationDetailResponse response = reservationService.lookUpReservation(reservationId);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{reservation_id}/name")
+    public ResponseEntity<Void> updateReservation(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+        reservationService.updateReservation(reservationId, teamName);
+        return ResponseEntity.noContent().build();
     }
 }

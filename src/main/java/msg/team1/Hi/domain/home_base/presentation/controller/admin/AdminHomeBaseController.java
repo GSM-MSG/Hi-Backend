@@ -34,8 +34,8 @@ public class AdminHomeBaseController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable Long reservationId){
+    @GetMapping("/{reservation_id}")
+    public ResponseEntity<LookUpReservationDetailResponse> lookUpReservation(@PathVariable("reservation_id") Long reservationId){
         LookUpReservationDetailResponse response = reservationService.lookUpReservation(reservationId);
         return ResponseEntity.ok(response);
     }
