@@ -56,7 +56,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public void updateReservation(Long reservationId, String teamName) {
+    public void updateReservationTeamName(Long reservationId, String teamName) {
         Member currentMember = memberUtil.currentMember();
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new NotFoundReservationException("존재하지 않는 예약현황 입니다."));
