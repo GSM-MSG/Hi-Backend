@@ -53,7 +53,7 @@ public class MemberUtil {
     }
 
     public void updateUseStatusInUse(Member member){
-            member.updateStatus(UseStatus.INUSE);
+        member.updateStatus(UseStatus.INUSE);
     }
 
 }
