@@ -17,7 +17,7 @@ public class Notice extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "notice_id", nullable = false)
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id", nullable = false)
@@ -29,8 +29,17 @@ public class Notice extends BaseTimeEntity {
     @Column(name = "content", nullable = false,columnDefinition = "TEXT")
     private String content;
 
-    public void updateNotice(String title, String content) {
-        this.title = title != null ? title : this.title;
-        this.content = content != null ? content : this.content;
+    public Notice updateNotice(String title, String content) {
+        Notice notice = Notice.builder()
+                .title(title)
+                .content(content)
+                .member(this.member)
+                .build();
+        notice.updateId(id);
+        return notice;
+    }
+
+    public void updateId(Long id){
+        this.id = id;
     }
 }
