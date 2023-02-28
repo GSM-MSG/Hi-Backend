@@ -5,14 +5,12 @@ import msg.team1.Hi.domain.notice.entity.Notice;
 import msg.team1.Hi.domain.notice.exception.NoticeNotFoundException;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetIdNoticeResponse;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
-import msg.team1.Hi.global.annotation.TransactionalService;
-import msg.team1.Hi.global.util.MemberUtil;
+import org.springframework.stereotype.Service;
 
-@TransactionalService
+@Service
 @RequiredArgsConstructor
 public class GetNoticeService {
 
-    private final MemberUtil memberUtil;
     private final NoticeRepository noticeRepository;
 
     public GetIdNoticeResponse execute(Long noticeId) {

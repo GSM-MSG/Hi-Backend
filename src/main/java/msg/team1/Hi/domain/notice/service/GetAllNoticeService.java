@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.notice.entity.Notice;
 import msg.team1.Hi.domain.notice.presentation.dto.response.GetNoticeResponse;
 import msg.team1.Hi.domain.notice.repository.NoticeRepository;
-import msg.team1.Hi.global.annotation.TransactionalService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@TransactionalService
+@Service
 @RequiredArgsConstructor
 public class GetAllNoticeService {
 
