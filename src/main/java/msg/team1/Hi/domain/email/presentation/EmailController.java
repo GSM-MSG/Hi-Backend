@@ -2,7 +2,8 @@ package msg.team1.Hi.domain.email.presentation;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.email.presentation.dto.request.EmailSentDto;
-import msg.team1.Hi.domain.email.service.EmailService;
+import msg.team1.Hi.domain.email.service.EmailCheckService;
+import msg.team1.Hi.domain.email.service.EmailSendService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +17,18 @@ import javax.validation.constraints.Email;
 @RequestMapping("/email")
 public class EmailController {
 
-    private final EmailService emailService;
+    private final EmailSendService emailSendService;
+    private final EmailCheckService emailCheckService;
 
     @PostMapping(value = "/send" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendEmail(@RequestBody @Valid EmailSentDto emailSentDto) {
-        emailService.sendEmail(emailSentDto);
+        emailSendService.execute(emailSentDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @RequestMapping(method = RequestMethod.HEAD)
     public ResponseEntity<Void> mailCheck(@Email @RequestParam String email, @RequestParam String authKey) {
-        emailService.checkEmail(email, authKey);
+        emailCheckService.execute(email, authKey);
         return ResponseEntity.ok().build();
     }
 

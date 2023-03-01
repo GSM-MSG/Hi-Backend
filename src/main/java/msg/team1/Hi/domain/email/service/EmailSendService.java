@@ -1,37 +1,33 @@
-package msg.team1.Hi.domain.email.service.impl;
+package msg.team1.Hi.domain.email.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.email.presentation.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.entity.EmailAuth;
 import msg.team1.Hi.domain.email.exception.AuthCodeExpiredException;
 import msg.team1.Hi.domain.email.exception.ManyRequestEmailAuthException;
-import msg.team1.Hi.domain.email.exception.MisMatchAuthCodeException;
+import msg.team1.Hi.domain.email.presentation.dto.request.EmailSentDto;
 import msg.team1.Hi.domain.email.repository.EmailAuthRepository;
-import msg.team1.Hi.domain.email.service.EmailService;
-import msg.team1.Hi.domain.auth.exception.MemberNotFoundException;
+import msg.team1.Hi.global.annotation.TransactionalService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Objects;
 import java.util.Random;
 
-@Service
 @EnableAsync
+@TransactionalService
 @RequiredArgsConstructor
-public class EmailServiceImpl implements EmailService {
+public class EmailSendService {
 
     private final EmailAuthRepository emailAuthRepository;
     private final JavaMailSender mailSender;
 
     @Async
     @Transactional(rollbackFor = Exception.class)
-    public void sendEmail(EmailSentDto emailSentDto){
+    public void execute(EmailSentDto emailSentDto){
 
         Random random = new Random();
         String authKey = String.valueOf(random.nextInt(8888) + 1111);
@@ -66,22 +62,6 @@ public class EmailServiceImpl implements EmailService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new AuthCodeExpiredException("메일 발송에 실패했습니다");
-        }
-    }
-
-
-    @Transactional(rollbackFor = Exception.class)
-    public void checkEmail(String email , String authKey) {
-        EmailAuth emailAuthEntity = emailAuthRepository.findById(email)
-                .orElseThrow(()-> new MemberNotFoundException("유저를 찾을 수 없습니다."));
-        checkAuthKey(emailAuthEntity,authKey);
-        emailAuthEntity.updateAuthentication(true);
-        emailAuthRepository.save(emailAuthEntity);
-    }
-
-    private void checkAuthKey(EmailAuth emailAuthEntity, String authKey) {
-        if(!Objects.equals(emailAuthEntity.getRandomValue(), authKey)){
-            throw new MisMatchAuthCodeException("인증번호가 일치하지 않습니다.");
         }
     }
 

@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.service.impl;
+package msg.team1.Hi.domain.home_base.service;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.home_base.entity.HomeBase;
@@ -7,7 +7,6 @@ import msg.team1.Hi.domain.home_base.exception.FullHomeBaseReservationException;
 import msg.team1.Hi.domain.home_base.exception.NotFoundHomeBaseException;
 import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
 import msg.team1.Hi.domain.home_base.repository.HomeBaseRepository;
-import msg.team1.Hi.domain.home_base.service.HomeBaseService;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
@@ -20,11 +19,12 @@ import java.util.List;
 
 @TransactionalService
 @RequiredArgsConstructor
-public class HomeBaseServiceImpl implements HomeBaseService {
+public class ReserveHomeBaseService {
 
     private final MemberUtil memberUtil;
     private final HomeBaseRepository homeBaseRepository;
     private final ReservationRepository reservationRepository;
+
 
     private void isAvailableHomeBaseAndMember(HomeBase homeBase, Member member) {
         if(homeBase.isFull())
@@ -41,8 +41,7 @@ public class HomeBaseServiceImpl implements HomeBaseService {
         }
     }
 
-    @Override
-    public void reserveHomeBase(ReserveHomeBaseRequest request) {
+    public void execute(ReserveHomeBaseRequest request) {
         Member representative = memberUtil.currentMember();
         HomeBase homeBase = homeBaseRepository.findByFloorAndPeriod(request.getFloor(), request.getPeriod())
                 .orElseThrow(() -> new NotFoundHomeBaseException("홈베이스가 존재하지 않습니다."));

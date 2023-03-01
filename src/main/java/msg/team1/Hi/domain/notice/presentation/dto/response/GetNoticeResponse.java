@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 public class GetNoticeResponse{
 
-    private Integer noticeId;
+    private Long noticeId;
     private String title;
     private String name;
 

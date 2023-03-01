@@ -39,7 +39,18 @@ public class Reservation {
         this.checkStatus = checkStatus;
     }
 
-    public void updateTeamName(String teamName){
-        this.teamName = teamName;
+    public Reservation updateTeamName(String teamName){
+        Reservation reservation = Reservation.builder()
+                .teamName(teamName)
+                .checkStatus(this.checkStatus)
+                .homeBase(this.homeBase)
+                .representative(this.representative)
+                .build();
+        reservation.updateId(id);
+        return reservation;
+    }
+
+    public void updateId(Long id){
+        this.id = id;
     }
 }
