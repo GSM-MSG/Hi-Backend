@@ -24,7 +24,7 @@ public class GetReservationService {
     public LookUpReservationDetailResponse execute(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new NotFoundReservationException("존재하지 않는 예약현황입니다."));
-        List<Member> reservedMembers = memberRepository.findByReservation(reservation);
+        List<Member> reservedMembers = memberRepository.findAllByReservation(reservation);
         List<MemberInfoResponse> memberInfoList = memberUtil
                 .memberListToDtoList(reservedMembers);
 
