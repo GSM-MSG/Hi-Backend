@@ -31,7 +31,7 @@ public class UpdateReservationMemberService {
 
     public void execute(UpdateReservationMemberRequest updateReservationRequest, Long reservationId) {
 
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findByIdAndRepresentative(reservationId, memberUtil.currentMember())
                 .orElseThrow(() -> new NotFoundReservationException("존재하지 않는 예약현황 입니다."));
 
        updatePrevMemberUseStatus(reservation);
