@@ -2,7 +2,6 @@ package msg.team1.Hi.domain.home_base.presentation.controller.admin;
 
 import lombok.RequiredArgsConstructor;
 import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
-import msg.team1.Hi.domain.home_base.presentation.dto.request.UpdateReservationMemberRequest;
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationDetailResponse;
 import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
 import msg.team1.Hi.domain.home_base.service.ReserveHomeBaseService;
@@ -48,14 +47,8 @@ public class AdminHomeBaseController {
     }
 
     @PatchMapping("/{reservation_id}/name")
-    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName) {
         updateReservationTeamNameService.execute(reservationId, teamName);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{reservation_id}/update-member")
-    public ResponseEntity<Void> updateReservationMembers(@PathVariable("reservation_id") Long reservationId, @RequestBody UpdateReservationMemberRequest request) {
-        updateReservationMemberService.execute(request, reservationId);
         return ResponseEntity.noContent().build();
     }
 }
