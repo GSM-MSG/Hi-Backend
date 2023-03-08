@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateReservationRequest {
+public class UpdateReservationMemberRequest {
     private List<Long> members;
 }
