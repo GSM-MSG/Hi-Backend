@@ -25,6 +25,7 @@ public class UpdateReservationMemberService {
         List<Member> prevMembers = memberRepository.findAllByReservation(reservation);
         for (Member member : prevMembers) {
             member.updateStatus(UseStatus.AVAILABLE);
+            member.updateReservation(null);
         }
         memberRepository.saveAll(prevMembers);
     }
