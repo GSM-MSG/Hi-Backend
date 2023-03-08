@@ -25,7 +25,6 @@ public class AdminHomeBaseController {
     private final GetAllReservationService getAllReservationService;
     private final GetReservationService getReservationService;
     private final UpdateReservationTeamNameService updateReservationTeamNameService;
-    private final UpdateReservationMemberService updateReservationMemberService;
 
     @PostMapping("/reserve")
     public ResponseEntity<Void> reserveHomeBase(@Valid @RequestBody ReserveHomeBaseRequest request) {
