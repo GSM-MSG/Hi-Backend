@@ -12,6 +12,7 @@ import msg.team1.Hi.global.annotation.TransactionalService;
 import msg.team1.Hi.global.util.MemberUtil;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @TransactionalService
 @RequiredArgsConstructor
@@ -22,12 +23,9 @@ public class UpdateReservationMemberService {
     private final ReservationRepository reservationRepository;
 
     private void updatePrevMemberUseStatus(Reservation reservation) {
-        List<Member> prevMembers = memberRepository.findAllByReservation(reservation);
-        for (Member member : prevMembers) {
-            member.updateStatus(UseStatus.AVAILABLE);
-            member.updateReservation(null);
-        }
-        memberRepository.saveAll(prevMembers);
+        memberRepository.saveAll(memberRepository.findAllByReservation(reservation).stream()
+                .map(m ->{ m.updateStatus(UseStatus.AVAILABLE) , m.updateReservation(null)})
+                .collect(Collectors.toList()));
     }
 
     public void execute(UpdateReservationMemberRequest updateReservationRequest, Long reservationId) {
