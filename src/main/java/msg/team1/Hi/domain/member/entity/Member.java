@@ -56,4 +56,10 @@ public class Member {
     public void updateReservation(Reservation reservation){
         this.reservation = reservation;
     }
+
+    public Member updateReservationAndUseStatus(UseStatus status, Reservation reservation){
+        this.status = status;
+        this.reservation = reservation;
+        return this;
+    }
 }
