@@ -24,7 +24,7 @@ public class UpdateReservationMemberService {
 
     private void updatePrevMemberUseStatus(Reservation reservation) {
         memberRepository.saveAll(memberRepository.findAllByReservation(reservation).stream()
-                .map(m ->{ m.updateStatus(UseStatus.AVAILABLE) , m.updateReservation(null)})
+                .map(m -> m.updateReservationAndUseStatus(UseStatus.AVAILABLE, reservation))
                 .collect(Collectors.toList()));
     }
 
