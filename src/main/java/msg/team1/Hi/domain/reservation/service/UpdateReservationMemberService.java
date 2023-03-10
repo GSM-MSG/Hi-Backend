@@ -21,7 +21,7 @@ public class UpdateReservationMemberService {
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
 
-    public void updatePrevMemberUseStatus(Reservation reservation) {
+    private void updatePrevMemberUseStatus(Reservation reservation) {
         List<Member> prevMembers = memberRepository.findAllByReservation(reservation);
         for (Member member : prevMembers) {
             member.updateStatus(UseStatus.AVAILABLE);

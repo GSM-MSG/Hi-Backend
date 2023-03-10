@@ -54,7 +54,7 @@ public class StudentHomeBaseController {
     }
 
     @PatchMapping("/{reservation_id}/update-member")
-    public ResponseEntity<Void> updateReservationMembers(@PathVariable("reservation_id") Long reservationId, @RequestBody UpdateReservationMemberRequest request) {
+    public ResponseEntity<Void> updateReservationMembers(@PathVariable("reservation_id") Long reservationId, @RequestBody @Valid UpdateReservationMemberRequest request) {
         updateReservationMemberService.execute(request, reservationId);
         return ResponseEntity.noContent().build();
     }
