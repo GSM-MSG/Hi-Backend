@@ -20,5 +20,5 @@ public class ReserveHomeBaseRequest {
     @NotNull
     private Integer period;
     @NotEmpty
-    private List<Integer> members;
+    private List<Long> members;
 }

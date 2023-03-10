@@ -7,6 +7,7 @@ import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservation
 import msg.team1.Hi.domain.home_base.service.ReserveHomeBaseService;
 import msg.team1.Hi.domain.reservation.service.GetAllReservationService;
 import msg.team1.Hi.domain.reservation.service.GetReservationService;
+import msg.team1.Hi.domain.reservation.service.UpdateReservationMemberService;
 import msg.team1.Hi.domain.reservation.service.UpdateReservationTeamNameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class AdminHomeBaseController {
     }
 
     @PatchMapping("/{reservation_id}/name")
-    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName){
+    public ResponseEntity<Void> updateReservationTeamName(@PathVariable("reservation_id") Long reservationId, @RequestParam String teamName) {
         updateReservationTeamNameService.execute(reservationId, teamName);
         return ResponseEntity.noContent().build();
     }

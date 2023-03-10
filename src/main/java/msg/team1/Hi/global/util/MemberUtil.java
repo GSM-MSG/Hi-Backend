@@ -32,7 +32,7 @@ public class MemberUtil {
             throw new MisMatchPasswordException("비밀번호가 일치하지 않음");
     }
 
-    public List<Member> convertMemberIdListToMemberList(List<Integer> memberIdList){
+    public List<Member> convertMemberIdListToMemberList(List<Long> memberIdList){
         return memberIdList.stream()
                 .map(m -> memberRepository.findById(m).orElseThrow(() -> new MemberNotFoundException("존재하지 않는 멤버입니다.")))
                 .collect(Collectors.toList());
