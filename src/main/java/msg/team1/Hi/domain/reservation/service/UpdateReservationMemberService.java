@@ -1,7 +1,7 @@
 package msg.team1.Hi.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.presentation.dto.request.UpdateReservationMemberRequest;
+import msg.team1.Hi.domain.homebase.presentation.dto.request.UpdateReservationMemberRequest;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.reservation.entity.Reservation;

@@ -1,6 +1,6 @@
 package msg.team1.Hi.domain.reservation.repository;
 
-import msg.team1.Hi.domain.home_base.entity.HomeBase;
+import msg.team1.Hi.domain.homebase.entity.HomeBase;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;

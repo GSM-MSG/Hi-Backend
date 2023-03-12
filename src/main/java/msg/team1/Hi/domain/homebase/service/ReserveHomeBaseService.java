@@ -1,12 +1,12 @@
-package msg.team1.Hi.domain.home_base.service;
+package msg.team1.Hi.domain.homebase.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.entity.HomeBase;
-import msg.team1.Hi.domain.home_base.exception.ForbiddenHomeBaseReservationException;
-import msg.team1.Hi.domain.home_base.exception.FullHomeBaseReservationException;
-import msg.team1.Hi.domain.home_base.exception.NotFoundHomeBaseException;
-import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
-import msg.team1.Hi.domain.home_base.repository.HomeBaseRepository;
+import msg.team1.Hi.domain.homebase.entity.HomeBase;
+import msg.team1.Hi.domain.homebase.exception.ForbiddenHomeBaseReservationException;
+import msg.team1.Hi.domain.homebase.exception.FullHomeBaseReservationException;
+import msg.team1.Hi.domain.homebase.exception.NotFoundHomeBaseException;
+import msg.team1.Hi.domain.homebase.presentation.dto.request.ReserveHomeBaseRequest;
+import msg.team1.Hi.domain.homebase.repository.HomeBaseRepository;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.reservation.entity.Reservation;

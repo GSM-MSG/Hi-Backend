@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.entity;
+package msg.team1.Hi.domain.homebase.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
