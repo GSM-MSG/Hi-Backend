@@ -36,9 +36,9 @@ public class UpdateReservationMemberService {
        updatePrevMemberUseStatus(reservation);
 
         List<Member> members = memberUtil.convertMemberIdListToMemberList(updateReservationRequest.getMembers());
-        members.forEach(m -> m.updateReservation(reservation));
-        members.forEach(m -> m.updateStatus(UseStatus.INUSE));
 
-        memberRepository.saveAll(members);
+        memberRepository.saveAll(members.stream()
+                .map(m -> m.updateReservationAndUseStatus(UseStatus.INUSE, reservation))
+                .collect(Collectors.toList()));
     }
 }
