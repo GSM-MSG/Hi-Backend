@@ -7,6 +7,7 @@ import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.member.exception.MisMatchPasswordException;
 import msg.team1.Hi.domain.member.presentation.dto.response.MemberInfoResponse;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
+import msg.team1.Hi.domain.reservation.entity.Reservation;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -54,6 +55,18 @@ public class MemberUtil {
 
     public void updateUseStatusInUse(Member member){
         member.updateStatus(UseStatus.INUSE);
+    }
+
+    public void updateUseStatusInUseAndReservation(List<Member> members, Reservation reservation){
+        memberRepository.saveAll(members.stream()
+                .map(m -> m.updateReservationAndUseStatus(UseStatus.INUSE, reservation))
+                .collect(Collectors.toList()));
+    }
+
+    public void updateAllMemberUseStatusAvailable(List<Member> members){
+        memberRepository.saveAll(members.stream()
+                .map(m -> m.updateReservationAndUseStatus(UseStatus.AVAILABLE, null))
+                .collect(Collectors.toList()));
     }
 
 }

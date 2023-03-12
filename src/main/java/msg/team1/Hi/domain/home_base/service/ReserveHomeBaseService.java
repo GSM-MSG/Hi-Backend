@@ -34,12 +34,6 @@ public class ReserveHomeBaseService {
             throw new ForbiddenHomeBaseReservationException("홈베이스에 예약 가능한 상태가 아닙니다.");
     }
 
-    private void updateMemberUseStatus(List<Member> members, Reservation reservation) {
-        for (Member member : members) {
-            memberUtil.updateUseStatusInUse(member);
-            member.updateReservation(reservation);
-        }
-    }
 
     public void execute(ReserveHomeBaseRequest request) {
         Member representative = memberUtil.currentMember();
@@ -57,7 +51,7 @@ public class ReserveHomeBaseService {
                 .build();
 
         homeBase.updateTableCount(homeBase.getTableCount() + 1);
-        updateMemberUseStatus(members, reservation);
+        memberUtil.updateUseStatusInUseAndReservation(members, reservation);
 
         if(homeBase.getTableCount() >= 4)
             homeBase.updateIsFull(true);
