@@ -57,7 +57,7 @@ public class StudentHomeBaseController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{reservation_id}/delete")
+    @DeleteMapping("/{reservation_id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable("reservation_id") Long reservationId){
         deleteReservationService.execute(reservationId);
         return ResponseEntity.ok().build();
