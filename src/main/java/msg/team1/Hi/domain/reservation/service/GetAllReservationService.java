@@ -1,10 +1,10 @@
 package msg.team1.Hi.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.entity.HomeBase;
-import msg.team1.Hi.domain.home_base.exception.NotFoundHomeBaseException;
-import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
-import msg.team1.Hi.domain.home_base.repository.HomeBaseRepository;
+import msg.team1.Hi.domain.homebase.entity.HomeBase;
+import msg.team1.Hi.domain.homebase.exception.NotFoundHomeBaseException;
+import msg.team1.Hi.domain.homebase.presentation.dto.response.LookUpReservationResponse;
+import msg.team1.Hi.domain.homebase.repository.HomeBaseRepository;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
 import msg.team1.Hi.domain.reservation.repository.ReservationRepository;
 import msg.team1.Hi.global.util.HomeBaseUtil;

@@ -1,12 +1,12 @@
-package msg.team1.Hi.domain.home_base.service;
+package msg.team1.Hi.domain.homebase.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.entity.HomeBase;
-import msg.team1.Hi.domain.home_base.exception.ForbiddenHomeBaseReservationException;
-import msg.team1.Hi.domain.home_base.exception.FullHomeBaseReservationException;
-import msg.team1.Hi.domain.home_base.exception.NotFoundHomeBaseException;
-import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
-import msg.team1.Hi.domain.home_base.repository.HomeBaseRepository;
+import msg.team1.Hi.domain.homebase.entity.HomeBase;
+import msg.team1.Hi.domain.homebase.exception.ForbiddenHomeBaseReservationException;
+import msg.team1.Hi.domain.homebase.exception.FullHomeBaseReservationException;
+import msg.team1.Hi.domain.homebase.exception.NotFoundHomeBaseException;
+import msg.team1.Hi.domain.homebase.presentation.dto.request.ReserveHomeBaseRequest;
+import msg.team1.Hi.domain.homebase.repository.HomeBaseRepository;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.entity.enum_type.UseStatus;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
@@ -34,12 +34,6 @@ public class ReserveHomeBaseService {
             throw new ForbiddenHomeBaseReservationException("홈베이스에 예약 가능한 상태가 아닙니다.");
     }
 
-    private void updateMemberUseStatus(List<Member> members, Reservation reservation) {
-        for (Member member : members) {
-            memberUtil.updateUseStatusInUse(member);
-            member.updateReservation(reservation);
-        }
-    }
 
     public void execute(ReserveHomeBaseRequest request) {
         Member representative = memberUtil.currentMember();
@@ -57,7 +51,7 @@ public class ReserveHomeBaseService {
                 .build();
 
         homeBase.updateTableCount(homeBase.getTableCount() + 1);
-        updateMemberUseStatus(members, reservation);
+        memberUtil.updateUseStatusInUseAndReservation(members, reservation);
 
         if(homeBase.getTableCount() >= 4)
             homeBase.updateIsFull(true);

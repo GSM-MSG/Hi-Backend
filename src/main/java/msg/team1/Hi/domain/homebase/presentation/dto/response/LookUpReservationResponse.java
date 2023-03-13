@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.presentation.dto.response;
+package msg.team1.Hi.domain.homebase.presentation.dto.response;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

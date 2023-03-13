@@ -1,13 +1,12 @@
-package msg.team1.Hi.domain.home_base.presentation.controller.admin;
+package msg.team1.Hi.domain.homebase.presentation.controller.admin;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.presentation.dto.request.ReserveHomeBaseRequest;
-import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationDetailResponse;
-import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
-import msg.team1.Hi.domain.home_base.service.ReserveHomeBaseService;
+import msg.team1.Hi.domain.homebase.presentation.dto.request.ReserveHomeBaseRequest;
+import msg.team1.Hi.domain.homebase.presentation.dto.response.LookUpReservationDetailResponse;
+import msg.team1.Hi.domain.homebase.presentation.dto.response.LookUpReservationResponse;
+import msg.team1.Hi.domain.homebase.service.ReserveHomeBaseService;
 import msg.team1.Hi.domain.reservation.service.GetAllReservationService;
 import msg.team1.Hi.domain.reservation.service.GetReservationService;
-import msg.team1.Hi.domain.reservation.service.UpdateReservationMemberService;
 import msg.team1.Hi.domain.reservation.service.UpdateReservationTeamNameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

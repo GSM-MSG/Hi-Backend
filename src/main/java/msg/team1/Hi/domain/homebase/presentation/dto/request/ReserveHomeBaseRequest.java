@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.presentation.dto.request;
+package msg.team1.Hi.domain.homebase.presentation.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

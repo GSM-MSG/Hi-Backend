@@ -1,4 +1,4 @@
-package msg.team1.Hi.domain.home_base.exception;
+package msg.team1.Hi.domain.homebase.exception;
 
 import lombok.Getter;
 import msg.team1.Hi.global.error.ErrorCode;

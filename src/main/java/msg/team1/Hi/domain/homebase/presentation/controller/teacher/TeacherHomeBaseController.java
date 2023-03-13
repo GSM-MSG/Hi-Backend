@@ -1,8 +1,8 @@
-package msg.team1.Hi.domain.home_base.presentation.controller.teacher;
+package msg.team1.Hi.domain.homebase.presentation.controller.teacher;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationDetailResponse;
-import msg.team1.Hi.domain.home_base.presentation.dto.response.LookUpReservationResponse;
+import msg.team1.Hi.domain.homebase.presentation.dto.response.LookUpReservationDetailResponse;
+import msg.team1.Hi.domain.homebase.presentation.dto.response.LookUpReservationResponse;
 import msg.team1.Hi.domain.reservation.service.GetAllReservationService;
 import msg.team1.Hi.domain.reservation.service.GetReservationService;
 import org.springframework.http.ResponseEntity;

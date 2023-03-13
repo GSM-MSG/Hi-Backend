@@ -1,7 +1,6 @@
 package msg.team1.Hi.domain.reservation.service;
 
 import lombok.RequiredArgsConstructor;
-import msg.team1.Hi.domain.homebase.presentation.dto.request.UpdateReservationMemberRequest;
 import msg.team1.Hi.domain.member.entity.Member;
 import msg.team1.Hi.domain.member.repository.MemberRepository;
 import msg.team1.Hi.domain.reservation.entity.Reservation;
@@ -14,20 +13,16 @@ import java.util.List;
 
 @TransactionalService
 @RequiredArgsConstructor
-public class UpdateReservationMemberService {
-
+public class DeleteReservationService {
     private final MemberUtil memberUtil;
     private final MemberRepository memberRepository;
-    private final ReservationRepository reservationRepository;
+    private final ReservationRepository reservationsRepository;
 
-    public void execute(UpdateReservationMemberRequest updateReservationRequest, Long reservationId) {
-
-        Reservation reservation = reservationRepository.findByIdAndRepresentative(reservationId, memberUtil.currentMember())
+    public void execute(Long reservationId){
+        Reservation reservation = reservationsRepository.findByIdAndRepresentative(reservationId, memberUtil.currentMember())
                 .orElseThrow(() -> new NotFoundReservationException("존재하지 않는 예약현황 입니다."));
-        List<Member> prevMembers = memberRepository.findAllByReservation(reservation);
-        List<Member> members = memberUtil.convertMemberIdListToMemberList(updateReservationRequest.getMembers());
-
-        memberUtil.updateAllMemberUseStatusAvailable(prevMembers);
-        memberUtil.updateUseStatusInUseAndReservation(members, reservation);
+        List<Member> members = memberRepository.findAllByReservation(reservation);
+        memberUtil.updateAllMemberUseStatusAvailable(members);
+        reservationsRepository.delete(reservation);
     }
 }
