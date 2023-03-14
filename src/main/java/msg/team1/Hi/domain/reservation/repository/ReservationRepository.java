@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findAllByHomeBase(HomeBase homeBase);
     Optional<Reservation> findByIdAndRepresentative(Long id, Member representative);
+    Boolean existsByIdAndRepresentative(Long id, Member representative);
 }
