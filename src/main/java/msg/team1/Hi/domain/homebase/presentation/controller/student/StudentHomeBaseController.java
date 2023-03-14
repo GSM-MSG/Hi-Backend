@@ -25,6 +25,7 @@ public class StudentHomeBaseController {
     private final UpdateReservationTeamNameService updateReservationTeamNameService;
     private final UpdateReservationMemberService updateReservationMemberService;
     private final DeleteReservationService deleteReservationService;
+    private final ExitReservationService exitReservationService;
 
     @PostMapping("/reserve")
     public ResponseEntity<Void> reserveHomeBase(@Valid @RequestBody ReserveHomeBaseRequest request) {
@@ -61,5 +62,11 @@ public class StudentHomeBaseController {
     public ResponseEntity<Void> deleteReservation(@PathVariable("reservation_id") Long reservationId){
         deleteReservationService.execute(reservationId);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{reservation_id}/exit")
+    public ResponseEntity<Void> exitReservation(@PathVariable("reservation_id") Long reservationId){
+        exitReservationService.execute(reservationId);
+        return ResponseEntity.noContent().build();
     }
 }
