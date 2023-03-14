@@ -53,10 +53,6 @@ public class MemberUtil {
                 .collect(Collectors.toList());
     }
 
-    public void updateUseStatusInUse(Member member){
-        member.updateStatus(UseStatus.INUSE);
-    }
-
     public void updateUseStatusInUseAndReservation(List<Member> members, Reservation reservation){
         memberRepository.saveAll(members.stream()
                 .map(m -> m.updateReservationAndUseStatus(UseStatus.INUSE, reservation))
