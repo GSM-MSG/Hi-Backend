@@ -14,6 +14,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByName(String name);
     List<Member> findAllByReservation(Reservation reservation);
     List<Member> findAllByNameContaining(String name);
+    boolean existsByReservation(Reservation reservation);
     boolean existsByEmail(String email);
 
 }
